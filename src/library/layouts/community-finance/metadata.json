@@ -1,0 +1,11 @@
+{
+  "id": "community-finance",
+  "displayName": "Community Finance",
+  "vertical": [
+    "FINANCIAL_SERVICES"
+  ],
+  "purpose": [
+    "LOCATION"
+  ],
+  "pageSetType": "ENTITY"
+}
