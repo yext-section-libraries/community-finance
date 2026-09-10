@@ -1,7 +1,7 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
-import { PuckComponent, setDeep } from "@puckeditor/core";
+import { PuckComponent } from "@puckeditor/core";
 import {
   AnalyticsScopeProvider,
   Link,
@@ -11,6 +11,7 @@ import {
   useAnalytics,
 } from "@yext/pages-components";
 import {
+  Background,
   ComprehensiveCTA,
   type ComprehensiveCTAValue,
   EntityField,
@@ -27,6 +28,7 @@ import {
   type YextEntityField,
   type YextFields,
   getAnalyticsScopeHash,
+  getSurfaceColorStyle,
   i18nComponentsInstance,
   isDarkColor,
   normalizeLink,
@@ -671,6 +673,8 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
     color: navigationColor,
     styles: props.navigation.styles,
   });
+  const headerSurfaceStyle =
+    getSurfaceColorStyle(props.section.backgroundColor, streamDocument) ?? {};
 
   const logoWrapperStyle: React.CSSProperties = {
     height: "50px",
@@ -993,10 +997,12 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
       liveVisibility={props.section.visibleOnLivePage}
       isEditing={props.puck.isEditing}
     >
-      <header
+      <Background
+        as="header"
+        background={props.section.backgroundColor}
         className="yext-community-finance-header relative"
         style={{
-          backgroundColor: resolveThemeColorCssValue(props.section.backgroundColor),
+          ...headerSurfaceStyle,
           color: resolveThemeColorCssValue(navigationColor),
         }}
       >
@@ -1144,9 +1150,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
         {menuOpen ? (
           <div
             className="absolute inset-x-0 top-full z-20 max-h-[calc(100vh-82px)] overflow-y-auto px-6 py-6 md:px-8 lg:hidden"
-            style={{
-              backgroundColor: resolveThemeColorCssValue(props.section.backgroundColor),
-            }}
+            style={{ backgroundColor: headerSurfaceStyle.backgroundColor }}
           >
             <div className="space-y-6">
               {navigationLinks.length > 0 ? renderNavigationLinks("column") : null}
@@ -1236,7 +1240,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
             </div>
           </div>
         ) : null}
-      </header>
+      </Background>
     </VisibilityWrapper>
   );
 };

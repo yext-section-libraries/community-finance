@@ -8,7 +8,7 @@ import {
   EntityField,
   VisibilityWrapper,
   getAnalyticsScopeHash,
-  isDarkColor,
+  getSurfaceColorStyle,
   resolveBreadcrumbs,
   resolveComponentData,
   useDocument,
@@ -21,6 +21,9 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import {
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
 
 type FinanceSectionVerticalPaddingValue =
   | "default"
@@ -99,63 +102,6 @@ const financeSectionStylesFields = {
 } as const;
 
 const FINANCE_SECTION_MAX_WIDTH = "1440px";
-
-const getThemeColorValue = (color?: ThemeColor): string | undefined => {
-  const token = color?.selectedColor;
-
-  if (!token || token === "default") {
-    return undefined;
-  }
-
-  if (token === "white") {
-    return "#ffffff";
-  }
-
-  if (token.endsWith("-light")) {
-    const baseToken = token.replace(/-light$/, "");
-    return `hsl(from var(--colors-${baseToken}) h s 98)`;
-  }
-
-  if (token.endsWith("-dark")) {
-    const baseToken = token.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${baseToken}) h s 20)`;
-  }
-
-  if (token.startsWith("palette-")) {
-    return `var(--colors-${token})`;
-  }
-
-  if (
-    token.startsWith("var(") ||
-    token.startsWith("#") ||
-    token.startsWith("rgb(") ||
-    token.startsWith("rgba(") ||
-    token.startsWith("hsl(") ||
-    token.startsWith("hsla(")
-  ) {
-    return token;
-  }
-
-  if (token.startsWith("[") && token.endsWith("]")) {
-    return token.slice(1, -1);
-  }
-
-  return token;
-};
-
-const getReadableForegroundColor = (
-  surfaceColor: ThemeColor,
-  streamDocument: StreamDocument,
-): string =>
-  isDarkColor(surfaceColor, streamDocument) ? "#ffffff" : "#000000";
-
-const getSurfaceTextColor = (
-  color: ThemeColor | undefined,
-  surfaceColor: ThemeColor,
-  streamDocument: StreamDocument,
-): string =>
-  getThemeColorValue(color) ??
-  getReadableForegroundColor(surfaceColor, streamDocument);
 
 const getTextStyles = (
   field: StyledTextProps,
@@ -282,9 +228,6 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
     props.section.styles.verticalPadding === "default"
       ? undefined
       : props.section.styles.verticalPadding;
-  const sectionBackgroundColor = getThemeColorValue(
-    props.section.backgroundColor,
-  );
   const rootTextStyles = getTextStyles(
     props.rootLabel,
     props.section.backgroundColor,
@@ -331,7 +274,10 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="border-b border-current/10"
           style={{
-            backgroundColor: sectionBackgroundColor,
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
             paddingBlock,
           }}
         >

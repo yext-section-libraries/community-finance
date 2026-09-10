@@ -15,14 +15,13 @@ import {
   EntityField,
   Heading,
   Image,
-  MaybeRTF,
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
-  type RichText,
   type StreamDocument,
   type StyledImageValue,
   type StyledTextValue,
@@ -33,6 +32,10 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import {
+  hasImageSource,
+  renderRichText,
+} from "../shared/sectionHelpers";
 
 type StyledHeading = {
   text: YextEntityField<TranslatableString>;
@@ -302,54 +305,6 @@ const CommunityFinanceHeroFields: YextFields<CommunityFinanceHeroProps> =
     },
   };
 
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides?: React.ComponentProps<
-    typeof MaybeRTF
-  >["richTextStyleOverrides"],
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
-const hasImageSource = (image: unknown): image is ImageType => {
-  if (!image || typeof image !== "object") {
-    return false;
-  }
-
-  if ("url" in image && typeof image.url === "string" && image.url.trim()) {
-    return true;
-  }
-
-  if (
-    "image" in image &&
-    image.image &&
-    typeof image.image === "object" &&
-    "url" in image.image &&
-    typeof image.image.url === "string" &&
-    image.image.url.trim()
-  ) {
-    return true;
-  }
-
-  return false;
-};
-
 const CommunityFinanceHeroComponent: PuckComponent<
   CommunityFinanceHeroProps
 > = (props) => {
@@ -361,12 +316,6 @@ const CommunityFinanceHeroComponent: PuckComponent<
     props.body.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.body.styles,
-        color: props.body.fontColor,
-      },
-    },
   );
   const resolvedHours = resolveComponentData(
     props.hours,
@@ -396,7 +345,13 @@ const CommunityFinanceHeroComponent: PuckComponent<
           as="section"
           background={props.section.backgroundColor}
           className="yext-community-finance-hero border-b border-current/10"
-          style={{ paddingBlock }}
+          style={{
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
+            paddingBlock,
+          }}
         >
           <style>{`
             .yext-community-finance-hero p {
@@ -500,10 +455,16 @@ const CommunityFinanceHeroComponent: PuckComponent<
                   constantValueEnabled={props.hours.constantValueEnabled}
                 >
                   <Background
-                  background={props.statusPill.backgroundColor}
-                  className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold"
-                  style={{ textTransform: "uppercase" }}
-                >
+                    background={props.statusPill.backgroundColor}
+                    className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold"
+                    style={{
+                      ...getSurfaceColorStyle(
+                        props.statusPill.backgroundColor,
+                        streamDocument,
+                      ),
+                      textTransform: "uppercase",
+                    }}
+                  >
                   <HoursStatus
                     hours={resolvedHours}
                     timezone={streamDocument.timezone ?? "UTC"}

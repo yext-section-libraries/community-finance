@@ -12,15 +12,14 @@ import {
   EntityField,
   Heading,
   Image,
-  MaybeRTF,
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
-  type RichText,
   type StreamDocument,
   type StyledImageValue,
   type StyledTextValue,
@@ -31,66 +30,13 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
-type FinanceSectionVerticalPaddingValue =
-  | "default"
-  | "0px"
-  | "2px"
-  | "4px"
-  | "6px"
-  | "8px"
-  | "10px"
-  | "12px"
-  | "14px"
-  | "16px"
-  | "20px"
-  | "24px"
-  | "28px"
-  | "32px"
-  | "36px"
-  | "40px"
-  | "44px"
-  | "48px"
-  | "56px"
-  | "64px"
-  | "80px"
-  | "96px";
-
-type FinanceSectionStyles = {
-  verticalPadding: FinanceSectionVerticalPaddingValue;
-};
-
-const financeSectionStylesFields = {
-  verticalPadding: {
-    label: "Top/Bottom Padding",
-    type: "select",
-    options: [
-      { label: "Default", value: "default" },
-      { label: "0px", value: "0px" },
-      { label: "2px", value: "2px" },
-      { label: "4px", value: "4px" },
-      { label: "6px", value: "6px" },
-      { label: "8px", value: "8px" },
-      { label: "10px", value: "10px" },
-      { label: "12px", value: "12px" },
-      { label: "14px", value: "14px" },
-      { label: "16px", value: "16px" },
-      { label: "20px", value: "20px" },
-      { label: "24px", value: "24px" },
-      { label: "28px", value: "28px" },
-      { label: "32px", value: "32px" },
-      { label: "36px", value: "36px" },
-      { label: "40px", value: "40px" },
-      { label: "44px", value: "44px" },
-      { label: "48px", value: "48px" },
-      { label: "56px", value: "56px" },
-      { label: "64px", value: "64px" },
-      { label: "80px", value: "80px" },
-      { label: "96px", value: "96px" },
-    ],
-  },
-} as const;
-
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+import {
+  FINANCE_SECTION_MAX_WIDTH,
+  financeSectionStylesFields,
+  hasImageSource,
+  renderRichText,
+  type FinanceSectionStyles,
+} from "../shared/sectionHelpers";
 
 type StyledHeading = {
   text: YextEntityField<TranslatableString>;
@@ -252,54 +198,6 @@ const CommunityFinanceAboutBranchFields: YextFields<CommunityFinanceAboutBranchP
     },
   };
 
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides?: React.ComponentProps<
-    typeof MaybeRTF
-  >["richTextStyleOverrides"],
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
-const hasImageSource = (image: unknown): image is ImageType => {
-  if (!image || typeof image !== "object") {
-    return false;
-  }
-
-  if ("url" in image && typeof image.url === "string" && image.url.trim()) {
-    return true;
-  }
-
-  if (
-    "image" in image &&
-    image.image &&
-    typeof image.image === "object" &&
-    "url" in image.image &&
-    typeof image.image.url === "string" &&
-    image.image.url.trim()
-  ) {
-    return true;
-  }
-
-  return false;
-};
-
 const CommunityFinanceAboutBranchComponent: PuckComponent<
   CommunityFinanceAboutBranchProps
 > = (props) => {
@@ -313,12 +211,6 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
     props.body.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.body.styles,
-        color: props.body.fontColor,
-      },
-    },
   );
   const resolvedImage = resolveComponentData(
     props.branchImage.image,
@@ -346,7 +238,13 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
           as="section"
           background={props.section.backgroundColor}
           className="yext-community-finance-about-branch border-t border-current/10"
-          style={{ paddingBlock }}
+          style={{
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
+            paddingBlock,
+          }}
         >
           <style>{`
             .yext-community-finance-about-branch p {
@@ -451,9 +349,13 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
                 constantValueEnabled={props.eyebrow.text.constantValueEnabled}
               >
                 <Background
-                background={props.eyebrow.backgroundColor}
-                className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
-                style={{
+                  background={props.eyebrow.backgroundColor}
+                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                  style={{
+                    ...getSurfaceColorStyle(
+                      props.eyebrow.backgroundColor,
+                      streamDocument,
+                    ),
                   fontFamily:
                     props.eyebrow.styles.fontFamily === "default"
                       ? undefined
@@ -474,7 +376,7 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
                     props.eyebrow.styles.textTransform === "default"
                       ? undefined
                       : props.eyebrow.styles.textTransform,
-                  color: eyebrowColor,
+                  ...(eyebrowColor ? { color: eyebrowColor } : {}),
                   lineHeight: 1.2,
                 }}
               >

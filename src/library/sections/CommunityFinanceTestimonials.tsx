@@ -12,16 +12,15 @@ import {
   Body,
   EntityField,
   Heading,
-  MaybeRTF,
   ReviewStars,
   VisibilityWrapper,
   getAggregateRating,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
-  type RichText,
   type StreamDocument,
   type StyledTextValue,
   type ThemeColor,
@@ -31,6 +30,7 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import { renderRichText } from "../shared/sectionHelpers";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 type FinanceSectionVerticalPaddingValue =
   | "default"
@@ -213,31 +213,6 @@ const CommunityFinanceTestimonialsFields: YextFields<CommunityFinanceTestimonial
     },
   };
 
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides?: React.ComponentProps<
-    typeof MaybeRTF
-  >["richTextStyleOverrides"],
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
 const CommunityFinanceTestimonialsComponent: PuckComponent<
   CommunityFinanceTestimonialsProps
 > = (props) => {
@@ -252,12 +227,6 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
     props.description.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.description.styles,
-        color: props.description.fontColor,
-      },
-    },
   );
   const liveReviews =
     streamDocument.ref_reviewsAgg?.find(
@@ -316,7 +285,13 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
           as="section"
           background={props.section.backgroundColor}
           className="yext-community-finance-testimonials border-t border-current/10"
-          style={{ paddingBlock }}
+          style={{
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
+            paddingBlock,
+          }}
         >
           <style>{`
             .yext-community-finance-testimonials p {
@@ -407,9 +382,13 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                 constantValueEnabled={props.eyebrow.text.constantValueEnabled}
               >
                 <Background
-                background={props.eyebrow.backgroundColor}
-                className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
-                style={{
+                  background={props.eyebrow.backgroundColor}
+                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                  style={{
+                    ...getSurfaceColorStyle(
+                      props.eyebrow.backgroundColor,
+                      streamDocument,
+                    ),
                   fontFamily:
                     props.eyebrow.styles.fontFamily === "default"
                       ? undefined
@@ -430,7 +409,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                     props.eyebrow.styles.textTransform === "default"
                       ? undefined
                       : props.eyebrow.styles.textTransform,
-                  color: eyebrowColor,
+                  ...(eyebrowColor ? { color: eyebrowColor } : {}),
                   lineHeight: 1.2,
                 }}
               >
@@ -498,6 +477,10 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
             <Background
               background={props.slideBackgroundColor}
               className="mt-8 overflow-hidden rounded-[28px] px-6 py-10 text-center md:px-10"
+              style={getSurfaceColorStyle(
+                props.slideBackgroundColor,
+                streamDocument,
+              )}
             >
               <p className="mx-auto max-w-[1210px] text-[1.9rem] font-bold leading-tight md:text-[2.4rem]">
                 {activeTestimonial.quote}

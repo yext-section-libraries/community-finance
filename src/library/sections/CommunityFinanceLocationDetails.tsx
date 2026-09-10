@@ -16,13 +16,12 @@ import {
   VisibilityWrapper,
   ComprehensiveCTA,
   EntityField,
-  MaybeRTF,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
-  type RichText,
   type StreamDocument,
   type StyledTextValue,
   type ThemeColor,
@@ -32,6 +31,11 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import {
+  getSurfaceTextColor,
+  getThemeColorValue,
+  renderRichText,
+} from "../shared/sectionHelpers";
 type FinanceSectionVerticalPaddingValue =
   | "default"
   | "0px"
@@ -649,84 +653,6 @@ const CommunityFinanceLocationDetailsFields: YextFields<CommunityFinanceLocation
     },
   };
 
-const getThemeColorValue = (color?: ThemeColor): string | undefined => {
-  const token = color?.selectedColor;
-
-  if (!token) {
-    return undefined;
-  }
-
-  if (token === "white") {
-    return "#ffffff";
-  }
-
-  if (token.endsWith("-light")) {
-    const baseToken = token.replace(/-light$/, "");
-    return `hsl(from var(--colors-${baseToken}) h s 98)`;
-  }
-
-  if (token.endsWith("-dark")) {
-    const baseToken = token.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${baseToken}) h s 20)`;
-  }
-
-  if (token.startsWith("palette-")) {
-    return `var(--colors-${token})`;
-  }
-
-  if (
-    token.startsWith("var(") ||
-    token.startsWith("#") ||
-    token.startsWith("rgb(") ||
-    token.startsWith("rgba(") ||
-    token.startsWith("hsl(") ||
-    token.startsWith("hsla(")
-  ) {
-    return token;
-  }
-
-  if (token.startsWith("[") && token.endsWith("]")) {
-    return token.slice(1, -1);
-  }
-
-  return token;
-};
-
-const getSurfaceTextColor = (
-  color: ThemeColor | undefined,
-  surfaceColor: ThemeColor,
-): string | undefined =>
-  getThemeColorValue(color) ??
-  getThemeColorValue({
-    selectedColor: surfaceColor.contrastingColor,
-    contrastingColor: surfaceColor.selectedColor,
-  });
-
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides?: React.ComponentProps<
-    typeof MaybeRTF
-  >["richTextStyleOverrides"],
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
 const formatPhone = (value: string, format: PhoneFieldProps["phoneFormat"]) => {
   const parsed = parsePhoneNumber(value.replace(/(?!^\+)\+|[^\d+]/g, ""));
 
@@ -809,34 +735,16 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
     props.accessibility.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.accessibility.styles,
-        color: props.accessibility.fontColor,
-      },
-    },
   );
   const resolvedLanguages = resolveComponentData(
     props.languages.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.languages.styles,
-        color: props.languages.fontColor,
-      },
-    },
   );
   const resolvedServices = resolveComponentData(
     props.services.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.services.styles,
-        color: props.services.fontColor,
-      },
-    },
   );
   const resolvedEmails = resolveComponentData(
     props.emails.list,
@@ -877,10 +785,6 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
         original: string;
       } => item !== null,
     );
-  const sectionBackgroundColor = getThemeColorValue(
-    props.section.backgroundColor,
-  );
-  const cardBackgroundColor = getThemeColorValue(props.cardBackgroundColor);
   const sectionForegroundColor = getSurfaceTextColor(
     props.heading.fontColor,
     props.section.backgroundColor,
@@ -897,19 +801,19 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
     props.accessibility.fontColor,
     props.cardBackgroundColor,
   );
-  const secondaryCtaValue: Partial<ComprehensiveCTAValue> =
-    props.secondaryCta.styles.color.selectedColor === "default"
-      ? {
-          ...props.secondaryCta,
-          styles: {
-            ...props.secondaryCta.styles,
-            color: {
+  const secondaryCtaValue: Partial<ComprehensiveCTAValue> = {
+    data: props.secondaryCta.data,
+    styles: {
+      ...props.secondaryCta.styles,
+      color:
+        props.secondaryCta.styles.color?.selectedColor === "default"
+          ? {
               selectedColor: props.cardBackgroundColor.contrastingColor,
               contrastingColor: props.cardBackgroundColor.selectedColor,
-            },
-          },
-        }
-      : (props.secondaryCta as Partial<ComprehensiveCTAValue>);
+            }
+          : props.secondaryCta.styles.color,
+    },
+  };
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
       ? undefined
@@ -930,7 +834,10 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
         <section
           className="yext-community-finance-location-details"
           style={{
-            backgroundColor: sectionBackgroundColor,
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
             borderTop: "1px solid rgb(230, 232, 233)",
             borderBottom: "1px solid rgb(230, 232, 233)",
             paddingBlock,
@@ -1067,7 +974,10 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
               <article
                 className="rounded-[24px] p-6"
                 style={{
-                  backgroundColor: cardBackgroundColor,
+                  ...getSurfaceColorStyle(
+                    props.cardBackgroundColor,
+                    streamDocument,
+                  ),
                 }}
               >
                 <EntityField
@@ -1286,7 +1196,10 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
               <article
                 className="rounded-[24px] p-6"
                 style={{
-                  backgroundColor: cardBackgroundColor,
+                  ...getSurfaceColorStyle(
+                    props.cardBackgroundColor,
+                    streamDocument,
+                  ),
                 }}
               >
                 <EntityField
@@ -1459,7 +1372,10 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
               <article
                 className="rounded-[24px] p-6 md:col-span-2 xl:col-span-1"
                 style={{
-                  backgroundColor: cardBackgroundColor,
+                  ...getSurfaceColorStyle(
+                    props.cardBackgroundColor,
+                    streamDocument,
+                  ),
                 }}
               >
                 <EntityField

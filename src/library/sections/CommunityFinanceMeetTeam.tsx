@@ -10,16 +10,15 @@ import {
   EntityField,
   Heading,
   Image,
-  MaybeRTF,
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
   type EnhancedTranslatableCTA,
-  type RichText,
   type StreamDocument,
   type StyledImageValue,
   type StyledTextValue,
@@ -30,6 +29,10 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import {
+  hasImageSource,
+  renderRichText,
+} from "../shared/sectionHelpers";
 type FinanceSectionVerticalPaddingValue =
   | "default"
   | "0px"
@@ -516,54 +519,6 @@ const CommunityFinanceMeetTeamFields: YextFields<CommunityFinanceMeetTeamProps> 
     },
   };
 
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides?: React.ComponentProps<
-    typeof MaybeRTF
-  >["richTextStyleOverrides"],
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
-const hasImageSource = (image: unknown): image is ImageType => {
-  if (!image || typeof image !== "object") {
-    return false;
-  }
-
-  if ("url" in image && typeof image.url === "string" && image.url.trim()) {
-    return true;
-  }
-
-  if (
-    "image" in image &&
-    image.image &&
-    typeof image.image === "object" &&
-    "url" in image.image &&
-    typeof image.image.url === "string" &&
-    image.image.url.trim()
-  ) {
-    return true;
-  }
-
-  return false;
-};
-
 const CommunityFinanceMeetTeamComponent: PuckComponent<
   CommunityFinanceMeetTeamProps
 > = (props) => {
@@ -681,7 +636,13 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
           as="section"
           background={props.section.backgroundColor}
           className="yext-community-finance-meet-team border-t border-current/10"
-          style={{ paddingBlock }}
+          style={{
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
+            paddingBlock,
+          }}
         >
           <style>{`
             .yext-community-finance-meet-team p {
@@ -783,6 +744,10 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                   background={props.eyebrow.backgroundColor}
                   className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
                   style={{
+                    ...getSurfaceColorStyle(
+                      props.eyebrow.backgroundColor,
+                      streamDocument,
+                    ),
                     fontFamily:
                       props.eyebrow.styles.fontFamily === "default"
                         ? undefined
@@ -803,7 +768,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                       props.eyebrow.styles.textTransform === "default"
                         ? undefined
                         : props.eyebrow.styles.textTransform,
-                    color: eyebrowColor,
+                    ...(eyebrowColor ? { color: eyebrowColor } : {}),
                     lineHeight: 1.2,
                   }}
                 >
@@ -886,12 +851,6 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                       advisor.specialties,
                       locale,
                       streamDocument,
-                      {
-                        richTextStyleOverrides: {
-                          ...props.advisors.styles.specialties.styles,
-                          color: props.advisors.styles.specialties.fontColor,
-                        },
-                      },
                     )
                   : undefined;
                 const resolvedSpecialtiesText = advisor.specialties
@@ -949,6 +908,10 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                     key={resolvedName}
                     className="overflow-hidden rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
                     background={props.cardBackgroundColor}
+                    style={getSurfaceColorStyle(
+                      props.cardBackgroundColor,
+                      streamDocument,
+                    )}
                   >
                     <div className="flex h-full flex-col gap-5 p-6">
                       <div className="flex items-center gap-4">

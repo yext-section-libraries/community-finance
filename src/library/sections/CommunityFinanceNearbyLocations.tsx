@@ -15,10 +15,10 @@ import {
   ComprehensiveCTA,
   EntityField,
   MapboxStaticMapComponent,
-  MaybeRTF,
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   mapboxStaticMapStyleOptions,
   mergeMeta,
   resolveComponentData,
@@ -27,7 +27,6 @@ import {
   useNearbyLocations,
   useTemplateProps,
   type ComprehensiveCTAValue,
-  type RichText,
   type StreamDocument,
   type StyledTextValue,
   type ThemeColor,
@@ -37,6 +36,11 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import {
+  getSurfaceTextColor,
+  getThemeColorValue,
+  renderRichText,
+} from "../shared/sectionHelpers";
 type FinanceSectionVerticalPaddingValue =
   | "default"
   | "0px"
@@ -376,59 +380,6 @@ const CommunityFinanceNearbyLocationsFields: YextFields<CommunityFinanceNearbyLo
     },
   };
 
-const getThemeColorValue = (color?: ThemeColor): string | undefined => {
-  const token = color?.selectedColor;
-
-  if (!token) {
-    return undefined;
-  }
-
-  if (token === "white") {
-    return "#ffffff";
-  }
-
-  if (token.endsWith("-light")) {
-    const baseToken = token.replace(/-light$/, "");
-    return `hsl(from var(--colors-${baseToken}) h s 98)`;
-  }
-
-  if (token.endsWith("-dark")) {
-    const baseToken = token.replace(/-dark$/, "");
-    return `hsl(from var(--colors-${baseToken}) h s 20)`;
-  }
-
-  if (token.startsWith("palette-")) {
-    return `var(--colors-${token})`;
-  }
-
-  if (
-    token.startsWith("var(") ||
-    token.startsWith("#") ||
-    token.startsWith("rgb(") ||
-    token.startsWith("rgba(") ||
-    token.startsWith("hsl(") ||
-    token.startsWith("hsla(")
-  ) {
-    return token;
-  }
-
-  if (token.startsWith("[") && token.endsWith("]")) {
-    return token.slice(1, -1);
-  }
-
-  return token;
-};
-
-const getSurfaceTextColor = (
-  color: ThemeColor | undefined,
-  surfaceColor: ThemeColor,
-): string | undefined =>
-  getThemeColorValue(color) ??
-  getThemeColorValue({
-    selectedColor: surfaceColor.contrastingColor,
-    contrastingColor: surfaceColor.selectedColor,
-  });
-
 const haversineMiles = (
   origin?: { latitude?: number; longitude?: number },
   target?: { latitude?: number; longitude?: number },
@@ -471,21 +422,6 @@ const formatAddress = (address?: AddressType) => {
   return [line1, line2].filter(Boolean);
 };
 
-const renderRichText = (value: unknown) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return <MaybeRTF data={normalizedValue} />;
-};
-
 const formatPhone = (value: string, format: PhoneFieldProps["phoneFormat"]) => {
   const parsed = parsePhoneNumber(value.replace(/(?!^\+)\+|[^\d+]/g, ""));
 
@@ -513,12 +449,6 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
     props.body.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.body.styles,
-        color: props.body.fontColor,
-      },
-    },
   );
   const coordinate = streamDocument?.yextDisplayCoordinate;
   const enableNearbyLocations =
@@ -534,9 +464,6 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
     limit: props.limit,
     enabled: enableNearbyLocations,
   });
-  const sectionBackgroundColor = getThemeColorValue(
-    props.section.backgroundColor,
-  );
   const sectionForegroundColor = getSurfaceTextColor(
     props.body.fontColor,
     props.section.backgroundColor,
@@ -658,7 +585,10 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
         <section
           className="yext-community-finance-nearby-locations"
           style={{
-            backgroundColor: sectionBackgroundColor,
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
             borderTop: "1px solid rgb(230, 232, 233)",
             paddingBlock,
           }}
@@ -764,10 +694,14 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                   constantValueEnabled={props.eyebrow.text.constantValueEnabled}
                 >
                   <Background
-                background={props.eyebrow.backgroundColor}
-                className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
-                style={{
-                  color: eyebrowColor,
+                    background={props.eyebrow.backgroundColor}
+                    className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                    style={{
+                      ...getSurfaceColorStyle(
+                        props.eyebrow.backgroundColor,
+                        streamDocument,
+                      ),
+                      ...(eyebrowColor ? { color: eyebrowColor } : {}),
                   fontFamily:
                     props.eyebrow.styles.fontFamily === "default"
                       ? undefined
@@ -864,7 +798,10 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                       : props.body.styles.textTransform,
                 }}
               >
-                {renderRichText(resolvedBody)}
+                {renderRichText(resolvedBody, {
+                  ...props.body.styles,
+                  color: props.body.fontColor,
+                })}
               </div>
               </EntityField>
               </div>

@@ -12,15 +12,14 @@ import {
   EntityField,
   Heading,
   Image,
-  MaybeRTF,
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
-  type RichText,
   type StreamDocument,
   type StyledImageValue,
   type StyledTextValue,
@@ -31,6 +30,10 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import {
+  hasImageSource,
+  renderRichText,
+} from "../shared/sectionHelpers";
 type FinanceSectionVerticalPaddingValue =
   | "default"
   | "0px"
@@ -240,54 +243,6 @@ const CommunityFinanceCommunityResourcesFields: YextFields<CommunityFinanceCommu
     },
   };
 
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides?: React.ComponentProps<
-    typeof MaybeRTF
-  >["richTextStyleOverrides"],
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
-const hasImageSource = (image: unknown): image is ImageType => {
-  if (!image || typeof image !== "object") {
-    return false;
-  }
-
-  if ("url" in image && typeof image.url === "string" && image.url.trim()) {
-    return true;
-  }
-
-  if (
-    "image" in image &&
-    image.image &&
-    typeof image.image === "object" &&
-    "url" in image.image &&
-    typeof image.image.url === "string" &&
-    image.image.url.trim()
-  ) {
-    return true;
-  }
-
-  return false;
-};
-
 const CommunityFinanceCommunityResourcesComponent: PuckComponent<
   CommunityFinanceCommunityResourcesProps
 > = (props) => {
@@ -301,12 +256,6 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
     props.body.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.body.styles,
-        color: props.body.fontColor,
-      },
-    },
   );
   const resolvedImage = resolveComponentData(
     props.sectionImage.image,
@@ -334,7 +283,13 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
           as="section"
           background={props.section.backgroundColor}
           className="yext-community-finance-community-resources border-t border-current/10"
-          style={{ paddingBlock }}
+          style={{
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
+            paddingBlock,
+          }}
         >
           <style>{`
             .yext-community-finance-community-resources p {
@@ -437,9 +392,13 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                 constantValueEnabled={props.eyebrow.text.constantValueEnabled}
               >
                 <Background
-                background={props.eyebrow.backgroundColor}
-                className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
-                style={{
+                  background={props.eyebrow.backgroundColor}
+                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                  style={{
+                    ...getSurfaceColorStyle(
+                      props.eyebrow.backgroundColor,
+                      streamDocument,
+                    ),
                   fontFamily:
                     props.eyebrow.styles.fontFamily === "default"
                       ? undefined
@@ -460,7 +419,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                     props.eyebrow.styles.textTransform === "default"
                       ? undefined
                       : props.eyebrow.styles.textTransform,
-                  color: eyebrowColor,
+                  ...(eyebrowColor ? { color: eyebrowColor } : {}),
                   lineHeight: 1.2,
                 }}
               >

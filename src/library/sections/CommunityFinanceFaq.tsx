@@ -8,14 +8,13 @@ import {
   createItemSource,
   EntityField,
   Heading,
-  MaybeRTF,
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
-  type RichText,
   type StreamDocument,
   type StyledTextValue,
   type ThemeColor,
@@ -25,6 +24,7 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import { renderRichText } from "../shared/sectionHelpers";
 import { Minus, Plus } from "lucide-react";
 type FinanceSectionVerticalPaddingValue =
   | "default"
@@ -262,31 +262,6 @@ const CommunityFinanceFaqFields: YextFields<CommunityFinanceFaqProps> =
     },
   };
 
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides?: React.ComponentProps<
-    typeof MaybeRTF
-  >["richTextStyleOverrides"],
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
 const CommunityFinanceFaqComponent: PuckComponent<
   CommunityFinanceFaqProps
 > = (props) => {
@@ -314,7 +289,13 @@ const CommunityFinanceFaqComponent: PuckComponent<
           as="section"
           background={props.section.backgroundColor}
           className="yext-community-finance-faq border-t border-current/10"
-          style={{ paddingBlock }}
+          style={{
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
+            paddingBlock,
+          }}
         >
           <style>{`
             .yext-community-finance-faq p {
@@ -451,12 +432,7 @@ const CommunityFinanceFaqComponent: PuckComponent<
                       ) || ""
                     : "";
                   const resolvedAnswer = faq.answer
-                    ? resolveComponentData(faq.answer, locale, streamDocument, {
-                        richTextStyleOverrides: {
-                          ...props.faqs.styles.answer.styles,
-                          color: props.faqs.styles.answer.fontColor,
-                        },
-                      })
+                    ? resolveComponentData(faq.answer, locale, streamDocument)
                     : undefined;
                   const isOpen = openIndex === index;
                   const questionColor = getThemeColorCssValue(
@@ -468,6 +444,10 @@ const CommunityFinanceFaqComponent: PuckComponent<
                       key={`${resolvedQuestion}-${index}`}
                       background={props.rowBackgroundColor}
                       className="rounded-[20px] px-5 py-4"
+                      style={getSurfaceColorStyle(
+                        props.rowBackgroundColor,
+                        streamDocument,
+                      )}
                     >
                       <button
                         type="button"

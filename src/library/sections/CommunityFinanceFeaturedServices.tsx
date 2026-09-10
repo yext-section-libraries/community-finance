@@ -10,10 +10,10 @@ import {
   EntityField,
   Heading,
   Image,
-  MaybeRTF,
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   getThemeColorCssValue,
   type ComprehensiveCTAValue,
   type StyledImageValue,
@@ -25,11 +25,14 @@ import {
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
-  type RichText,
   resolveComponentData,
   useDocument,
   type StreamDocument,
 } from "@yext/visual-editor";
+import {
+  hasImageSource,
+  renderRichText,
+} from "../shared/sectionHelpers";
 type FinanceSectionVerticalPaddingValue =
   | "default"
   | "0px"
@@ -406,54 +409,6 @@ const CommunityFinanceFeaturedServicesFields: YextFields<CommunityFinanceFeature
     },
   };
 
-const renderRichText = (
-  value: unknown,
-  richTextStyleOverrides?: React.ComponentProps<
-    typeof MaybeRTF
-  >["richTextStyleOverrides"],
-) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={richTextStyleOverrides}
-    />
-  );
-};
-
-const hasImageSource = (image: unknown): image is ImageType => {
-  if (!image || typeof image !== "object") {
-    return false;
-  }
-
-  if ("url" in image && typeof image.url === "string" && image.url.trim()) {
-    return true;
-  }
-
-  if (
-    "image" in image &&
-    image.image &&
-    typeof image.image === "object" &&
-    "url" in image.image &&
-    typeof image.image.url === "string" &&
-    image.image.url.trim()
-  ) {
-    return true;
-  }
-
-  return false;
-};
-
 const ServiceImage = ({
   image,
   styles,
@@ -499,12 +454,6 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
     props.description.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.description.styles,
-        color: props.description.fontColor,
-      },
-    },
   );
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
@@ -533,7 +482,13 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
           as="section"
           background={props.section.backgroundColor}
           className="yext-community-finance-featured-services"
-          style={{ paddingBlock }}
+          style={{
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
+            paddingBlock,
+          }}
         >
           <style>{`
             .yext-community-finance-featured-services p {
@@ -636,6 +591,10 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                     background={props.eyebrow.backgroundColor}
                     className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
                     style={{
+                      ...getSurfaceColorStyle(
+                        props.eyebrow.backgroundColor,
+                        streamDocument,
+                      ),
                       fontFamily:
                         props.eyebrow.styles.fontFamily === "default"
                           ? undefined
@@ -656,7 +615,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                         props.eyebrow.styles.textTransform === "default"
                           ? undefined
                           : props.eyebrow.styles.textTransform,
-                      color: eyebrowColor,
+                      ...(eyebrowColor ? { color: eyebrowColor } : {}),
                       lineHeight: 1.2,
                     }}
                   >
@@ -746,12 +705,6 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                         service.description,
                         locale,
                         streamDocument,
-                        {
-                          richTextStyleOverrides: {
-                            ...props.services.styles.description.styles,
-                            color: props.services.styles.description.fontColor,
-                          },
-                        },
                       )
                     : undefined;
                   const serviceTitleColor = getThemeColorCssValue(
@@ -781,6 +734,10 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                       key={`${resolvedServiceTitle}-${index}`}
                       className="min-w-[280px] overflow-hidden rounded-[24px] md:min-w-[320px]"
                       background={props.cardBackgroundColor}
+                      style={getSurfaceColorStyle(
+                        props.cardBackgroundColor,
+                        streamDocument,
+                      )}
                     >
                       {hasAnyImages ? (
                         hasServiceImage ? (

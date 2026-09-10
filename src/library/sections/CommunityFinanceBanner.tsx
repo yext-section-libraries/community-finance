@@ -1,13 +1,11 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
-import { isValidElement } from "react";
 import { PuckComponent } from "@puckeditor/core";
 import { CircleSlash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
   Body,
   EntityField,
-  MaybeRTF,
   PageSection,
   type StyledTextValue,
   type ThemeColor,
@@ -18,11 +16,16 @@ import {
   type YextFields,
   backgroundColors,
   getDefaultRTF,
+  getSurfaceColorStyle,
   resolveComponentData,
   resolveYextEntityField,
   toPuckFields,
   useDocument,
 } from "@yext/visual-editor";
+import {
+  isRichTextEmpty,
+  renderRichText,
+} from "../shared/sectionHelpers";
 
 type CommunityFinanceBannerProps = {
   data: {
@@ -37,23 +40,6 @@ type CommunityFinanceBannerProps = {
     backgroundColor: ThemeColor;
     visibleOnLivePage: boolean;
   };
-};
-
-const isRichTextEmpty = (value: unknown): boolean => {
-  if (!value) {
-    return true;
-  }
-
-  if (typeof value === "string") {
-    return value.trim() === "";
-  }
-
-  if (typeof value === "object" && "html" in value) {
-    const html = (value as { html?: unknown }).html;
-    return typeof html !== "string" || html.trim() === "";
-  }
-
-  return false;
 };
 
 const CommunityFinanceBannerFields: YextFields<CommunityFinanceBannerProps> = {
@@ -140,6 +126,10 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
       <PageSection
         background={section.backgroundColor}
         className="flex items-center justify-center"
+        outerStyle={getSurfaceColorStyle(
+          section.backgroundColor,
+          streamDocument,
+        )}
         verticalPadding="sm"
       >
         <div className="relative flex h-20 w-full flex-row items-center justify-center gap-3 rounded-lg border border-gray-200 bg-gray-100 px-4">
@@ -165,7 +155,6 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
     data.text,
     i18n.language,
     streamDocument,
-    { richTextStyleOverrides },
   );
 
   if (!resolvedText) {
@@ -182,6 +171,10 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
           right: "justify-end text-right",
         }[styles.textAlignment]
       }`}
+      outerStyle={getSurfaceColorStyle(
+        section.backgroundColor,
+        streamDocument,
+      )}
       verticalPadding="sm"
     >
       <EntityField
@@ -189,14 +182,7 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
         displayName="Banner Text"
         fieldId={data.text.field}
       >
-        {isValidElement(resolvedText) ? (
-          resolvedText
-        ) : typeof resolvedText === "string" ? (
-          <MaybeRTF
-            data={resolvedText}
-            richTextStyleOverrides={richTextStyleOverrides}
-          />
-        ) : null}
+        {renderRichText(resolvedText, richTextStyleOverrides)}
       </EntityField>
     </PageSection>
   );
@@ -207,7 +193,9 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
  */
 export const CommunityFinanceBanner: YextComponentConfig<CommunityFinanceBannerProps> = {
   label: "Banner",
-  fields: toPuckFields(CommunityFinanceBannerFields),
+  fields: toPuckFields<CommunityFinanceBannerProps>(
+    CommunityFinanceBannerFields,
+  ),
   defaultProps: {
     data: {
       text: {

@@ -12,14 +12,13 @@ import {
   EntityField,
   Heading,
   Image,
-  MaybeRTF,
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
+  getSurfaceColorStyle,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
-  type RichText,
   type StreamDocument,
   type StyledImageValue,
   type StyledTextValue,
@@ -30,6 +29,10 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import {
+  hasImageSource,
+  renderRichText,
+} from "../shared/sectionHelpers";
 type FinanceSectionVerticalPaddingValue =
   | "default"
   | "0px"
@@ -259,51 +262,6 @@ const CommunityFinanceBeforeMeetFields: YextFields<CommunityFinanceBeforeMeetPro
     },
   };
 
-const renderRichText = (value: unknown, color?: ThemeColor) => {
-  if (React.isValidElement(value)) {
-    return value;
-  }
-
-  const normalizedValue: RichText | string | undefined =
-    typeof value === "string"
-      ? value
-      : typeof value === "object" && value !== null && "html" in value
-        ? (value as RichText)
-        : undefined;
-
-  return (
-    <MaybeRTF
-      data={normalizedValue}
-      richTextStyleOverrides={{
-        color,
-      }}
-    />
-  );
-};
-
-const hasImageSource = (image: unknown): image is ImageType => {
-  if (!image || typeof image !== "object") {
-    return false;
-  }
-
-  if ("url" in image && typeof image.url === "string" && image.url.trim()) {
-    return true;
-  }
-
-  if (
-    "image" in image &&
-    image.image &&
-    typeof image.image === "object" &&
-    "url" in image.image &&
-    typeof image.image.url === "string" &&
-    image.image.url.trim()
-  ) {
-    return true;
-  }
-
-  return false;
-};
-
 const CommunityFinanceBeforeMeetComponent: PuckComponent<
   CommunityFinanceBeforeMeetProps
 > = (props) => {
@@ -315,12 +273,6 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
     props.body.text,
     locale,
     streamDocument,
-    {
-      richTextStyleOverrides: {
-        ...props.body.styles,
-        color: props.body.fontColor,
-      },
-    },
   );
   const resolvedImage = resolveComponentData(
     props.sectionImage.image,
@@ -345,7 +297,13 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
           as="section"
           background={props.section.backgroundColor}
           className="yext-community-finance-before-meet border-t border-current/10"
-          style={{ paddingBlock }}
+          style={{
+            ...getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            ),
+            paddingBlock,
+          }}
         >
           <style>{`
             .yext-community-finance-before-meet p {
@@ -547,7 +505,10 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
                       : props.body.styles.textTransform,
                 }}
               >
-                {renderRichText(resolvedBody, props.body.fontColor)}
+                {renderRichText(resolvedBody, {
+                  ...props.body.styles,
+                  color: props.body.fontColor,
+                })}
               </div>
               </EntityField>
               <ul className="mt-7 grid gap-3">

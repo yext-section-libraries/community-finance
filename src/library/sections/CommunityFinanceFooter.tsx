@@ -16,6 +16,7 @@ import {
   VisibilityWrapper,
   getThemeColorCssValue,
   getAnalyticsScopeHash,
+  getSurfaceColorStyle,
   normalizeLink,
   resolveComponentData,
   useDocument,
@@ -496,6 +497,10 @@ const CommunityFinanceFooterComponent: PuckComponent<
           as="footer"
           background={props.section.backgroundColor}
           className="yext-community-finance-footer relative border-t border-current/10"
+          style={getSurfaceColorStyle(
+            props.section.backgroundColor,
+            streamDocument,
+          )}
         >
           <style>{`
             .yext-community-finance-footer p {
