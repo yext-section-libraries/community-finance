@@ -1,5 +1,5 @@
 {
   "id": "community-finance-locator",
   "displayName": "Locator",
-  "pageGroupType": "LOCATOR"
+  "pageSetType": "LOCATOR"
 }
