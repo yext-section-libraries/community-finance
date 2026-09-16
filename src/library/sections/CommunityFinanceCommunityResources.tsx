@@ -7,6 +7,7 @@ import {
   type ImageType,
 } from "@yext/pages-components";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   EntityField,
@@ -64,10 +65,10 @@ type FinanceSectionStyles = {
 
 const financeSectionStylesFields = {
   verticalPadding: {
-    label: "Top/Bottom Padding",
+    label: msg("fields.verticalPadding", "Top/Bottom Padding"),
     type: "select",
     options: [
-      { label: "Default", value: "default" },
+      { label: msg("fields.options.default", "Default"), value: "default" },
       { label: "0px", value: "0px" },
       { label: "2px", value: "2px" },
       { label: "4px", value: "4px" },
@@ -134,111 +135,111 @@ type CommunityFinanceCommunityResourcesProps = {
 const CommunityFinanceCommunityResourcesFields: YextFields<CommunityFinanceCommunityResourcesProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         styles: {
-          label: "Section Styles",
+          label: msg("fields.sectionStyles", "Section Styles"),
           type: "object",
           objectFields: financeSectionStylesFields,
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     eyebrow: {
-      label: "Eyebrow",
+      label: msg("fields.eyebrow", "Eyebrow"),
       type: "object",
       objectFields: {
         text: {
-          label: "Text",
+          label: msg("fields.text", "Text"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     body: {
-      label: "Body",
+      label: msg("fields.body", "Body"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     primaryCta: {
-      label: "Primary CTA",
+      label: msg("fields.primaryCTA", "Primary CTA"),
       type: "comprehensiveCTA",
     },
     sectionImage: {
-      label: "Section Image",
+      label: msg("fields.sectionImage", "Section Image"),
       type: "object",
       objectFields: {
         image: {
           type: "entityField",
-          label: "Image",
+          label: msg("fields.image", "Image"),
           filter: { types: ["type.image"] },
         },
-        aspectRatio: { label: "Aspect Ratio", type: "number" },
+        aspectRatio: { label: msg("fields.aspectRatio", "Aspect Ratio"), type: "number" },
         imageConstrain: {
-          label: "Image Constrain",
+          label: msg("fields.imageConstrain", "Image Constrain"),
           type: "select",
           options: [
-            { label: "Fixed", value: "fixed" },
-            { label: "Filled", value: "filled" },
+            { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+            { label: msg("fields.options.filled", "Filled"), value: "filled" },
           ],
         },
-        styles: { label: "Image Styles", type: "styledImage" },
+        styles: { label: msg("fields.imageStyles", "Image Styles"), type: "styledImage" },
       },
     },
   };
@@ -560,7 +561,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
 
 export const CommunityFinanceCommunityResources: YextComponentConfig<CommunityFinanceCommunityResourcesProps> =
   {
-    label: "Community Resources",
+    label: msg("components.communityResources", "Community Resources"),
     fields: CommunityFinanceCommunityResourcesFields,
     defaultProps: {
       section: {

@@ -1,6 +1,7 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import type { PuckComponent } from "@puckeditor/core";
 import {
   Address,
@@ -13,6 +14,7 @@ import {
 import { parsePhoneNumber } from "awesome-phonenumber";
 import { FaPhone, FaRegEnvelope } from "react-icons/fa";
 import {
+  msg,
   VisibilityWrapper,
   ComprehensiveCTA,
   EntityField,
@@ -66,10 +68,10 @@ type FinanceSectionStyles = {
 
 const financeSectionStylesFields = {
   verticalPadding: {
-    label: "Top/Bottom Padding",
+    label: msg("fields.verticalPadding", "Top/Bottom Padding"),
     type: "select",
     options: [
-      { label: "Default", value: "default" },
+      { label: msg("fields.options.default", "Default"), value: "default" },
       { label: "0px", value: "0px" },
       { label: "2px", value: "2px" },
       { label: "4px", value: "4px" },
@@ -191,86 +193,86 @@ type CommunityFinanceLocationDetailsProps = {
 const CommunityFinanceLocationDetailsFields: YextFields<CommunityFinanceLocationDetailsProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         styles: {
-          label: "Section Styles",
+          label: msg("fields.sectionStyles", "Section Styles"),
           type: "object",
           objectFields: financeSectionStylesFields,
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     cardBackgroundColor: {
-      label: "Card Background Color",
+      label: msg("fields.cardBackgroundColor", "Card Background Color"),
       type: "basicSelector",
       options: "BACKGROUND_COLOR",
     },
     address: {
       type: "entityField",
-      label: "Address",
+      label: msg("fields.address", "Address"),
       filter: { types: ["type.address"] },
     },
     showRegion: {
-      label: "Show Region",
+      label: msg("fields.showRegion", "Show Region"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
     showCountry: {
-      label: "Show Country",
+      label: msg("fields.showCountry", "Show Country"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
     phones: {
-      label: "Phones",
+      label: msg("fields.phones", "Phones"),
       type: "object",
       objectFields: {
         items: {
-          label: "Items",
+          label: msg("fields.items", "Items"),
           type: "array",
           arrayFields: {
             number: {
               type: "entityField",
-              label: "Number",
+              label: msg("fields.number", "Number"),
               filter: { types: ["type.phone"] },
             },
-            label: { label: "Label", type: "text" },
+            label: { label: msg("fields.label", "Label"), type: "text" },
           },
           defaultItemProps: {
             number: {
@@ -287,43 +289,43 @@ const CommunityFinanceLocationDetailsFields: YextFields<CommunityFinanceLocation
             "Phone",
         },
         phoneFormat: {
-          label: "Phone Format",
+          label: msg("fields.phoneFormat", "Phone Format"),
           type: "radio",
           options: [
-            { label: "Domestic", value: "domestic" },
-            { label: "International", value: "international" },
+            { label: msg("fields.options.domestic", "Domestic"), value: "domestic" },
+            { label: msg("fields.options.international", "International"), value: "international" },
           ],
         },
         includeHyperlink: {
-          label: "Include Hyperlink",
+          label: msg("fields.includeHyperlink", "Include Hyperlink"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         showIcon: {
-          label: "Show Icon",
+          label: msg("fields.showIcon", "Show Icon"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         color: {
-          label: "Color",
+          label: msg("fields.color", "Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     emails: {
-      label: "Emails",
+      label: msg("fields.emails", "Emails"),
       type: "object",
       objectFields: {
         list: {
           type: "entityField",
-          label: "Emails",
+          label: msg("fields.emails", "Emails"),
           filter: {
             types: ["type.string"],
             includeListsOnly: true,
@@ -332,74 +334,74 @@ const CommunityFinanceLocationDetailsFields: YextFields<CommunityFinanceLocation
           disallowTranslation: true,
         },
         showIcon: {
-          label: "Show Icon",
+          label: msg("fields.showIcon", "Show Icon"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         color: {
-          label: "Color",
+          label: msg("fields.color", "Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     locationInformationHeading: {
-      label: "Location Information Heading",
+      label: msg("fields.locationInformationHeading", "Location Information Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     nmlsNumber: {
-      label: "NMLS Number",
+      label: msg("fields.nmlsNumber", "NMLS Number"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     primaryCta: {
-      label: "Primary CTA",
+      label: msg("fields.primaryCTA", "Primary CTA"),
       type: "comprehensiveCTA",
     },
     secondaryCta: {
-      label: "Secondary CTA",
+      label: msg("fields.secondaryCTA", "Secondary CTA"),
       type: "comprehensiveCTA",
     },
     lobbyHoursHeading: {
-      label: "Lobby Hours Heading",
+      label: msg("fields.lobbyHoursHeading", "Lobby Hours Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
@@ -407,75 +409,75 @@ const CommunityFinanceLocationDetailsFields: YextFields<CommunityFinanceLocation
     },
     hours: {
       type: "entityField",
-      label: "Hours",
+      label: msg("fields.hours", "Hours"),
       filter: { types: ["type.hours"] },
       disableConstantValueToggle: true,
     },
     hoursStyles: {
-      label: "Hours Styles",
+      label: msg("fields.hoursStyles", "Hours Styles"),
       type: "object",
       objectFields: {
         startOfWeek: {
-          label: "Start Of Week",
+          label: msg("fields.startOfWeek", "Start Of Week"),
           type: "select",
           options: [
-            { label: "Monday", value: "monday" },
-            { label: "Tuesday", value: "tuesday" },
-            { label: "Wednesday", value: "wednesday" },
-            { label: "Thursday", value: "thursday" },
-            { label: "Friday", value: "friday" },
-            { label: "Saturday", value: "saturday" },
-            { label: "Sunday", value: "sunday" },
-            { label: "Today", value: "today" },
+            { label: msg("fields.options.monday", "Monday"), value: "monday" },
+            { label: msg("fields.options.tuesday", "Tuesday"), value: "tuesday" },
+            { label: msg("fields.options.wednesday", "Wednesday"), value: "wednesday" },
+            { label: msg("fields.options.thursday", "Thursday"), value: "thursday" },
+            { label: msg("fields.options.friday", "Friday"), value: "friday" },
+            { label: msg("fields.options.saturday", "Saturday"), value: "saturday" },
+            { label: msg("fields.options.sunday", "Sunday"), value: "sunday" },
+            { label: msg("fields.options.today", "Today"), value: "today" },
           ],
         },
         collapseDays: {
-          label: "Collapse Days",
+          label: msg("fields.collapseDays", "Collapse Days"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         showAdditionalHoursText: {
-          label: "Show Additional Hours Text",
+          label: msg("fields.showAdditionalHoursText", "Show Additional Hours Text"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         alignment: {
-          label: "Alignment",
+          label: msg("fields.alignment", "Alignment"),
           type: "select",
           options: [
-            { label: "Start", value: "items-start" },
-            { label: "Center", value: "items-center" },
-            { label: "End", value: "items-end" },
+            { label: msg("fields.options.start", "Start"), value: "items-start" },
+            { label: msg("fields.options.center", "Center"), value: "items-center" },
+            { label: msg("fields.options.end", "End"), value: "items-end" },
           ],
         },
       },
     },
     showSecondaryHours: {
-      label: "Show Secondary Hours",
+      label: msg("fields.showSecondaryHours", "Show Secondary Hours"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
     secondaryHoursHeading: {
-      label: "Secondary Hours Heading",
+      label: msg("fields.secondaryHoursHeading", "Secondary Hours Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
@@ -483,169 +485,169 @@ const CommunityFinanceLocationDetailsFields: YextFields<CommunityFinanceLocation
     },
     secondaryHours: {
       type: "entityField",
-      label: "Secondary Hours",
+      label: msg("fields.secondaryHours", "Secondary Hours"),
       filter: { types: ["type.hours"] },
       disableConstantValueToggle: true,
     },
     secondaryHoursStyles: {
-      label: "Secondary Hours Styles",
+      label: msg("fields.secondaryHoursStyles", "Secondary Hours Styles"),
       type: "object",
       objectFields: {
         startOfWeek: {
-          label: "Start Of Week",
+          label: msg("fields.startOfWeek", "Start Of Week"),
           type: "select",
           options: [
-            { label: "Monday", value: "monday" },
-            { label: "Tuesday", value: "tuesday" },
-            { label: "Wednesday", value: "wednesday" },
-            { label: "Thursday", value: "thursday" },
-            { label: "Friday", value: "friday" },
-            { label: "Saturday", value: "saturday" },
-            { label: "Sunday", value: "sunday" },
-            { label: "Today", value: "today" },
+            { label: msg("fields.options.monday", "Monday"), value: "monday" },
+            { label: msg("fields.options.tuesday", "Tuesday"), value: "tuesday" },
+            { label: msg("fields.options.wednesday", "Wednesday"), value: "wednesday" },
+            { label: msg("fields.options.thursday", "Thursday"), value: "thursday" },
+            { label: msg("fields.options.friday", "Friday"), value: "friday" },
+            { label: msg("fields.options.saturday", "Saturday"), value: "saturday" },
+            { label: msg("fields.options.sunday", "Sunday"), value: "sunday" },
+            { label: msg("fields.options.today", "Today"), value: "today" },
           ],
         },
         collapseDays: {
-          label: "Collapse Days",
+          label: msg("fields.collapseDays", "Collapse Days"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         showAdditionalHoursText: {
-          label: "Show Additional Hours Text",
+          label: msg("fields.showAdditionalHoursText", "Show Additional Hours Text"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         alignment: {
-          label: "Alignment",
+          label: msg("fields.alignment", "Alignment"),
           type: "select",
           options: [
-            { label: "Start", value: "items-start" },
-            { label: "Center", value: "items-center" },
-            { label: "End", value: "items-end" },
+            { label: msg("fields.options.start", "Start"), value: "items-start" },
+            { label: msg("fields.options.center", "Center"), value: "items-center" },
+            { label: msg("fields.options.end", "End"), value: "items-end" },
           ],
         },
       },
     },
     clientServicesHeading: {
-      label: "Client Services Heading",
+      label: msg("fields.clientServicesHeading", "Client Services Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     languagesHeading: {
-      label: "Languages Heading",
+      label: msg("fields.languagesHeading", "Languages Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     accessibilityHeading: {
-      label: "Accessibility Heading",
+      label: msg("fields.accessibilityHeading", "Accessibility Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     servicesHeading: {
-      label: "Services Heading",
+      label: msg("fields.servicesHeading", "Services Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     languages: {
-      label: "Languages",
+      label: msg("fields.options.facets.languages", "Languages"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     accessibility: {
-      label: "Accessibility",
+      label: msg("fields.accessibility", "Accessibility"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     services: {
-      label: "Services",
+      label: msg("fields.services", "Services"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
@@ -668,6 +670,16 @@ const formatPhone = (value: string, format: PhoneFieldProps["phoneFormat"]) => {
 const CommunityFinanceLocationDetailsComponent: PuckComponent<
   CommunityFinanceLocationDetailsProps
 > = (props) => {
+  const { t, i18n } = useTranslation();
+  const dayOfWeekNames = {
+    monday: t("monday", "Monday"),
+    tuesday: t("tuesday", "Tuesday"),
+    wednesday: t("wednesday", "Wednesday"),
+    thursday: t("thursday", "Thursday"),
+    friday: t("friday", "Friday"),
+    saturday: t("saturday", "Saturday"),
+    sunday: t("sunday", "Sunday"),
+  };
   const streamDocument = useDocument<StreamDocument>();
   const locale = streamDocument.locale ?? "en";
   const resolvedHeading =
@@ -1029,7 +1041,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                   style={{ color: cardForegroundColor }}
                 >
                   <div>
-                    <dt className="font-bold">Address</dt>
+                    <dt className="font-bold">{t("address", "Address")}</dt>
                     <dd className="mt-1">
                       {resolvedAddress ? (
                         <EntityField
@@ -1091,7 +1103,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                   ))}
                   {normalizedEmails.length > 0 ? (
                     <div>
-                      <dt className="font-bold">Email</dt>
+                      <dt className="font-bold">{t("email", "Email")}</dt>
                       <EntityField
                         displayName="Email Addresses"
                         fieldId={props.emails.list.field}
@@ -1122,7 +1134,9 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     </div>
                   ) : null}
                   <div>
-                    <dt className="font-bold">NMLS number</dt>
+                    <dt className="font-bold">
+                      {t("nmlsNumber", "NMLS number")}
+                    </dt>
                     <EntityField
                       displayName="NMLS Number"
                       fieldId={props.nmlsNumber.text.field}
@@ -1275,8 +1289,15 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     <HoursTable
                       hours={resolvedHours}
                       comingSoon={streamDocument.comingSoon}
+                      dayOfWeekNames={dayOfWeekNames}
                       startOfWeek={props.hoursStyles.startOfWeek}
                       collapseDays={props.hoursStyles.collapseDays}
+                      intervalTranslations={{
+                        isClosed: t("closed", "Closed"),
+                        open24Hours: t("open24Hours", "Open 24 Hours"),
+                        reopenDate: t("reopenDate", "Reopen Date"),
+                        timeFormatLocale: i18n.language,
+                      }}
                     />
                     {props.hoursStyles.showAdditionalHoursText &&
                     additionalHoursText ? (
@@ -1351,8 +1372,15 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         <HoursTable
                           hours={resolvedSecondaryHours}
                           comingSoon={streamDocument.comingSoon}
+                          dayOfWeekNames={dayOfWeekNames}
                           startOfWeek={props.secondaryHoursStyles.startOfWeek}
                           collapseDays={props.secondaryHoursStyles.collapseDays}
+                          intervalTranslations={{
+                            isClosed: t("closed", "Closed"),
+                            open24Hours: t("open24Hours", "Open 24 Hours"),
+                            reopenDate: t("reopenDate", "Reopen Date"),
+                            timeFormatLocale: i18n.language,
+                          }}
                         />
                         {props.secondaryHoursStyles.showAdditionalHoursText &&
                         additionalHoursText ? (
@@ -1614,7 +1642,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
 
 export const CommunityFinanceLocationDetails: YextComponentConfig<CommunityFinanceLocationDetailsProps> =
   {
-    label: "Location Details",
+    label: msg("components.locationDetails", "Location Details"),
     fields: CommunityFinanceLocationDetailsFields,
     defaultProps: {
       section: {

@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { ImageType } from "@yext/pages-components";
 import {
+  msg,
   MaybeRTF,
   getThemeColorCssValue,
   isDarkColor,
@@ -40,10 +41,10 @@ export type FinanceSectionStyles = {
 
 export const financeSectionStylesFields = {
   verticalPadding: {
-    label: "Top/Bottom Padding",
+    label: msg("fields.verticalPadding", "Top/Bottom Padding"),
     type: "select",
     options: [
-      { label: "Default", value: "default" },
+      { label: msg("fields.options.default", "Default"), value: "default" },
       ...[
         0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44, 48,
         56, 64, 80, 96,

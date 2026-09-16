@@ -2,12 +2,14 @@ import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
+import { useTranslation } from "react-i18next";
 import {
   AnalyticsScopeProvider,
   useAnalytics,
 } from "@yext/pages-components";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import {
+  msg,
   Background,
   Body,
   EntityField,
@@ -62,10 +64,10 @@ type FinanceSectionStyles = {
 
 const financeSectionStylesFields = {
   verticalPadding: {
-    label: "Top/Bottom Padding",
+    label: msg("fields.verticalPadding", "Top/Bottom Padding"),
     type: "select",
     options: [
-      { label: "Default", value: "default" },
+      { label: msg("fields.options.default", "Default"), value: "default" },
       { label: "0px", value: "0px" },
       { label: "2px", value: "2px" },
       { label: "4px", value: "4px" },
@@ -124,90 +126,90 @@ type CommunityFinanceTestimonialsProps = {
 const CommunityFinanceTestimonialsFields: YextFields<CommunityFinanceTestimonialsProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         styles: {
-          label: "Section Styles",
+          label: msg("fields.sectionStyles", "Section Styles"),
           type: "object",
           objectFields: financeSectionStylesFields,
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     eyebrow: {
-      label: "Eyebrow",
+      label: msg("fields.eyebrow", "Eyebrow"),
       type: "object",
       objectFields: {
         text: {
-          label: "Text",
+          label: msg("fields.text", "Text"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     description: {
-      label: "Description",
+      label: msg("fields.description", "Description"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     slideBackgroundColor: {
-      label: "Slide Background Color",
+      label: msg("fields.slideBackgroundColor", "Slide Background Color"),
       type: "basicSelector",
       options: "BACKGROUND_COLOR",
     },
@@ -217,6 +219,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
   CommunityFinanceTestimonialsProps
 > = (props) => {
   const analytics = useAnalytics();
+  const { t } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
   const locale = streamDocument.locale ?? "en";
   const resolvedHeading =
@@ -243,7 +246,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
             rating?: number;
           }) => ({
             authorName: review.authorName ?? "Verified Client",
-            authorRole: "First-party review",
+            authorRole: t("firstPartyReview", "First-party review"),
             quote: review.content ?? "",
             rating: review.rating,
           }),
@@ -506,7 +509,11 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                       )}
                     </div>
                     <Body variant="sm" className="m-0 font-medium">
-                      {activeTestimonial.rating}/5 stars
+                      {t(
+                        "ratingOutOfFiveStars",
+                        "{{rating}}/5 stars",
+                        { rating: activeTestimonial.rating },
+                      )}
                     </Body>
                   </div>
                 ) : null}
@@ -573,7 +580,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
 
 export const CommunityFinanceTestimonials: YextComponentConfig<CommunityFinanceTestimonialsProps> =
   {
-    label: "Testimonials",
+    label: msg("components.testimonials", "Testimonials"),
     fields: CommunityFinanceTestimonialsFields,
     defaultProps: {
       section: {

@@ -4,6 +4,7 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, useAnalytics } from "@yext/pages-components";
 import {
+  msg,
   Background,
   createItemSource,
   EntityField,
@@ -56,10 +57,10 @@ type FinanceSectionStyles = {
 
 const financeSectionStylesFields = {
   verticalPadding: {
-    label: "Top/Bottom Padding",
+    label: msg("fields.verticalPadding", "Top/Bottom Padding"),
     type: "select",
     options: [
-      { label: "Default", value: "default" },
+      { label: msg("fields.options.default", "Default"), value: "default" },
       { label: "0px", value: "0px" },
       { label: "2px", value: "2px" },
       { label: "4px", value: "4px" },
@@ -118,15 +119,15 @@ const createFaqDefaultValue = (
 });
 
 const faqSource = createItemSource<FaqItemFields>({
-  label: "FAQs",
+  label: msg("fields.faqs", "FAQs"),
   mappingFields: {
     question: {
-      label: "Question",
+      label: msg("fields.question", "Question"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     answer: {
-      label: "Answer",
+      label: msg("fields.answer", "Answer"),
       type: "entityField",
       filter: { types: ["type.rich_text_v2"] },
     },
@@ -178,79 +179,79 @@ type CommunityFinanceFaqProps = {
 const CommunityFinanceFaqFields: YextFields<CommunityFinanceFaqProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         styles: {
-          label: "Section Styles",
+          label: msg("fields.sectionStyles", "Section Styles"),
           type: "object",
           objectFields: financeSectionStylesFields,
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     rowBackgroundColor: {
-      label: "Row Background Color",
+      label: msg("fields.rowBackgroundColor", "Row Background Color"),
       type: "basicSelector",
       options: "BACKGROUND_COLOR",
     },
     faqs: {
-      label: "FAQs",
+      label: msg("fields.faqs", "FAQs"),
       type: "object",
       objectFields: {
         data: faqSource.field,
         styles: {
-          label: "FAQ Styles",
+          label: msg("fields.faqStyles", "FAQ Styles"),
           type: "object",
           objectFields: {
             question: {
-              label: "Question",
+              label: msg("fields.question", "Question"),
               type: "object",
               objectFields: {
-                styles: { label: "Text Styles", type: "styledText" },
+                styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
                 fontColor: {
-                  label: "Font Color",
+                  label: msg("fields.fontColor", "Font Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
               },
             },
             answer: {
-              label: "Answer",
+              label: msg("fields.answer", "Answer"),
               type: "object",
               objectFields: {
-                styles: { label: "Text Styles", type: "styledText" },
+                styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
                 fontColor: {
-                  label: "Font Color",
+                  label: msg("fields.fontColor", "Font Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
@@ -518,7 +519,7 @@ const CommunityFinanceFaqComponent: PuckComponent<
 
 export const CommunityFinanceFaq: YextComponentConfig<CommunityFinanceFaqProps> =
   {
-    label: "FAQ",
+    label: msg("components.faq", "FAQ"),
     fields: CommunityFinanceFaqFields,
     defaultProps: {
       section: {

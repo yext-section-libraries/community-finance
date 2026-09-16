@@ -4,6 +4,7 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, type ImageType } from "@yext/pages-components";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   createItemSource,
@@ -63,10 +64,10 @@ type FinanceSectionStyles = {
 
 const financeSectionStylesFields = {
   verticalPadding: {
-    label: "Top/Bottom Padding",
+    label: msg("fields.verticalPadding", "Top/Bottom Padding"),
     type: "select",
     options: [
-      { label: "Default", value: "default" },
+      { label: msg("fields.options.default", "Default"), value: "default" },
       { label: "0px", value: "0px" },
       { label: "2px", value: "2px" },
       { label: "4px", value: "4px" },
@@ -175,40 +176,40 @@ const createTeamMemberDefaultValue = (
 });
 
 const advisorsSource = createItemSource<TeamMemberFields>({
-  label: "Advisors",
+  label: msg("fields.advisors", "Advisors"),
   mappingFields: {
     name: {
-      label: "Name",
+      label: msg("fields.name", "Name"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     role: {
-      label: "Role",
+      label: msg("fields.role", "Role"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     credentials: {
-      label: "Credentials",
+      label: msg("fields.credentials", "Credentials"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     licenses: {
-      label: "Licenses",
+      label: msg("fields.licenses", "Licenses"),
       type: "entityField",
       filter: { types: ["type.string"], includeListsOnly: true },
     },
     specialties: {
-      label: "Specialties",
+      label: msg("fields.specialties", "Specialties"),
       type: "entityField",
       filter: { types: ["type.rich_text_v2"] },
     },
     cta: {
-      label: "CTA",
+      label: msg("fields.cta", "CTA"),
       type: "entityField",
       filter: { types: ["type.cta"] },
     },
     image: {
-      label: "Image",
+      label: msg("fields.image", "Image"),
       type: "entityField",
       filter: { types: ["type.image"] },
     },
@@ -274,243 +275,243 @@ type CommunityFinanceMeetTeamProps = {
 const CommunityFinanceMeetTeamFields: YextFields<CommunityFinanceMeetTeamProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         styles: {
-          label: "Section Styles",
+          label: msg("fields.sectionStyles", "Section Styles"),
           type: "object",
           objectFields: financeSectionStylesFields,
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     eyebrow: {
-      label: "Eyebrow",
+      label: msg("fields.eyebrow", "Eyebrow"),
       type: "object",
       objectFields: {
         text: {
-          label: "Text",
+          label: msg("fields.text", "Text"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
-          label: "Text",
+          label: msg("fields.text", "Text"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     cardBackgroundColor: {
-      label: "Card Background Color",
+      label: msg("fields.cardBackgroundColor", "Card Background Color"),
       type: "basicSelector",
       options: "BACKGROUND_COLOR",
     },
     credentialsHeading: {
-      label: "Credentials Heading",
+      label: msg("fields.credentialsHeading", "Credentials Heading"),
       type: "object",
       objectFields: {
         text: {
-          label: "Text",
+          label: msg("fields.text", "Text"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     licensesHeading: {
-      label: "Licenses Heading",
+      label: msg("fields.licensesHeading", "Licenses Heading"),
       type: "object",
       objectFields: {
         text: {
-          label: "Text",
+          label: msg("fields.text", "Text"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     specialtiesHeading: {
-      label: "Specialties Heading",
+      label: msg("fields.specialtiesHeading", "Specialties Heading"),
       type: "object",
       objectFields: {
         text: {
-          label: "Text",
+          label: msg("fields.text", "Text"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     advisors: {
-      label: "Advisors",
+      label: msg("fields.advisors", "Advisors"),
       type: "object",
       objectFields: {
         data: advisorsSource.field,
         styles: {
-          label: "Advisor Styles",
+          label: msg("fields.advisorStyles", "Advisor Styles"),
           type: "object",
           objectFields: {
             name: {
-              label: "Name",
+              label: msg("fields.name", "Name"),
               type: "object",
               objectFields: {
-                styles: { label: "Text Styles", type: "styledText" },
+                styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
                 fontColor: {
-                  label: "Font Color",
+                  label: msg("fields.fontColor", "Font Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
               },
             },
             role: {
-              label: "Role",
+              label: msg("fields.role", "Role"),
               type: "object",
               objectFields: {
-                styles: { label: "Text Styles", type: "styledText" },
+                styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
                 fontColor: {
-                  label: "Font Color",
+                  label: msg("fields.fontColor", "Font Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
               },
             },
             credentials: {
-              label: "Credentials",
+              label: msg("fields.credentials", "Credentials"),
               type: "object",
               objectFields: {
-                styles: { label: "Text Styles", type: "styledText" },
+                styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
                 fontColor: {
-                  label: "Font Color",
+                  label: msg("fields.fontColor", "Font Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
               },
             },
             licenses: {
-              label: "Licenses",
+              label: msg("fields.licenses", "Licenses"),
               type: "object",
               objectFields: {
-                styles: { label: "Text Styles", type: "styledText" },
+                styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
                 fontColor: {
-                  label: "Font Color",
+                  label: msg("fields.fontColor", "Font Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
               },
             },
             specialties: {
-              label: "Specialties",
+              label: msg("fields.specialties", "Specialties"),
               type: "object",
               objectFields: {
-                styles: { label: "Text Styles", type: "styledText" },
+                styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
                 fontColor: {
-                  label: "Font Color",
+                  label: msg("fields.fontColor", "Font Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
               },
             },
             cta: {
-              label: "CTA Styles",
+              label: msg("fields.ctaStyles", "CTA Styles"),
               type: "object",
               objectFields: {
                 variant: {
-                  label: "Variant",
+                  label: msg("fields.variant", "Variant"),
                   type: "select",
                   options: [
-                    { label: "Link", value: "link" },
-                    { label: "Primary", value: "primary" },
-                    { label: "Secondary", value: "secondary" },
+                    { label: msg("fields.options.link", "Link"), value: "link" },
+                    { label: msg("fields.options.primary", "Primary"), value: "primary" },
+                    { label: msg("fields.options.secondary", "Secondary"), value: "secondary" },
                   ],
                 },
                 color: {
-                  label: "Color",
+                  label: msg("fields.color", "Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
-                link: { label: "Link Styles", type: "styledLink" },
+                link: { label: msg("fields.linkStyles", "Link Styles"), type: "styledLink" },
               },
             },
             image: {
-              label: "Image",
+              label: msg("fields.image", "Image"),
               type: "object",
               objectFields: {
-                aspectRatio: { label: "Aspect Ratio", type: "number" },
+                aspectRatio: { label: msg("fields.aspectRatio", "Aspect Ratio"), type: "number" },
                 imageConstrain: {
-                  label: "Image Constrain",
+                  label: msg("fields.imageConstrain", "Image Constrain"),
                   type: "select",
                   options: [
-                    { label: "Fixed", value: "fixed" },
-                    { label: "Filled", value: "filled" },
+                    { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+                    { label: msg("fields.options.filled", "Filled"), value: "filled" },
                   ],
                 },
-                styles: { label: "Image Styles", type: "styledImage" },
+                styles: { label: msg("fields.imageStyles", "Image Styles"), type: "styledImage" },
               },
             },
           },
@@ -1317,7 +1318,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
 
 export const CommunityFinanceMeetTeam: YextComponentConfig<CommunityFinanceMeetTeamProps> =
   {
-    label: "Meet Team",
+    label: msg("components.meetTeam", "Meet Team"),
     fields: CommunityFinanceMeetTeamFields,
     defaultProps: {
       section: {

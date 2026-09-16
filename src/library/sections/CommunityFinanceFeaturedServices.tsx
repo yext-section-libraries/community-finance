@@ -4,6 +4,7 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, type ImageType } from "@yext/pages-components";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   createItemSource,
@@ -63,10 +64,10 @@ type FinanceSectionStyles = {
 
 const financeSectionStylesFields = {
   verticalPadding: {
-    label: "Top/Bottom Padding",
+    label: msg("fields.verticalPadding", "Top/Bottom Padding"),
     type: "select",
     options: [
-      { label: "Default", value: "default" },
+      { label: msg("fields.options.default", "Default"), value: "default" },
       { label: "0px", value: "0px" },
       { label: "2px", value: "2px" },
       { label: "4px", value: "4px" },
@@ -154,25 +155,25 @@ const createServiceDefaultValue = (
 });
 
 const serviceCardsSource = createItemSource<ServiceCardFields>({
-  label: "Services",
+  label: msg("fields.services", "Services"),
   mappingFields: {
     title: {
-      label: "Title",
+      label: msg("fields.title", "Title"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     description: {
-      label: "Description",
+      label: msg("fields.description", "Description"),
       type: "entityField",
       filter: { types: ["type.rich_text_v2"] },
     },
     cta: {
-      label: "CTA",
+      label: msg("fields.cta", "CTA"),
       type: "entityField",
       filter: { types: ["type.cta"] },
     },
     image: {
-      label: "Image",
+      label: msg("fields.image", "Image"),
       type: "entityField",
       filter: { types: ["type.image"] },
     },
@@ -242,165 +243,165 @@ type CommunityFinanceFeaturedServicesProps = {
 const CommunityFinanceFeaturedServicesFields: YextFields<CommunityFinanceFeaturedServicesProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         styles: {
-          label: "Section Styles",
+          label: msg("fields.sectionStyles", "Section Styles"),
           type: "object",
           objectFields: financeSectionStylesFields,
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     eyebrow: {
-      label: "Eyebrow",
+      label: msg("fields.eyebrow", "Eyebrow"),
       type: "object",
       objectFields: {
         text: {
-          label: "Text",
+          label: msg("fields.text", "Text"),
           type: "entityField",
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     description: {
-      label: "Description",
+      label: msg("fields.description", "Description"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     sectionCta: {
-      label: "Section CTA",
+      label: msg("fields.sectionCta", "Section CTA"),
       type: "comprehensiveCTA",
     },
     cardBackgroundColor: {
-      label: "Card Background Color",
+      label: msg("fields.cardBackgroundColor", "Card Background Color"),
       type: "basicSelector",
       options: "BACKGROUND_COLOR",
     },
     services: {
-      label: "Services",
+      label: msg("fields.services", "Services"),
       type: "object",
       objectFields: {
         data: serviceCardsSource.field,
         styles: {
-          label: "Service Styles",
+          label: msg("fields.serviceStyles", "Service Styles"),
           type: "object",
           objectFields: {
             title: {
-              label: "Title",
+              label: msg("fields.title", "Title"),
               type: "object",
               objectFields: {
-                styles: { label: "Text Styles", type: "styledText" },
+                styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
                 fontColor: {
-                  label: "Font Color",
+                  label: msg("fields.fontColor", "Font Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
               },
             },
             description: {
-              label: "Description",
+              label: msg("fields.description", "Description"),
               type: "object",
               objectFields: {
-                styles: { label: "Text Styles", type: "styledText" },
+                styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
                 fontColor: {
-                  label: "Font Color",
+                  label: msg("fields.fontColor", "Font Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
               },
             },
             cta: {
-              label: "CTA Styles",
+              label: msg("fields.ctaStyles", "CTA Styles"),
               type: "object",
               objectFields: {
                 variant: {
-                  label: "Variant",
+                  label: msg("fields.variant", "Variant"),
                   type: "select",
                   options: [
-                    { label: "Link", value: "link" },
-                    { label: "Primary", value: "primary" },
-                    { label: "Secondary", value: "secondary" },
+                    { label: msg("fields.options.link", "Link"), value: "link" },
+                    { label: msg("fields.options.primary", "Primary"), value: "primary" },
+                    { label: msg("fields.options.secondary", "Secondary"), value: "secondary" },
                   ],
                 },
                 color: {
-                  label: "Color",
+                  label: msg("fields.color", "Color"),
                   type: "basicSelector",
                   options: "SITE_COLOR",
                 },
-                link: { label: "Link Styles", type: "styledLink" },
+                link: { label: msg("fields.linkStyles", "Link Styles"), type: "styledLink" },
               },
             },
             image: {
-              label: "Image",
+              label: msg("fields.image", "Image"),
               type: "object",
               objectFields: {
-                aspectRatio: { label: "Aspect Ratio", type: "number" },
+                aspectRatio: { label: msg("fields.aspectRatio", "Aspect Ratio"), type: "number" },
                 imageConstrain: {
-                  label: "Image Constrain",
+                  label: msg("fields.imageConstrain", "Image Constrain"),
                   type: "select",
                   options: [
-                    { label: "Fixed", value: "fixed" },
-                    { label: "Filled", value: "filled" },
+                    { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+                    { label: msg("fields.options.filled", "Filled"), value: "filled" },
                   ],
                 },
-                styles: { label: "Image Styles", type: "styledImage" },
+                styles: { label: msg("fields.imageStyles", "Image Styles"), type: "styledImage" },
               },
             },
           },
@@ -823,7 +824,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
 
 export const CommunityFinanceFeaturedServices: YextComponentConfig<CommunityFinanceFeaturedServicesProps> =
   {
-    label: "Featured Services",
+    label: msg("components.featuredServices", "Featured Services"),
     fields: CommunityFinanceFeaturedServicesFields,
     defaultProps: {
       section: {
