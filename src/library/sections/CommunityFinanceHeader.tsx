@@ -1,6 +1,7 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { PuckComponent } from "@puckeditor/core";
 import {
   AnalyticsScopeProvider,
@@ -11,6 +12,7 @@ import {
   useAnalytics,
 } from "@yext/pages-components";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   type ComprehensiveCTAValue,
@@ -29,7 +31,7 @@ import {
   type YextFields,
   getAnalyticsScopeHash,
   getSurfaceColorStyle,
-  i18nComponentsInstance,
+  i18nPageInstance,
   isDarkColor,
   normalizeLink,
   resolveComponentData,
@@ -97,9 +99,9 @@ type CommunityFinanceHeaderProps = {
 };
 
 const linkTypeOptions: Array<{ label: string; value: LinkType }> = [
-  { label: "URL", value: "URL" },
-  { label: "Phone", value: "PHONE" },
-  { label: "Email", value: "EMAIL" },
+  { label: msg("fields.options.url", "URL"), value: "URL" },
+  { label: msg("fields.options.phone", "Phone"), value: "PHONE" },
+  { label: msg("fields.options.email", "Email"), value: "EMAIL" },
 ];
 const defaultSurfaceColor: ThemeColor = {
   selectedColor: "white",
@@ -161,7 +163,9 @@ const getReadableForegroundColor = (
   streamDocument?: StreamDocument,
 ): ThemeColor => {
   return {
-    selectedColor: isDarkColor(surfaceColor, streamDocument) ? "white" : "black",
+    selectedColor: isDarkColor(surfaceColor, streamDocument)
+      ? "white"
+      : "black",
     contrastingColor: surfaceColor.selectedColor,
   };
 };
@@ -171,7 +175,9 @@ const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
     return undefined;
   }
 
-  const customColorMatch = color.selectedColor.match(/^\[(#[0-9A-Fa-f]{3,8})\]$/);
+  const customColorMatch = color.selectedColor.match(
+    /^\[(#[0-9A-Fa-f]{3,8})\]$/,
+  );
   if (customColorMatch) {
     return customColorMatch[1].toUpperCase();
   }
@@ -231,8 +237,7 @@ const getTextStyles = ({
     color: resolveThemeColorCssValue(color),
     fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
     fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-    fontWeight:
-      styles.fontWeight === "default" ? undefined : styles.fontWeight,
+    fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
     fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
     textTransform:
       styles.textTransform === "default" ? undefined : styles.textTransform,
@@ -254,11 +259,9 @@ const getTranslatableSummary = (
   }
 
   return (
-    resolveComponentData(
-      value,
-      i18nComponentsInstance.language,
-      undefined,
-    ) || value.defaultValue || fallback
+    resolveComponentData(value, i18nPageInstance.language, undefined) ||
+    value.defaultValue ||
+    fallback
   );
 };
 
@@ -333,82 +336,97 @@ const SharedHeaderDefaultUtilityIcon = () => (
 
 const CommunityFinanceHeaderFields: YextFields<CommunityFinanceHeaderProps> = {
   variant: {
-    label: "Variant",
+    label: msg("fields.variant", "Variant"),
     type: "select",
     options: [
-      { label: "Centered Logo Split Nav", value: "centerLogoSplitNav" },
-      { label: "Logo Left Inline Nav", value: "logoLeftInlineNav" },
-      { label: "Stacked Nav Below", value: "stackedNavBelow" },
-      { label: "Utility Top Row", value: "utilityTopRow" },
+      {
+        label: msg(
+          "fields.options.centeredLogoSplitNav",
+          "Centered Logo Split Nav",
+        ),
+        value: "centerLogoSplitNav",
+      },
+      {
+        label: msg("fields.options.logoLeftInlineNav", "Logo Left Inline Nav"),
+        value: "logoLeftInlineNav",
+      },
+      {
+        label: msg("fields.options.stackedNavBelow", "Stacked Nav Below"),
+        value: "stackedNavBelow",
+      },
+      {
+        label: msg("fields.options.utilityTopRow", "Utility Top Row"),
+        value: "utilityTopRow",
+      },
     ],
   },
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: {
       backgroundColor: {
-        label: "Background Color",
+        label: msg("fields.backgroundColor", "Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
       dividerColor: {
-        label: "Divider Color",
+        label: msg("fields.dividerColor", "Divider Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
       visibleOnLivePage: {
-        label: "Visible on Live Page",
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
     },
   },
   navigation: {
-    label: "Navigation",
+    label: msg("fields.navigation", "Navigation"),
     type: "object",
     objectFields: {
       show: {
-        label: "Show on Live Page",
+        label: msg("fields.showOnLivePage", "Show on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       links: {
-        label: "Links",
+        label: msg("fields.links", "Links"),
         type: "array",
         arrayFields: {
           label: {
-            label: "Label",
+            label: msg("fields.label", "Label"),
             type: "translatableString",
           },
           link: {
-            label: "Link",
+            label: msg("fields.link", "Link"),
             type: "translatableString",
           },
           linkType: {
-            label: "Link Type",
+            label: msg("fields.linkType", "Link Type"),
             type: "select",
             options: linkTypeOptions,
           },
           normalizeLink: {
-            label: "Normalize Link",
+            label: msg("fields.normalizeLink", "Normalize Link"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
           openInNewTab: {
-            label: "Open in New Tab",
+            label: msg("fields.openInNewTab", "Open in New Tab"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
         },
@@ -423,89 +441,95 @@ const CommunityFinanceHeaderFields: YextFields<CommunityFinanceHeaderProps> = {
           getTranslatableSummary(item.label, `Link ${index ?? 0}`),
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
       styles: {
-        label: "Link Styles",
+        label: msg("fields.linkStyles", "Link Styles"),
         type: "styledLink",
         showIncludeCaretField: false,
       },
     },
   },
   utilities: {
-    label: "Utility Icons",
+    label: msg("fields.utilityIcons", "Utility Icons"),
     type: "object",
     objectFields: {
       show: {
-        label: "Show on Live Page",
+        label: msg("fields.showOnLivePage", "Show on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       items: {
-        label: "Items",
+        label: msg("fields.items", "Items"),
         type: "array",
         arrayFields: {
           iconImage: {
-            label: "Icon Image",
+            label: msg("fields.iconImage", "Icon Image"),
             type: "object",
             objectFields: {
               image: {
                 type: "entityField",
-                label: "Image",
+                label: msg("fields.image", "Image"),
                 filter: {
                   types: ["type.image"],
                 },
               },
               aspectRatio: {
-                label: "Aspect Ratio",
+                label: msg("fields.aspectRatio", "Aspect Ratio"),
                 type: "number",
               },
               imageConstrain: {
-                label: "Image Constrain",
+                label: msg("fields.imageConstrain", "Image Constrain"),
                 type: "select",
                 options: [
-                  { label: "Fixed", value: "fixed" },
-                  { label: "Filled", value: "filled" },
+                  {
+                    label: msg("fields.options.fixed", "Fixed"),
+                    value: "fixed",
+                  },
+                  {
+                    label: msg("fields.options.filled", "Filled"),
+                    value: "filled",
+                  },
                 ],
               },
               styles: {
-                label: "Image Styles",
+                label: msg("fields.imageStyles", "Image Styles"),
                 type: "styledImage",
               },
             },
           },
           label: {
-            label: "Label",
+            label: msg("fields.label", "Label"),
             type: "translatableString",
           },
           link: {
-            label: "Link",
+            label: msg("fields.link", "Link"),
             type: "translatableString",
           },
           linkType: {
-            label: "Link Type",
+            label: msg("fields.linkType", "Link Type"),
             type: "select",
             options: linkTypeOptions,
           },
           normalizeLink: {
-            label: "Normalize Link",
+            label: msg("fields.normalizeLink", "Normalize Link"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
           openInNewTab: {
-            label: "Open in New Tab",
+            label: msg("fields.openInNewTab", "Open in New Tab"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
         },
@@ -523,23 +547,23 @@ const CommunityFinanceHeaderFields: YextFields<CommunityFinanceHeaderProps> = {
     },
   },
   cta: {
-    label: "Call to Actions",
+    label: msg("fields.callToActions", "Call to Actions"),
     type: "object",
     objectFields: {
       show: {
-        label: "Show on Live Page",
+        label: msg("fields.showOnLivePage", "Show on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       items: {
-        label: "Items",
+        label: msg("fields.items", "Items"),
         type: "array",
         arrayFields: {
           cta: {
-            label: "CTA",
+            label: msg("fields.cta", "CTA"),
             type: "comprehensiveCTA",
           },
         },
@@ -585,52 +609,55 @@ const CommunityFinanceHeaderFields: YextFields<CommunityFinanceHeaderProps> = {
     },
   },
   logoImage: {
-    label: "Logo Image",
+    label: msg("fields.logoImage", "Logo Image"),
     type: "object",
     objectFields: {
       show: {
-        label: "Show on Live Page",
+        label: msg("fields.showOnLivePage", "Show on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       image: {
         type: "entityField",
-        label: "Image",
+        label: msg("fields.image", "Image"),
         filter: {
           types: ["type.image"],
         },
       },
       url: {
-        label: "URL",
+        label: msg("fields.url", "URL"),
         type: "entityField",
         filter: {
           types: ["type.string"],
         },
       },
       aspectRatio: {
-        label: "Aspect Ratio",
+        label: msg("fields.aspectRatio", "Aspect Ratio"),
         type: "number",
       },
       imageConstrain: {
-        label: "Image Constrain",
+        label: msg("fields.imageConstrain", "Image Constrain"),
         type: "select",
         options: [
-          { label: "Fixed", value: "fixed" },
-          { label: "Filled", value: "filled" },
+          { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+          { label: msg("fields.options.filled", "Filled"), value: "filled" },
         ],
       },
       styles: {
-        label: "Image Styles",
+        label: msg("fields.imageStyles", "Image Styles"),
         type: "styledImage",
       },
     },
   },
 };
 
-const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps> = (props) => {
+const CommunityFinanceHeaderComponent: PuckComponent<
+  CommunityFinanceHeaderProps
+> = (props) => {
+  const { t } = useTranslation();
   const analytics = useAnalytics();
   const streamDocument = useDocument<StreamDocument>();
   const locale = streamDocument.locale ?? "en";
@@ -642,11 +669,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
     streamDocument,
   ) as ImageType | ComplexImageType | TranslatableAssetImage | undefined;
   const resolvedLogoUrl = (
-    resolveComponentData(
-      props.logoImage.url,
-      locale,
-      streamDocument,
-    ) || ""
+    resolveComponentData(props.logoImage.url, locale, streamDocument) || ""
   )
     .toString()
     .trim();
@@ -664,7 +687,9 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
       ? props.navigation.fontColor
       : undefined) ??
     getReadableForegroundColor(props.section.backgroundColor, streamDocument);
-  const dividerColorValue = resolveThemeColorCssValue(props.section.dividerColor);
+  const dividerColorValue = resolveThemeColorCssValue(
+    props.section.dividerColor,
+  );
   const dividerStyle = dividerColorValue
     ? ({ borderColor: dividerColorValue } as React.CSSProperties)
     : undefined;
@@ -756,8 +781,10 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
       return <SharedHeaderDefaultUtilityIcon />;
     }
 
-    const resolvedIconImage =
-      iconImage as ImageType | ComplexImageType | TranslatableAssetImage;
+    const resolvedIconImage = iconImage as
+      | ImageType
+      | ComplexImageType
+      | TranslatableAssetImage;
     const iconHeight = 32;
     const iconAspectRatio =
       iconImageProps.aspectRatio > 0 ? iconImageProps.aspectRatio : 1;
@@ -794,8 +821,13 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
         constantValueEnabled={iconImageProps.image.constantValueEnabled}
       >
         <div style={wrapperStyle}>
-        <img alt="" src={iconUrl} className="h-full w-full" style={imageStyle} />
-      </div>
+          <img
+            alt=""
+            src={iconUrl}
+            className="h-full w-full"
+            style={imageStyle}
+          />
+        </div>
       </EntityField>
     );
   };
@@ -852,7 +884,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
   );
 
   const renderNavigationLinks = (orientation: "row" | "column") => (
-    <nav aria-label="Primary navigation">
+    <nav aria-label={t("primaryNavigation", "Primary navigation")}>
       <ul
         className={
           orientation === "row"
@@ -862,21 +894,21 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
       >
         {showNavigation
           ? navigationLinks.map((item) => (
-          <li key={`${item.eventName}-${item.link}`}>
-            <Link
-              cta={{
-                link: item.link,
-                linkType: item.linkType,
-              }}
-              eventName={item.eventName}
-              target={item.openInNewTab ? "_blank" : undefined}
-              rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-              className="inline-flex items-center gap-2 transition-opacity hover:opacity-80"
-              style={navigationTextStyles}
-            >
-              <span>{item.label}</span>
-            </Link>
-          </li>
+              <li key={`${item.eventName}-${item.link}`}>
+                <Link
+                  cta={{
+                    link: item.link,
+                    linkType: item.linkType,
+                  }}
+                  eventName={item.eventName}
+                  target={item.openInNewTab ? "_blank" : undefined}
+                  rel={item.openInNewTab ? "noopener noreferrer" : undefined}
+                  className="inline-flex items-center gap-2 transition-opacity hover:opacity-80"
+                  style={navigationTextStyles}
+                >
+                  <span>{item.label}</span>
+                </Link>
+              </li>
             ))
           : null}
       </ul>
@@ -899,13 +931,13 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
         fieldId={props.logoImage.image.field}
         constantValueEnabled={props.logoImage.image.constantValueEnabled}
       >
-      <div style={logoWrapperStyle}>
-        <Image
-          image={logoImage}
-          className="h-full w-full"
-          style={logoStyle}
-        />
-      </div>
+        <div style={logoWrapperStyle}>
+          <Image
+            image={logoImage}
+            className="h-full w-full"
+            style={logoStyle}
+          />
+        </div>
       </EntityField>
     );
 
@@ -915,17 +947,17 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
         fieldId={props.logoImage.url.field}
         constantValueEnabled={props.logoImage.url.constantValueEnabled}
       >
-      <Link
-        cta={{
-          link: logoUrl,
-          linkType: "URL",
-        }}
-        eventName="headerLogo"
-        className="inline-flex transition-opacity hover:opacity-80"
-        aria-label="Logo"
-      >
-        {logoContent}
-      </Link>
+        <Link
+          cta={{
+            link: logoUrl,
+            linkType: "URL",
+          }}
+          eventName="headerLogo"
+          className="inline-flex transition-opacity hover:opacity-80"
+          aria-label="Logo"
+        >
+          {logoContent}
+        </Link>
       </EntityField>
     ) : (
       logoContent
@@ -1121,7 +1153,9 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
               setMenuOpen((currentValue) => !currentValue);
             }}
             aria-expanded={menuOpen}
-            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-label={
+              menuOpen ? "Close navigation menu" : "Open navigation menu"
+            }
             className="inline-flex h-10 w-10 items-center justify-center rounded-full"
             style={{
               color: resolveThemeColorCssValue(navigationColor),
@@ -1153,7 +1187,9 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
             style={{ backgroundColor: headerSurfaceStyle.backgroundColor }}
           >
             <div className="space-y-6">
-              {navigationLinks.length > 0 ? renderNavigationLinks("column") : null}
+              {navigationLinks.length > 0
+                ? renderNavigationLinks("column")
+                : null}
               {((showUtilities && utilityLinks.length > 0) ||
                 drawerCtaItems.length > 0 ||
                 mobileDrawerCtaItems.length > 0) && (
@@ -1204,7 +1240,8 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
                   {showUtilities && utilityLinks.length > 0 ? (
                     <div
                       className={`flex flex-wrap items-center gap-3${
-                        drawerCtaItems.length > 0 || mobileDrawerCtaItems.length > 0
+                        drawerCtaItems.length > 0 ||
+                        mobileDrawerCtaItems.length > 0
                           ? " mt-6"
                           : ""
                       }`}
@@ -1218,7 +1255,11 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
                           }}
                           eventName={`${item.eventName}Mobile`}
                           target={item.openInNewTab ? "_blank" : undefined}
-                          rel={item.openInNewTab ? "noopener noreferrer" : undefined}
+                          rel={
+                            item.openInNewTab
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
                           aria-label={item.label}
                           className="inline-flex h-8 shrink-0 items-center justify-center rounded-full transition-opacity hover:opacity-80"
                           style={{
@@ -1245,151 +1286,152 @@ const CommunityFinanceHeaderComponent: PuckComponent<CommunityFinanceHeaderProps
   );
 };
 
-export const CommunityFinanceHeader: YextComponentConfig<CommunityFinanceHeaderProps> = {
-  label: "Shared Header",
-  fields: CommunityFinanceHeaderFields,
-  defaultProps: {
-    variant: "utilityTopRow",
-    section: {
-      backgroundColor: defaultSurfaceColor,
-      dividerColor: undefined,
-      visibleOnLivePage: true,
-    },
-    navigation: {
-      show: true,
-      links: [
-        {
-          label: "Locations",
-          link: "#",
-          linkType: "URL",
-          normalizeLink: false,
-          openInNewTab: false,
-        },
-        {
-          label: "Services",
-          link: "#",
-          linkType: "URL",
-          normalizeLink: false,
-          openInNewTab: false,
-        },
-        {
-          label: "Advisors",
-          link: "#",
-          linkType: "URL",
-          normalizeLink: false,
-          openInNewTab: false,
-        },
-        {
-          label: "Disclosures",
-          link: "#",
-          linkType: "URL",
-          normalizeLink: false,
-          openInNewTab: false,
-        },
-        {
-          label: "Contact",
-          link: "#",
-          linkType: "URL",
-          normalizeLink: false,
-          openInNewTab: false,
-        },
-      ],
-      styles: defaultLinkStyles,
-    },
-    utilities: {
-      show: true,
-      items: [
-        {
-          iconImage: defaultUtilityIconImage,
-          label: "Item 1",
-          link: "#",
-          linkType: "URL",
-          normalizeLink: false,
-          openInNewTab: false,
-        },
-        {
-          iconImage: defaultUtilityIconImage,
-          label: "Item 2",
-          link: "#",
-          linkType: "URL",
-          normalizeLink: false,
-          openInNewTab: false,
-        },
-      ],
-    },
-    cta: {
-      show: true,
-      items: [
-        {
-          cta: {
-            data: {
-              actionType: "link",
-              cta: {
-                field: "",
-                constantValueEnabled: true,
-                constantValue: {
-                  ctaType: "textAndLink",
-                  label: { defaultValue: "CTA Label" },
-                  link: { defaultValue: "#" },
-                  linkType: "URL",
+export const CommunityFinanceHeader: YextComponentConfig<CommunityFinanceHeaderProps> =
+  {
+    label: msg("components.sharedHeader", "Header"),
+    fields: CommunityFinanceHeaderFields,
+    defaultProps: {
+      variant: "utilityTopRow",
+      section: {
+        backgroundColor: defaultSurfaceColor,
+        dividerColor: undefined,
+        visibleOnLivePage: true,
+      },
+      navigation: {
+        show: true,
+        links: [
+          {
+            label: "Locations",
+            link: "#",
+            linkType: "URL",
+            normalizeLink: false,
+            openInNewTab: false,
+          },
+          {
+            label: "Services",
+            link: "#",
+            linkType: "URL",
+            normalizeLink: false,
+            openInNewTab: false,
+          },
+          {
+            label: "Advisors",
+            link: "#",
+            linkType: "URL",
+            normalizeLink: false,
+            openInNewTab: false,
+          },
+          {
+            label: "Disclosures",
+            link: "#",
+            linkType: "URL",
+            normalizeLink: false,
+            openInNewTab: false,
+          },
+          {
+            label: "Contact",
+            link: "#",
+            linkType: "URL",
+            normalizeLink: false,
+            openInNewTab: false,
+          },
+        ],
+        styles: defaultLinkStyles,
+      },
+      utilities: {
+        show: true,
+        items: [
+          {
+            iconImage: defaultUtilityIconImage,
+            label: "Item 1",
+            link: "#",
+            linkType: "URL",
+            normalizeLink: false,
+            openInNewTab: false,
+          },
+          {
+            iconImage: defaultUtilityIconImage,
+            label: "Item 2",
+            link: "#",
+            linkType: "URL",
+            normalizeLink: false,
+            openInNewTab: false,
+          },
+        ],
+      },
+      cta: {
+        show: true,
+        items: [
+          {
+            cta: {
+              data: {
+                actionType: "link",
+                cta: {
+                  field: "",
+                  constantValueEnabled: true,
+                  constantValue: {
+                    ctaType: "textAndLink",
+                    label: { defaultValue: "CTA Label" },
+                    link: { defaultValue: "#" },
+                    linkType: "URL",
+                  },
+                  selectedType: "textAndLink",
                 },
-                selectedType: "textAndLink",
+                openInNewTab: false,
+                buttonText: { defaultValue: "Button" },
+                customId: "",
+                customClass: "",
+                dataAttributes: [],
+                ariaLabel: { defaultValue: "CTA Label" },
               },
-              openInNewTab: false,
-              buttonText: { defaultValue: "Button" },
-              customId: "",
-              customClass: "",
-              dataAttributes: [],
-              ariaLabel: { defaultValue: "CTA Label" },
-            },
-            styles: {
-              variant: "primary",
-              color: {
-                selectedColor: "default",
-                contrastingColor: "black",
+              styles: {
+                variant: "primary",
+                color: {
+                  selectedColor: "default",
+                  contrastingColor: "black",
+                },
+                button: defaultButtonStyles,
+                link: defaultLinkStyles,
               },
-              button: defaultButtonStyles,
-              link: defaultLinkStyles,
             },
           },
-        },
-      ],
-    },
-    logoImage: {
-      show: true,
-      image: {
-        field: "",
-        constantValueEnabled: true,
-        constantValue: {
-          url: "https://a.mktgcdn.com/p/OLT2KExDEKhKlCmIobyRRHN6MFUS77fVs5gIt_FTnBI/450x450.jpg",
-          width: 450,
-          height: 450,
-        },
+        ],
       },
-      url: {
-        field: "",
-        constantValue: {
-          defaultValue: "",
+      logoImage: {
+        show: true,
+        image: {
+          field: "",
+          constantValueEnabled: true,
+          constantValue: {
+            url: "https://a.mktgcdn.com/p/OLT2KExDEKhKlCmIobyRRHN6MFUS77fVs5gIt_FTnBI/450x450.jpg",
+            width: 450,
+            height: 450,
+          },
         },
-        constantValueEnabled: true,
+        url: {
+          field: "",
+          constantValue: {
+            defaultValue: "",
+          },
+          constantValueEnabled: true,
+        },
+        aspectRatio: 1,
+        imageConstrain: "fixed",
+        styles: defaultImageStyles,
       },
-      aspectRatio: 1,
-      imageConstrain: "fixed",
-      styles: defaultImageStyles,
     },
-  },
-  render: (props) => (
-    <AnalyticsScopeProvider
-      name={`CommunityFinanceHeader${getAnalyticsScopeHash(props.id)}`}
-    >
-      <CommunityFinanceHeaderComponent {...props} />
-    </AnalyticsScopeProvider>
-  ),
-};
+    render: (props) => (
+      <AnalyticsScopeProvider
+        name={`CommunityFinanceHeader${getAnalyticsScopeHash(props.id)}`}
+      >
+        <CommunityFinanceHeaderComponent {...props} />
+      </AnalyticsScopeProvider>
+    ),
+  };
 
 export const config: SectionConfig = {
   id: "CommunityFinanceHeader",
-  displayName: "Shared Header",
-  description: "Shared Header",
+  displayName: "Header",
+  description: "Header",
   pageSetTypes: ["ENTITY", "DIRECTORY", "LOCATOR"],
 };

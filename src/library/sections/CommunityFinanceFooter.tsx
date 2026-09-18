@@ -8,6 +8,7 @@ import {
   type LinkType,
 } from "@yext/pages-components";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   type ComprehensiveCTAValue,
@@ -57,10 +58,10 @@ type FinanceSectionStyles = {
 
 const financeSectionStylesFields = {
   verticalPadding: {
-    label: "Top/Bottom Padding",
+    label: msg("fields.verticalPadding", "Top/Bottom Padding"),
     type: "select",
     options: [
-      { label: "Default", value: "default" },
+      { label: msg("fields.options.default", "Default"), value: "default" },
       { label: "0px", value: "0px" },
       { label: "2px", value: "2px" },
       { label: "4px", value: "4px" },
@@ -124,9 +125,9 @@ type CommunityFinanceFooterProps = {
 };
 
 const linkTypeOptions: Array<{ label: string; value: LinkType }> = [
-  { label: "URL", value: "URL" },
-  { label: "Phone", value: "PHONE" },
-  { label: "Email", value: "EMAIL" },
+  { label: msg("fields.options.url", "URL"), value: "URL" },
+  { label: msg("fields.options.phone", "Phone"), value: "PHONE" },
+  { label: msg("fields.options.email", "Email"), value: "EMAIL" },
 ];
 
 const defaultLinkStyles: StyledLinkValue = {
@@ -233,84 +234,84 @@ const getLinkTextStyles = ({
 const CommunityFinanceFooterFields: YextFields<CommunityFinanceFooterProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         styles: {
-          label: "Section Styles",
+          label: msg("fields.sectionStyles", "Section Styles"),
           type: "object",
           objectFields: financeSectionStylesFields,
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     brand: {
-      label: "Brand",
+      label: msg("fields.brand", "Brand"),
       type: "object",
       objectFields: {
         label: {
-          label: "Label",
+          label: msg("fields.label", "Label"),
           type: "translatableString",
         },
         link: {
-          label: "Link",
+          label: msg("fields.link", "Link"),
           type: "translatableString",
         },
         linkType: {
-          label: "Link Type",
+          label: msg("fields.linkType", "Link Type"),
           type: "select",
           options: linkTypeOptions,
         },
         normalizeLink: {
-          label: "Normalize Link",
+          label: msg("fields.normalizeLink", "Normalize Link"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         openInNewTab: {
-          label: "Open in New Tab",
+          label: msg("fields.openInNewTab", "Open in New Tab"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
         styles: {
-          label: "Link Styles",
+          label: msg("fields.linkStyles", "Link Styles"),
           type: "styledLink",
           showIncludeCaretField: false,
         },
       },
     },
     links: {
-      label: "Links",
+      label: msg("fields.links", "Links"),
       type: "object",
       objectFields: {
         items: {
-          label: "Items",
+          label: msg("fields.items", "Items"),
           type: "array",
           arrayFields: {
             cta: {
-              label: "CTA",
+              label: msg("fields.cta", "CTA"),
               type: "comprehensiveCTA",
             },
           },
@@ -638,7 +639,7 @@ const CommunityFinanceFooterComponent: PuckComponent<
 
 export const CommunityFinanceFooter: YextComponentConfig<CommunityFinanceFooterProps> =
   {
-    label: "Footer",
+    label: msg("components.footer", "Footer"),
     fields: CommunityFinanceFooterFields,
     defaultProps: {
       section: {

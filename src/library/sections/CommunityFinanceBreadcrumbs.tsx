@@ -1,9 +1,11 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, Link } from "@yext/pages-components";
 import {
+  msg,
   Background,
   EntityField,
   VisibilityWrapper,
@@ -20,10 +22,9 @@ import {
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  pt,
 } from "@yext/visual-editor";
-import {
-  getSurfaceTextColor,
-} from "../shared/sectionHelpers";
+import { getSurfaceTextColor } from "../shared/sectionHelpers";
 
 type FinanceSectionVerticalPaddingValue =
   | "default"
@@ -72,10 +73,10 @@ type CommunityFinanceBreadcrumbsProps = {
 
 const financeSectionStylesFields = {
   verticalPadding: {
-    label: "Top/Bottom Padding",
+    label: msg("fields.verticalPadding", "Top/Bottom Padding"),
     type: "select",
     options: [
-      { label: "Default", value: "default" },
+      { label: msg("fields.options.default", "Default"), value: "default" },
       { label: "0px", value: "0px" },
       { label: "2px", value: "2px" },
       { label: "4px", value: "4px" },
@@ -133,75 +134,75 @@ const getTextStyles = (
 const CommunityFinanceBreadcrumbsFields: YextFields<CommunityFinanceBreadcrumbsProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         styles: {
-          label: "Section Styles",
+          label: msg("fields.sectionStyles", "Section Styles"),
           type: "object",
           objectFields: financeSectionStylesFields,
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     rootLabel: {
-      label: "Root Label",
+      label: msg("fields.rootLabel", "Root Label"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     currentPage: {
-      label: "Current Page",
+      label: msg("fields.currentPage", "Current Page"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     includeCurrentLocation: {
-      label: "Include Current Location",
+      label: msg("fields.includeCurrentLocation", "Include Current Location"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
   };
@@ -209,6 +210,7 @@ const CommunityFinanceBreadcrumbsFields: YextFields<CommunityFinanceBreadcrumbsP
 const CommunityFinanceBreadcrumbsComponent: PuckComponent<
   CommunityFinanceBreadcrumbsProps
 > = (props) => {
+  const { t } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
   const { relativePrefixToRoot } = useTemplateProps<{
     relativePrefixToRoot?: string;
@@ -287,7 +289,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
               maxWidth: FINANCE_SECTION_MAX_WIDTH,
             }}
           >
-            <nav aria-label="Breadcrumb">
+            <nav aria-label={t("breadcrumb", "Breadcrumb")}>
               <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
                 {showSyntheticPreview ? (
                   <li
@@ -298,9 +300,11 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
                       padding: "18px 24px",
                     }}
                   >
-                    No breadcrumbs available (section will be hidden on live
-                    page). Create a directory to enable breadcrumbs.
-                    </li>
+                    {pt(
+                      "noBreadcrumbsAvailable",
+                      "No breadcrumbs available (section will be hidden on live page). Create a directory to enable breadcrumbs.",
+                    )}
+                  </li>
                 ) : (
                   breadcrumbs.map((breadcrumb, index) => {
                     const isRoot = index === 0;
@@ -387,7 +391,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
 
 export const CommunityFinanceBreadcrumbs: YextComponentConfig<CommunityFinanceBreadcrumbsProps> =
   {
-    label: "Breadcrumbs",
+    label: msg("components.breadcrumbs", "Breadcrumbs"),
     fields: CommunityFinanceBreadcrumbsFields,
     defaultProps: {
       section: {

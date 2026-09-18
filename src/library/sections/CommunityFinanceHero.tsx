@@ -2,6 +2,7 @@ import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
+import { useTranslation } from "react-i18next";
 import {
   AnalyticsScopeProvider,
   HoursStatus,
@@ -10,6 +11,7 @@ import {
   type StatusParams,
 } from "@yext/pages-components";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   EntityField,
@@ -115,7 +117,7 @@ const heroVerticalPaddingOptions: Array<{
   label: string;
   value: HeroVerticalPaddingValue;
 }> = [
-  { label: "Default", value: "default" },
+  { label: msg("fields.options.default", "Default"), value: "default" },
   { label: "0px", value: "0px" },
   { label: "2px", value: "2px" },
   { label: "4px", value: "4px" },
@@ -142,162 +144,162 @@ const heroVerticalPaddingOptions: Array<{
 const CommunityFinanceHeroFields: YextFields<CommunityFinanceHeroProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         styles: {
-          label: "Section Styles",
+          label: msg("fields.sectionStyles", "Section Styles"),
           type: "object",
           objectFields: {
             verticalPadding: {
-              label: "Top/Bottom Padding",
+              label: msg("fields.verticalPadding", "Top/Bottom Padding"),
               type: "select",
               options: heroVerticalPaddingOptions,
             },
           },
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.string"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     body: {
-      label: "Body",
+      label: msg("fields.body", "Body"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     primaryCta: {
-      label: "Primary CTA",
+      label: msg("fields.primaryCTA", "Primary CTA"),
       type: "comprehensiveCTA",
     },
     secondaryCta: {
-      label: "Secondary CTA",
+      label: msg("fields.secondaryCTA", "Secondary CTA"),
       type: "comprehensiveCTA",
     },
     heroImage: {
-      label: "Hero Image",
+      label: msg("fields.heroImage", "Hero Image"),
       type: "object",
       objectFields: {
         image: {
           type: "entityField",
-          label: "Image",
+          label: msg("fields.image", "Image"),
           filter: { types: ["type.image"] },
         },
         aspectRatio: {
-          label: "Aspect Ratio",
+          label: msg("fields.aspectRatio", "Aspect Ratio"),
           type: "number",
         },
         imageConstrain: {
-          label: "Image Constrain",
+          label: msg("fields.imageConstrain", "Image Constrain"),
           type: "select",
           options: [
-            { label: "Fixed", value: "fixed" },
-            { label: "Filled", value: "filled" },
+            { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+            { label: msg("fields.options.filled", "Filled"), value: "filled" },
           ],
         },
         styles: {
-          label: "Image Styles",
+          label: msg("fields.imageStyles", "Image Styles"),
           type: "styledImage",
         },
       },
     },
     hours: {
       type: "entityField",
-      label: "Hours",
+      label: msg("fields.hours", "Hours"),
       filter: {
         types: ["type.hours"],
       },
       disableConstantValueToggle: true,
     },
     hoursStyles: {
-      label: "Hours Styles",
+      label: msg("fields.hoursStyles", "Hours Styles"),
       type: "object",
       objectFields: {
         showCurrentStatus: {
-          label: "Show Current Status",
+          label: msg("fields.showCurrentStatus", "Show Current Status"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         timeFormat: {
-          label: "Time Format",
+          label: msg("fields.timeFormat", "Time Format"),
           type: "select",
           options: [
-            { label: "12 Hour", value: "12h" },
-            { label: "24 Hour", value: "24h" },
+            { label: msg("fields.options.hour12", "12-hour"), value: "12h" },
+            { label: msg("fields.options.hour24", "24-hour"), value: "24h" },
           ],
         },
         dayOfWeekFormat: {
-          label: "Day Of Week Format",
+          label: msg("fields.dayOfWeekFormat", "Day of Week Format"),
           type: "select",
           options: [
-            { label: "Short", value: "short" },
-            { label: "Long", value: "long" },
+            { label: msg("fields.options.short", "Short"), value: "short" },
+            { label: msg("fields.options.long", "Long"), value: "long" },
           ],
         },
         showDayNames: {
-          label: "Show Day Names",
+          label: msg("fields.showDayNames", "Show Day Names"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     statusPill: {
-      label: "Status Pill",
+      label: msg("fields.statusPill", "Status Pill"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
@@ -308,6 +310,7 @@ const CommunityFinanceHeroFields: YextFields<CommunityFinanceHeroProps> =
 const CommunityFinanceHeroComponent: PuckComponent<
   CommunityFinanceHeroProps
 > = (props) => {
+  const { t, i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
   const locale = streamDocument.locale ?? "en";
   const resolvedHeading =
@@ -332,6 +335,73 @@ const CommunityFinanceHeroComponent: PuckComponent<
     props.section.styles.verticalPadding === "default"
       ? undefined
       : props.section.styles.verticalPadding;
+
+  const statusTemplate = (status: StatusParams) => {
+    const isComingSoon = !!status.comingSoon;
+    const isOpen24Hours = !!status.currentInterval?.is24h?.();
+    const isIndefinitelyClosed = !status.futureInterval;
+    const hasFutureStatus = !isOpen24Hours && !isIndefinitelyClosed;
+    const interval = status.isOpen
+      ? status.currentInterval
+      : status.futureInterval;
+    const time = status.isOpen
+      ? (interval?.getEndTime(i18n.language, status.timeOptions) ?? "")
+      : (interval?.getStartTime(i18n.language, status.timeOptions) ?? "");
+    const dayOfWeek = props.hoursStyles.showDayNames
+      ? (interval?.[status.isOpen ? "end" : "start"]
+          ?.setLocale(i18n.language)
+          .toLocaleString({
+            weekday: props.hoursStyles.dayOfWeekFormat,
+          }) ?? "")
+      : "";
+    const currentStatus = isComingSoon
+      ? t("comingSoon", "Coming Soon")
+      : isOpen24Hours
+        ? t("open24Hours", "Open 24 Hours")
+        : isIndefinitelyClosed
+          ? t("temporarilyClosed", "Temporarily Closed")
+          : status.isOpen
+            ? t("openNow", "Open Now")
+            : t("closed", "Closed");
+    const futureStatus =
+      !isComingSoon && hasFutureStatus && time
+        ? status.isOpen
+          ? dayOfWeek
+            ? t(
+                "closesAtTimeWeek",
+                "Closes at {{time}} {{dayOfWeek}}",
+                { time, dayOfWeek },
+              )
+            : t("closesAtTime", "Closes at {{time}}", { time })
+          : dayOfWeek
+            ? t(
+                "opensAtTimeWeek",
+                "Opens at {{time}} {{dayOfWeek}}",
+                { time, dayOfWeek },
+              )
+            : t("opensAtTime", "Opens at {{time}}", { time })
+        : "";
+    const isOpen = status.isOpen && !isComingSoon;
+    const dotColor = isOpen ? "#59b66d" : "#d64545";
+    const dotShadow = isOpen
+      ? "0 0 0 4px rgba(89, 182, 109, 0.16)"
+      : "0 0 0 4px rgba(214, 69, 69, 0.16)";
+
+    return (
+      <span className="inline-flex items-center gap-2">
+        <span
+          aria-hidden="true"
+          className="h-2.5 w-2.5 rounded-full"
+          style={{
+            backgroundColor: dotColor,
+            boxShadow: dotShadow,
+          }}
+        />
+        <span>{currentStatus}</span>
+        {futureStatus ? <span>: {futureStatus}</span> : null}
+      </span>
+    );
+  };
 
   return (
     <AnalyticsScopeProvider
@@ -472,56 +542,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
                       hour12: props.hoursStyles.timeFormat === "12h",
                     }}
                     comingSoon={streamDocument.comingSoon}
-                    currentTemplate={(status: StatusParams) => {
-                      const dotColor = status.isOpen ? "#59b66d" : "#d64545";
-                      const dotShadow = status.isOpen
-                        ? "0 0 0 4px rgba(89, 182, 109, 0.16)"
-                        : "0 0 0 4px rgba(214, 69, 69, 0.16)";
-
-                      return (
-                        <span className="inline-flex items-center gap-2">
-                          <span
-                            aria-hidden="true"
-                            className="h-2.5 w-2.5 rounded-full"
-                            style={{
-                              backgroundColor: dotColor,
-                              boxShadow: dotShadow,
-                            }}
-                          />
-                          <span>{status.isOpen ? "Open Now" : "Closed"}</span>
-                        </span>
-                      );
-                    }}
-                    separatorTemplate={(status: StatusParams) =>
-                      status.futureInterval ? <span>: </span> : null
-                    }
-                    futureTemplate={(status: StatusParams) => {
-                      const interval = status.isOpen
-                        ? status.currentInterval
-                        : status.futureInterval;
-                      const time = status.isOpen
-                        ? interval?.getEndTime(locale, status.timeOptions)
-                        : interval?.getStartTime(locale, status.timeOptions);
-                      const weekday = props.hoursStyles.showDayNames
-                        ? interval?.[
-                            status.isOpen ? "end" : "start"
-                          ]
-                            ?.setLocale(locale)
-                            .toLocaleString({
-                              weekday: props.hoursStyles.dayOfWeekFormat,
-                            })
-                        : "";
-
-                      return (
-                        <span>
-                          {status.isOpen ? "Closes at" : "Opens at"}
-                          {time ? ` ${time}` : ""}
-                          {weekday ? ` ${weekday}` : ""}
-                        </span>
-                      );
-                    }}
-                    timeTemplate={() => null}
-                    dayOfWeekTemplate={() => null}
+                    statusTemplate={statusTemplate}
                   />
                 </Background>
                 </EntityField>
@@ -676,7 +697,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
 
 export const CommunityFinanceHero: YextComponentConfig<CommunityFinanceHeroProps> =
   {
-    label: "Hero",
+    label: msg("components.hero", "Hero"),
     fields: CommunityFinanceHeroFields,
     defaultProps: {
       section: {
