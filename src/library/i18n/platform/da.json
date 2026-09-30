@@ -34,6 +34,7 @@
     "sharedHeader": "Delt sidehoved",
     "testimonials": "Kundeudtalelser"
   },
+  "currentLocation": "Nuværende placering",
   "customSearchArea": "Brugerdefineret søgeområde",
   "distance": "Afstand",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> fra søgning",

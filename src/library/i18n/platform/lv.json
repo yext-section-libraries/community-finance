@@ -34,6 +34,7 @@
     "sharedHeader": "Koplietota galvene",
     "testimonials": "Atsauksmes"
   },
+  "currentLocation": "Pašreizējā atrašanās vieta",
   "customSearchArea": "Pielāgota meklēšanas zona",
   "distance": "Attālums",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> no meklēšanas",

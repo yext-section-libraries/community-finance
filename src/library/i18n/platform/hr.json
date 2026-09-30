@@ -34,6 +34,7 @@
     "sharedHeader": "Zajedničko zaglavlje",
     "testimonials": "Iskustva korisnika"
   },
+  "currentLocation": "Trenutna lokacija",
   "customSearchArea": "Područje prilagođenog pretraživanja",
   "distance": "Udaljenost",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> iz pretraživanja",

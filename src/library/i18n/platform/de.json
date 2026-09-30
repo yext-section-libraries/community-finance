@@ -34,6 +34,7 @@
     "sharedHeader": "Gemeinsame Kopfzeile",
     "testimonials": "Kundenstimmen"
   },
+  "currentLocation": "Aktueller Standort",
   "customSearchArea": "Benutzerdefinierter Suchbereich",
   "distance": "Distanz",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> aus der Suche",
