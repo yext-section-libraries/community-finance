@@ -34,6 +34,7 @@
     "sharedHeader": "Sdílené záhlaví",
     "testimonials": "Reference"
   },
+  "currentLocation": "Aktuální poloha",
   "customSearchArea": "Vlastní vyhledávací oblast",
   "distance": "Vzdálenost",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> z vyhledávání",

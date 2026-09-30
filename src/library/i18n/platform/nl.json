@@ -34,6 +34,7 @@
     "sharedHeader": "Gedeelde koptekst",
     "testimonials": "Getuigenissen"
   },
+  "currentLocation": "Huidige locatie",
   "customSearchArea": "Aangepast zoekgebied",
   "distance": "Afstand",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> uit zoekopdracht",

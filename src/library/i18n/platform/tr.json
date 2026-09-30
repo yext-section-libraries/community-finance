@@ -34,6 +34,7 @@
     "sharedHeader": "Paylaşılan Üstbilgi",
     "testimonials": "Müşteri görüşleri"
   },
+  "currentLocation": "Mevcut Konum",
   "customSearchArea": "Özel arama alanı",
   "distance": "Mesafe",
   "distanceLineFromSearch": "Aramadan <strong>{{distance}}</strong>",

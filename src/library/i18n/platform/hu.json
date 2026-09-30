@@ -34,6 +34,7 @@
     "sharedHeader": "Megosztott fejléc",
     "testimonials": "Vélemények"
   },
+  "currentLocation": "Jelenlegi hely",
   "customSearchArea": "Egyedi keresési terület",
   "distance": "Távolság",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> a keresésből",

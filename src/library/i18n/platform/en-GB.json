@@ -34,6 +34,7 @@
     "sharedHeader": "Header",
     "testimonials": "Testimonials"
   },
+  "currentLocation": "Current Location",
   "customSearchArea": "Custom Search Area",
   "distance": "Distance",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> from search",

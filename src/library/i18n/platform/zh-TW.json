@@ -34,6 +34,7 @@
     "sharedHeader": "共用頁首",
     "testimonials": "客戶評價"
   },
+  "currentLocation": "目前位置",
   "customSearchArea": "自定義搜索區域",
   "distance": "距離",
   "distanceLineFromSearch": "來自搜尋的 <strong>{{distance}}</strong>",

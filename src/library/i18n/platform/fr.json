@@ -34,6 +34,7 @@
     "sharedHeader": "En-tête partagé",
     "testimonials": "Témoignages"
   },
+  "currentLocation": "Emplacement actuel",
   "customSearchArea": "Zone de recherche personnalisée",
   "distance": "Distance",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> à partir de la recherche",

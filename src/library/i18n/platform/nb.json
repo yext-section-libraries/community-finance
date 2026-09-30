@@ -34,6 +34,7 @@
     "sharedHeader": "Delt topptekst",
     "testimonials": "Kundeuttalelser"
   },
+  "currentLocation": "Nåværende plassering",
   "customSearchArea": "Tilpasset søkeområde",
   "distance": "Avstand",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> fra søk",

@@ -34,6 +34,7 @@
     "sharedHeader": "Zdieľaná hlavička",
     "testimonials": "Referencie"
   },
+  "currentLocation": "Aktuálna poloha",
   "customSearchArea": "Oblasť vyhľadávania",
   "distance": "Vzdialenosť",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> z vyhľadávania",
