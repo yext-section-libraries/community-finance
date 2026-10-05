@@ -511,7 +511,6 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
       props.cardAddress.styles.fontStyle === "default"
         ? "var(--fontStyle-body-fontStyle)"
         : props.cardAddress.styles.fontStyle,
-    lineHeight: 1.5,
     textTransform:
       props.cardAddress.styles.textTransform === "default"
         ? "var(--textTransform-body-textTransform)"
@@ -535,7 +534,6 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
       props.cardDetails.styles.fontStyle === "default"
         ? "var(--fontStyle-body-fontStyle)"
         : props.cardDetails.styles.fontStyle,
-    lineHeight: 1.5,
     textTransform:
       props.cardDetails.styles.textTransform === "default"
         ? "var(--textTransform-body-textTransform)"
@@ -587,13 +585,12 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
         isEditing={props.puck.isEditing}
       >
         <section
-          className="yext-community-finance-nearby-locations"
+          className="yext-community-finance-nearby-locations border-t border-current/10"
           style={{
             ...getSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
-            borderTop: "1px solid rgb(230, 232, 233)",
             paddingBlock,
           }}
         >
@@ -625,7 +622,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                 >
                   <Background
                     background={props.eyebrow.backgroundColor}
-                    className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                    className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                     style={{
                       ...getSurfaceColorStyle(
                         props.eyebrow.backgroundColor,
@@ -652,7 +649,6 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                     props.eyebrow.styles.textTransform === "default"
                       ? undefined
                       : props.eyebrow.styles.textTransform,
-                  lineHeight: 1.2,
                 }}
               >
                 {resolveComponentData(
@@ -687,7 +683,6 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                     props.heading.styles.fontStyle === "default"
                       ? undefined
                       : props.heading.styles.fontStyle,
-                  lineHeight: 1,
                   textTransform:
                     props.heading.styles.textTransform === "default"
                       ? undefined
@@ -703,7 +698,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                   constantValueEnabled={props.body.text.constantValueEnabled}
                 >
                   <div
-                className="community-finance-nearby-section-body mt-3 leading-7"
+                className="community-finance-nearby-section-body mt-3"
                 style={{
                   color: sectionForegroundColor,
                   fontFamily:
@@ -742,7 +737,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                 fieldId={props.map.coordinate.field}
                 constantValueEnabled={props.map.coordinate.constantValueEnabled}
               >
-              <div className="community-finance-nearby-map relative mt-8 h-[220px] overflow-hidden rounded-[28px] md:h-[320px]">
+              <div className="community-finance-nearby-map relative mt-8 h-[220px] overflow-hidden rounded-image-borderRadius md:h-[320px]">
                 <MapboxStaticMapComponent
                   id={`${props.id}-map`}
                   puck={props.puck}
@@ -756,7 +751,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
             ) : null}
             {nearbyLocationsPending ? (
               <p
-                className="mt-6 text-sm"
+                className="mt-6"
                 style={{ color: sectionForegroundColor }}
               >
                 {t("loadingNearbyLocations", "Loading nearby locations")}
@@ -766,7 +761,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
             !nearbyLocationsPending &&
             !hasNearbyLocations ? (
               <p
-                className="mt-6 text-sm"
+                className="mt-6"
                 style={{ color: sectionForegroundColor }}
               >
                 {t(
@@ -875,7 +870,6 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                             props.cardTitle.styles.fontStyle === "default"
                               ? "var(--fontStyle-h4-fontStyle)"
                               : props.cardTitle.styles.fontStyle,
-                          lineHeight: 1.2,
                           textTransform:
                             props.cardTitle.styles.textTransform === "default"
                               ? "var(--textTransform-h4-textTransform)"
@@ -887,7 +881,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                             link: resolvedUrl,
                             linkType: "URL",
                           }}
-                          className="no-underline hover:underline"
+                          className=""
                           style={{ color: "inherit" }}
                         >
                           {locationData.name}
@@ -996,7 +990,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                             eventName={`getDirections${index}`}
                             className={
                               props.cardCta.styles.variant === "link"
-                                ? "community-finance-nearby-card-cta mt-3 inline-flex no-underline hover:underline"
+                                ? "community-finance-nearby-card-cta mt-3 inline-flex "
                                 : "community-finance-nearby-card-cta mt-3 inline-flex items-center justify-center px-5 py-3"
                             }
                           />

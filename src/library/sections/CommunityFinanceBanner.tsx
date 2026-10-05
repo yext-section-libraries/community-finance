@@ -132,15 +132,14 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
           section.backgroundColor,
           streamDocument,
         )}
-        verticalPadding="sm"
       >
         <div className="relative flex h-20 w-full flex-row items-center justify-center gap-3 rounded-lg border border-gray-200 bg-gray-100 px-4">
           <CircleSlash2 className="h-10 w-10 flex-shrink-0 text-gray-400" />
           <div className="flex flex-col items-start">
-            <Body className="font-medium text-gray-500" variant="sm">
+            <Body className="text-gray-500" variant="sm">
               Section hidden for this page
             </Body>
-            <Body className="font-normal text-gray-500" variant="sm">
+            <Body className="text-gray-500" variant="sm">
               The mapped banner field is empty
             </Body>
           </div>
@@ -177,7 +176,6 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
         section.backgroundColor,
         streamDocument,
       )}
-      verticalPadding="sm"
     >
       <EntityField
         constantValueEnabled={data.text.constantValueEnabled}

@@ -662,7 +662,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
               >
                 <Background
                   background={props.eyebrow.backgroundColor}
-                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                   style={{
                     ...getSurfaceColorStyle(
                       props.eyebrow.backgroundColor,
@@ -689,7 +689,6 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                         ? undefined
                         : props.eyebrow.styles.textTransform,
                     ...(eyebrowColor ? { color: eyebrowColor } : {}),
-                    lineHeight: 1.2,
                   }}
                 >
                   {resolvedEyebrow}
@@ -721,7 +720,6 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                       props.heading.styles.fontStyle === "default"
                         ? undefined
                         : props.heading.styles.fontStyle,
-                    lineHeight: 1,
                     textTransform:
                       props.heading.styles.textTransform === "default"
                         ? undefined
@@ -826,7 +824,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                 return (
                   <Background
                     key={resolvedName}
-                    className="overflow-hidden rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
+                    className="overflow-hidden rounded-image-borderRadius shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
                     background={props.cardBackgroundColor}
                     style={getSurfaceColorStyle(
                       props.cardBackgroundColor,
@@ -843,7 +841,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               props.advisors.data.constantValueEnabled
                             }
                           >
-                            <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full">
+                            <div className="h-24 w-24 shrink-0 overflow-hidden rounded-image-borderRadius">
                               <Image
                                 image={resolvedImage}
                                 className="h-full w-full"
@@ -913,7 +911,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                             }
                           >
                             <p
-                              className="mt-1 text-sm"
+                              className="mt-1"
                               style={{
                                 color: roleColor,
                                 fontFamily:
@@ -965,7 +963,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               }
                             >
                               <h4
-                                className="m-0 font-bold"
+                                className="m-0"
                                 style={{
                                   color:
                                     credentialsHeadingColor ??
@@ -1059,7 +1057,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               }
                             >
                               <h4
-                                className="m-0 font-bold"
+                                className="m-0"
                                 style={{
                                   color:
                                     licensesHeadingColor ?? cardForegroundColor,
@@ -1152,7 +1150,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               }
                             >
                               <h4
-                                className="m-0 font-bold"
+                                className="m-0"
                                 style={{
                                   color:
                                     specialtiesHeadingColor ??
@@ -1218,7 +1216,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                           >
                             <ComprehensiveCTA
                               value={advisorCtaValue}
-                              className="p-0 no-underline hover:underline"
+                              className=""
                             />
                           </EntityField>
                         </div>

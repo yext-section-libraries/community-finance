@@ -125,7 +125,6 @@ const getTextStyles = (
       : field.styles.fontWeight,
   fontStyle:
     field.styles.fontStyle === "default" ? undefined : field.styles.fontStyle,
-  lineHeight: 1.4,
   textTransform:
     field.styles.textTransform === "default"
       ? undefined
@@ -257,7 +256,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
   const separator = (
     <span
       aria-hidden="true"
-      className="text-[0.7rem] opacity-45"
+      className="opacity-45"
       style={currentTextStyles}
     >
       /
@@ -294,10 +293,8 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
               <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
                 {showSyntheticPreview ? (
                   <li
-                    className="text-sm"
                     style={{
                       ...currentTextStyles,
-                      fontFamily: "Arial, Helvetica, sans-serif",
                       padding: "18px 24px",
                     }}
                   >
@@ -331,14 +328,14 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
                             linkType: "URL",
                           }}
                           eventName={`breadcrumbLink${index}`}
-                          className="text-sm font-medium tracking-[0.08em] transition-opacity hover:opacity-75"
+                          className="transition-opacity hover:opacity-75"
                           style={isRoot ? rootTextStyles : currentTextStyles}
                         >
                           {label}
                         </Link>
                       ) : (
                         <span
-                          className={`text-sm font-medium tracking-[0.08em] ${
+                          className={`   ${
                             shouldRenderAsCurrent ? "opacity-65" : ""
                           }`}
                           style={isRoot ? rootTextStyles : currentTextStyles}

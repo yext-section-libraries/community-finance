@@ -311,7 +311,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
               >
                 <Background
                   background={props.eyebrow.backgroundColor}
-                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                   style={{
                     ...getSurfaceColorStyle(
                       props.eyebrow.backgroundColor,
@@ -338,7 +338,6 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                       ? undefined
                       : props.eyebrow.styles.textTransform,
                   ...(eyebrowColor ? { color: eyebrowColor } : {}),
-                  lineHeight: 1.2,
                 }}
               >
                 {resolvedEyebrow}
@@ -370,7 +369,6 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                     props.heading.styles.fontStyle === "default"
                       ? undefined
                       : props.heading.styles.fontStyle,
-                  lineHeight: 1,
                   textTransform:
                     props.heading.styles.textTransform === "default"
                       ? undefined
@@ -387,7 +385,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                   props.description.text.constantValueEnabled
                 }
               >
-                <div className="mt-3 max-w-[620px] leading-7">
+                <div className="mt-3 max-w-[620px]">
                 {renderRichText(resolvedDescription, {
                   ...props.description.styles,
                   color: props.description.fontColor,
@@ -404,13 +402,13 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
             </div>
             <Background
               background={props.slideBackgroundColor}
-              className="mt-8 overflow-hidden rounded-[28px] px-6 py-10 text-center md:px-10"
+              className="mt-8 overflow-hidden rounded-image-borderRadius px-6 py-10 text-center md:px-10"
               style={getSurfaceColorStyle(
                 props.slideBackgroundColor,
                 streamDocument,
               )}
             >
-              <p className="mx-auto max-w-[1210px] leading-tight">
+              <p className="mx-auto max-w-[1210px]">
                 {activeTestimonial.quote}
               </p>
               <div className="mt-6 flex flex-col items-center gap-4 text-center">
@@ -418,7 +416,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                   <h3 className="m-0">
                     {activeTestimonial.authorName}
                   </h3>
-                  <p className="m-0 text-sm">{activeTestimonial.authorRole}</p>
+                  <p className="m-0">{activeTestimonial.authorRole}</p>
                 </div>
                 {typeof activeTestimonial.rating === "number" ? (
                   <div className="flex items-center justify-center gap-2">
@@ -433,7 +431,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                         )
                       )}
                     </div>
-                    <Body variant="sm" className="m-0 font-medium">
+                    <Body variant="sm" className="m-0">
                       {t(
                         "ratingOutOfFiveStars",
                         "{{rating}}/5 stars",
@@ -447,7 +445,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
             <div className="mt-6 flex items-center justify-center gap-4">
               <button
                 type="button"
-                className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_12px_36px_rgba(1,22,36,0.1)]"
+                className="inline-flex h-14 w-14 items-center justify-center rounded-button-borderRadius shadow-[0_12px_36px_rgba(0,0,0,0.1)]"
                 onClick={() => {
                   const nextIndex =
                     (activeIndex - 1 + reviewItems.length) %
@@ -469,7 +467,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                     className={`h-2.5 w-2.5 rounded-full ${
                       activeIndex === index
                         ? "bg-[var(--colors-palette-quaternary)]"
-                        : "bg-[rgba(1,22,36,0.18)]"
+                        : "bg-current opacity-20"
                     }`}
                     onClick={() => {
                       setActiveIndex(index);
@@ -483,7 +481,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
               </div>
               <button
                 type="button"
-                className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_12px_36px_rgba(1,22,36,0.1)]"
+                className="inline-flex h-14 w-14 items-center justify-center rounded-button-borderRadius shadow-[0_12px_36px_rgba(0,0,0,0.1)]"
                 onClick={() => {
                   const nextIndex = (activeIndex + 1) % reviewItems.length;
                   setActiveIndex(nextIndex);

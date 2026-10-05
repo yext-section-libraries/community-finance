@@ -70,7 +70,6 @@
     text-transform: var(--textTransform-h6-textTransform);
   }
 
-  a,
   .components.font-link-fontFamily {
     font-family: var(--fontFamily-link-fontFamily);
     font-size: var(--fontSize-link-fontSize);
@@ -80,11 +79,6 @@
     letter-spacing: var(--letterSpacing-link-letterSpacing);
   }
 
-  button,
-  [role="button"],
-  input[type="button"],
-  input[type="submit"],
-  input[type="reset"],
   .components.font-button-fontFamily {
     font-family: var(--fontFamily-button-fontFamily);
     font-size: var(--fontSize-button-fontSize);
@@ -102,71 +96,4 @@
     font-style: var(--fontStyle-h2-fontStyle);
     text-transform: var(--textTransform-h2-textTransform);
   }
-}
-
-/* Keep section text spacing and link decoration consistent without repeating
- * theme font declarations in every section component. */
-:where(:root:not(:has(.Puck))) {
-  :is(
-    .yext-community-finance-about-branch,
-    .yext-community-finance-before-meet,
-    .yext-community-finance-community-resources,
-    .yext-community-finance-faq,
-    .yext-community-finance-featured-services,
-    .yext-community-finance-footer,
-    .yext-community-finance-header,
-    .yext-community-finance-hero,
-    .yext-community-finance-location-details,
-    .yext-community-finance-meet-team,
-    .yext-community-finance-nearby-locations,
-    .yext-community-finance-testimonials
-  ) {
-    p, li, a { line-height: 1.5; }
-    h1, h2, h3, h4, h5, h6 { line-height: 1.2; }
-  }
-
-  :is(
-    .yext-community-finance-about-branch,
-    .yext-community-finance-before-meet,
-    .yext-community-finance-community-resources,
-    .yext-community-finance-faq,
-    .yext-community-finance-featured-services,
-    .yext-community-finance-hero,
-    .yext-community-finance-location-details,
-    .yext-community-finance-meet-team,
-    .yext-community-finance-testimonials
-  ) a { text-decoration: underline; }
-
-  :is(
-    .yext-community-finance-about-branch,
-    .yext-community-finance-before-meet,
-    .yext-community-finance-community-resources,
-    .yext-community-finance-featured-services,
-    .yext-community-finance-hero,
-    .yext-community-finance-location-details,
-    .yext-community-finance-meet-team
-  ) a.components { text-decoration: none; }
-
-  :is(
-    .yext-community-finance-about-branch,
-    .yext-community-finance-before-meet,
-    .yext-community-finance-community-resources,
-    .yext-community-finance-featured-services,
-    .yext-community-finance-hero,
-    .yext-community-finance-location-details,
-    .yext-community-finance-meet-team
-  ) a.components:hover { text-decoration: underline; }
-
-  .yext-community-finance-footer a,
-  .yext-community-finance-header :is(nav, footer) a,
-  .yext-community-finance-header a.components { text-decoration: none; }
-
-  .yext-community-finance-footer a:hover,
-  .yext-community-finance-header :is(nav, footer) a:hover,
-  .yext-community-finance-header a.components:hover { text-decoration: underline; }
-
-  .yext-community-finance-nearby-locations .community-finance-nearby-section-body a {
-    text-decoration: underline;
-  }
-
 }

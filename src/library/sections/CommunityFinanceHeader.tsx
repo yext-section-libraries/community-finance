@@ -848,7 +848,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<
               target={item.openInNewTab ? "_blank" : undefined}
               rel={item.openInNewTab ? "noopener noreferrer" : undefined}
               aria-label={item.label}
-              className="inline-flex h-8 shrink-0 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+              className="inline-flex h-8 shrink-0 items-center justify-center rounded-button-borderRadius transition-opacity hover:opacity-80"
               style={{
                 color: resolveThemeColorCssValue(navigationColor),
               }}
@@ -1075,7 +1075,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<
             aria-label={
               menuOpen ? "Close navigation menu" : "Open navigation menu"
             }
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-button-borderRadius"
             style={{
               color: resolveThemeColorCssValue(navigationColor),
             }}
@@ -1180,7 +1180,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<
                               : undefined
                           }
                           aria-label={item.label}
-                          className="inline-flex h-8 shrink-0 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+                          className="inline-flex h-8 shrink-0 items-center justify-center rounded-button-borderRadius transition-opacity hover:opacity-80"
                           style={{
                             color: resolveThemeColorCssValue(navigationColor),
                           }}

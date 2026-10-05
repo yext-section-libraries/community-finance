@@ -334,7 +334,6 @@ const CommunityFinanceFaqComponent: PuckComponent<
                       props.heading.styles.fontStyle === "default"
                         ? undefined
                         : props.heading.styles.fontStyle,
-                    lineHeight: 1,
                     textTransform:
                       props.heading.styles.textTransform === "default"
                         ? undefined
@@ -371,7 +370,7 @@ const CommunityFinanceFaqComponent: PuckComponent<
                     <Background
                       key={`${resolvedQuestion}-${index}`}
                       background={props.rowBackgroundColor}
-                      className="rounded-[20px] px-5 py-4"
+                      className="rounded-image-borderRadius px-5 py-4"
                       style={getSurfaceColorStyle(
                         props.rowBackgroundColor,
                         streamDocument,
@@ -425,7 +424,7 @@ const CommunityFinanceFaqComponent: PuckComponent<
                         {isOpen ? <Minus size={16} /> : <Plus size={16} />}
                       </button>
                       {isOpen ? (
-                        <div className="mt-4 max-w-[880px] leading-7">
+                        <div className="mt-4 max-w-[880px]">
                           {renderRichText(resolvedAnswer, {
                             ...props.faqs.styles.answer.styles,
                             color: props.faqs.styles.answer.fontColor,

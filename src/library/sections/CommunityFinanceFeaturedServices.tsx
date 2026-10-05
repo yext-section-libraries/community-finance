@@ -513,7 +513,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                 >
                   <Background
                     background={props.eyebrow.backgroundColor}
-                    className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                    className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                     style={{
                       ...getSurfaceColorStyle(
                         props.eyebrow.backgroundColor,
@@ -540,7 +540,6 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                           ? undefined
                           : props.eyebrow.styles.textTransform,
                       ...(eyebrowColor ? { color: eyebrowColor } : {}),
-                      lineHeight: 1.2,
                     }}
                   >
                     {resolvedEyebrow}
@@ -572,7 +571,6 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                         props.heading.styles.fontStyle === "default"
                           ? undefined
                           : props.heading.styles.fontStyle,
-                      lineHeight: 1,
                       textTransform:
                         props.heading.styles.textTransform === "default"
                           ? undefined
@@ -589,7 +587,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                     props.description.text.constantValueEnabled
                   }
                 >
-                  <div className="mt-3 leading-7">
+                  <div className="mt-3">
                     {renderRichText(resolvedDescription, {
                       ...props.description.styles,
                       color: props.description.fontColor,
@@ -656,7 +654,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                   return (
                     <Background
                       key={`${resolvedServiceTitle}-${index}`}
-                      className="min-w-[280px] overflow-hidden rounded-[24px] md:min-w-[320px]"
+                      className="min-w-[280px] overflow-hidden rounded-image-borderRadius md:min-w-[320px]"
                       background={props.cardBackgroundColor}
                       style={getSurfaceColorStyle(
                         props.cardBackgroundColor,
@@ -682,7 +680,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                       ) : null}
                       <div className="flex h-full flex-col p-5">
                         <h3
-                          className="m-0 leading-[1.05]"
+                          className="m-0"
                           style={{
                             color: serviceTitleColor,
                             fontFamily:
@@ -715,7 +713,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                         >
                           {resolvedServiceTitle}
                         </h3>
-                        <div className="mt-3 leading-6">
+                        <div className="mt-3">
                           {renderRichText(resolvedServiceDescription, {
                             ...props.services.styles.description.styles,
                             color: props.services.styles.description.fontColor,
@@ -727,7 +725,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                             eventName={`cardLink${index}`}
                             className={
                               serviceCtaVariant === "link"
-                                ? "mt-5 p-0 no-underline hover:underline"
+                                ? "mt-5 "
                                 : "mt-5 inline-flex items-center justify-center px-5 py-3"
                             }
                           />

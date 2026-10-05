@@ -313,7 +313,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
               >
                 <Background
                   background={props.eyebrow.backgroundColor}
-                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                   style={{
                     ...getSurfaceColorStyle(
                       props.eyebrow.backgroundColor,
@@ -340,7 +340,6 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                       ? undefined
                       : props.eyebrow.styles.textTransform,
                   ...(eyebrowColor ? { color: eyebrowColor } : {}),
-                  lineHeight: 1.2,
                 }}
               >
                 {resolvedEyebrow}
@@ -372,7 +371,6 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                     props.heading.styles.fontStyle === "default"
                       ? undefined
                       : props.heading.styles.fontStyle,
-                  lineHeight: 1,
                   textTransform:
                     props.heading.styles.textTransform === "default"
                       ? undefined
@@ -396,7 +394,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                       : props.body.styles.fontFamily,
                   fontSize:
                     props.body.styles.fontSize === "default"
-                      ? "1.0625rem"
+                      ? "var(--fontSize-body-fontSize)"
                       : props.body.styles.fontSize,
                   fontWeight:
                     props.body.styles.fontWeight === "default"
@@ -406,7 +404,6 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                     props.body.styles.fontStyle === "default"
                       ? undefined
                       : props.body.styles.fontStyle,
-                  lineHeight: 1.75,
                   textTransform:
                     props.body.styles.textTransform === "default"
                       ? undefined

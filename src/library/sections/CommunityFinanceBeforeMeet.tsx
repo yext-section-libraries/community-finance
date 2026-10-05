@@ -384,7 +384,6 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
                     props.heading.styles.fontStyle === "default"
                       ? undefined
                       : props.heading.styles.fontStyle,
-                  lineHeight: 1,
                   textTransform:
                     props.heading.styles.textTransform === "default"
                       ? undefined
@@ -418,7 +417,6 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
                     props.body.styles.fontStyle === "default"
                       ? undefined
                       : props.body.styles.fontStyle,
-                  lineHeight: 1.7,
                   textTransform:
                     props.body.styles.textTransform === "default"
                       ? undefined
@@ -444,7 +442,7 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
                       <ComprehensiveCTA
                         value={item.cta as Partial<ComprehensiveCTAValue>}
                         eventName={`link${index}`}
-                        className="p-0 text-palette-primary no-underline hover:underline"
+                        className=""
                       />
                     </EntityField>
                   </li>

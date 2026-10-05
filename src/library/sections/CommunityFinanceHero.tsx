@@ -383,20 +383,14 @@ const CommunityFinanceHeroComponent: PuckComponent<
             : t("opensAtTime", "Opens at {{time}}", { time })
         : "";
     const isOpen = status.isOpen && !isComingSoon;
-    const dotColor = isOpen ? "#59b66d" : "#d64545";
-    const dotShadow = isOpen
-      ? "0 0 0 4px rgba(89, 182, 109, 0.16)"
-      : "0 0 0 4px rgba(214, 69, 69, 0.16)";
 
     return (
       <span className="inline-flex items-center gap-2">
         <span
           aria-hidden="true"
-          className="h-2.5 w-2.5 rounded-full"
-          style={{
-            backgroundColor: dotColor,
-            boxShadow: dotShadow,
-          }}
+          className={`h-2.5 w-2.5 rounded-full ${
+            isOpen ? "bg-palette-primary" : "bg-palette-secondary"
+          }`}
         />
         <span>{currentStatus}</span>
         {futureStatus ? <span>: {futureStatus}</span> : null}
@@ -443,13 +437,12 @@ const CommunityFinanceHeroComponent: PuckComponent<
                 >
                   <Background
                     background={props.statusPill.backgroundColor}
-                    className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold"
+                    className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1"
                     style={{
                       ...getSurfaceColorStyle(
                         props.statusPill.backgroundColor,
                         streamDocument,
                       ),
-                      textTransform: "uppercase",
                     }}
                   >
                   <HoursStatus
@@ -490,7 +483,6 @@ const CommunityFinanceHeroComponent: PuckComponent<
                     props.heading.styles.fontStyle === "default"
                       ? undefined
                       : props.heading.styles.fontStyle,
-                  lineHeight: 0.95,
                   textTransform:
                     props.heading.styles.textTransform === "default"
                       ? undefined
@@ -514,7 +506,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
                       : props.body.styles.fontFamily,
                   fontSize:
                     props.body.styles.fontSize === "default"
-                      ? "1.125rem"
+                      ? "var(--fontSize-body-fontSize)"
                       : props.body.styles.fontSize,
                   fontWeight:
                     props.body.styles.fontWeight === "default"
@@ -524,7 +516,6 @@ const CommunityFinanceHeroComponent: PuckComponent<
                     props.body.styles.fontStyle === "default"
                       ? undefined
                       : props.body.styles.fontStyle,
-                  lineHeight: 1.7,
                   textTransform:
                     props.body.styles.textTransform === "default"
                       ? undefined
@@ -562,7 +553,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
                       props.secondaryCta as Partial<ComprehensiveCTAValue>
                     }
                     eventName="getDirections"
-                    className="p-0 no-underline hover:underline"
+                    className=""
                   />
                 </EntityField>
               </div>

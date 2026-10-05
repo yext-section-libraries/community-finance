@@ -845,14 +845,12 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
         isEditing={props.puck.isEditing}
       >
         <section
-          className="yext-community-finance-location-details"
+          className="yext-community-finance-location-details border-y border-current/10"
           style={{
             ...getSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
-            borderTop: "1px solid rgb(230, 232, 233)",
-            borderBottom: "1px solid rgb(230, 232, 233)",
             paddingBlock,
           }}
         >
@@ -888,7 +886,6 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     props.heading.styles.fontStyle === "default"
                       ? undefined
                       : props.heading.styles.fontStyle,
-                  lineHeight: 1,
                   textTransform:
                     props.heading.styles.textTransform === "default"
                       ? undefined
@@ -901,7 +898,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               <article
-                className="rounded-[24px] p-6"
+                className="rounded-image-borderRadius p-6"
                 style={{
                   ...getSurfaceColorStyle(
                     props.cardBackgroundColor,
@@ -954,11 +951,11 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                 </h3>
                 </EntityField>
                 <div
-                  className="mt-5 grid gap-4 text-sm leading-6"
+                  className="mt-5 grid gap-4"
                   style={{ color: cardForegroundColor }}
                 >
                   <div>
-                    <dt className="font-bold">{t("address", "Address")}</dt>
+                    <dt>{t("address", "Address")}</dt>
                     <dd className="mt-1">
                       {resolvedAddress ? (
                         <EntityField
@@ -979,7 +976,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                   </div>
                   {normalizedPhones.map((phone, index) => (
                     <div key={`${phone.original}-${index}`}>
-                      <dt className="font-bold">{phone.label || "Phone"}</dt>
+                      <dt>{phone.label || "Phone"}</dt>
                       <EntityField
                         displayName="Phone"
                         fieldId={phone.entityField.field}
@@ -1020,7 +1017,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                   ))}
                   {normalizedEmails.length > 0 ? (
                     <div>
-                      <dt className="font-bold">{t("email", "Email")}</dt>
+                      <dt>{t("email", "Email")}</dt>
                       <EntityField
                         displayName="Email Addresses"
                         fieldId={props.emails.list.field}
@@ -1051,7 +1048,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     </div>
                   ) : null}
                   <div>
-                    <dt className="font-bold">
+                    <dt>
                       {t("nmlsNumber", "NMLS number")}
                     </dt>
                     <EntityField
@@ -1119,13 +1116,13 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     <ComprehensiveCTA
                       value={secondaryCtaValue}
                       eventName="secondaryCta"
-                      className="inline-flex no-underline hover:underline"
+                      className="inline-flex"
                     />
                   </EntityField>
                 </div>
               </article>
               <article
-                className="rounded-[24px] p-6"
+                className="rounded-image-borderRadius p-6"
                 style={{
                   ...getSurfaceColorStyle(
                     props.cardBackgroundColor,
@@ -1219,7 +1216,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     {props.hoursStyles.showAdditionalHoursText &&
                     additionalHoursText ? (
                       <span
-                        className="mt-3 text-sm"
+                        className="mt-3"
                         style={{ color: cardForegroundColor }}
                       >
                         {additionalHoursText}
@@ -1237,7 +1234,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         props.secondaryHoursHeading.text.constantValueEnabled
                       }>
                     <h4
-                      className="m-0 text-sm font-bold"
+                      className="m-0"
                       style={{
                         color:
                           getSurfaceTextColor(
@@ -1302,7 +1299,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         {props.secondaryHoursStyles.showAdditionalHoursText &&
                         additionalHoursText ? (
                           <span
-                            className="mt-3 text-sm"
+                            className="mt-3"
                             style={{ color: cardForegroundColor }}
                           >
                             {additionalHoursText}
@@ -1315,7 +1312,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                 ) : null}
               </article>
               <article
-                className="rounded-[24px] p-6 md:col-span-2 xl:col-span-1"
+                className="rounded-image-borderRadius p-6 md:col-span-2 xl:col-span-1"
                 style={{
                   ...getSurfaceColorStyle(
                     props.cardBackgroundColor,
@@ -1366,7 +1363,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                 </h3>
                 </EntityField>
                 <div
-                  className="mt-5 grid gap-4 text-sm leading-6"
+                  className="mt-5 grid gap-4"
                   style={{ color: cardForegroundColor }}
                 >
                   <div>
@@ -1377,7 +1374,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         props.languagesHeading.text.constantValueEnabled
                       }>
                     <h4
-                      className="m-0 font-bold"
+                      className="m-0"
                       style={{
                         color:
                           getSurfaceTextColor(
@@ -1436,7 +1433,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         props.accessibilityHeading.text.constantValueEnabled
                       }>
                     <h4
-                      className="m-0 font-bold"
+                      className="m-0"
                       style={{
                         color:
                           getSurfaceTextColor(
@@ -1496,7 +1493,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         props.servicesHeading.text.constantValueEnabled
                       }>
                     <h4
-                      className="m-0 font-bold"
+                      className="m-0"
                       style={{
                         color:
                           getSurfaceTextColor(

@@ -512,7 +512,7 @@ const CommunityFinanceFooterComponent: PuckComponent<
               maxWidth: FINANCE_SECTION_MAX_WIDTH,
               paddingBlock:
                 props.section.styles.verticalPadding === "default"
-                  ? "28px"
+                  ? "var(--padding-pageSection-verticalPadding)"
                   : props.section.styles.verticalPadding,
             }}
           >
@@ -520,17 +520,14 @@ const CommunityFinanceFooterComponent: PuckComponent<
               cta={{ link: brandLink, linkType: brand.linkType }}
               target={brand.openInNewTab ? "_blank" : undefined}
               rel={brand.openInNewTab ? "noopener noreferrer" : undefined}
-              className="text-inherit"
             >
-              <span
-                className="text-sm font-bold uppercase tracking-[0.24em]"
-                style={brandTextStyles}
+              <span style={brandTextStyles}
               >
                 {resolvedBrandLabel}
               </span>
             </Link>
 
-            <ul className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
+            <ul className="flex flex-wrap gap-x-6 gap-y-3">
               {footerLinks.map((item) => (
                 <li key={item.key}>
                   <EntityField
@@ -545,7 +542,7 @@ const CommunityFinanceFooterComponent: PuckComponent<
                       eventName="footerLink"
                       className={
                         item.isLegacy
-                          ? "inline-flex text-inherit transition-colors hover:opacity-80"
+                          ? "inline-flex transition-colors hover:opacity-80"
                           : "inline-flex"
                       }
                     />
