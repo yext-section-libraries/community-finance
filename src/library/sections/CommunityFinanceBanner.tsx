@@ -1,3 +1,8 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import { PuckComponent } from "@puckeditor/core";
@@ -17,7 +22,6 @@ import {
   type YextFields,
   backgroundColors,
   getDefaultRTF,
-  getSurfaceColorStyle,
   resolveComponentData,
   resolveYextEntityField,
   toPuckFields,
@@ -127,19 +131,18 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
       <PageSection
         background={section.backgroundColor}
         className="flex items-center justify-center"
-        outerStyle={getSurfaceColorStyle(
+        outerStyle={getFinanceSurfaceColorStyle(
           section.backgroundColor,
           streamDocument,
         )}
-        verticalPadding="sm"
       >
         <div className="relative flex h-20 w-full flex-row items-center justify-center gap-3 rounded-lg border border-gray-200 bg-gray-100 px-4">
           <CircleSlash2 className="h-10 w-10 flex-shrink-0 text-gray-400" />
           <div className="flex flex-col items-start">
-            <Body className="font-medium text-gray-500" variant="sm">
+            <Body className="text-gray-500" variant="sm">
               Section hidden for this page
             </Body>
-            <Body className="font-normal text-gray-500" variant="sm">
+            <Body className="text-gray-500" variant="sm">
               The mapped banner field is empty
             </Body>
           </div>
@@ -150,7 +153,11 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
 
   const richTextStyleOverrides = {
     ...data.styles,
-    color: data.fontColor ?? section.backgroundColor.contrastingColor,
+    color: getSurfaceTextColor(
+      data.fontColor,
+      section.backgroundColor,
+      streamDocument,
+    ),
   };
   const resolvedText = resolveComponentData(
     data.text,
@@ -172,11 +179,10 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
           right: "justify-end text-right",
         }[styles.textAlignment]
       }`}
-      outerStyle={getSurfaceColorStyle(
+      outerStyle={getFinanceSurfaceColorStyle(
         section.backgroundColor,
         streamDocument,
       )}
-      verticalPadding="sm"
     >
       <EntityField
         constantValueEnabled={data.text.constantValueEnabled}
@@ -193,7 +199,7 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
  * Displays a full-width, editor-configurable rich-text banner.
  */
 export const CommunityFinanceBanner: YextComponentConfig<CommunityFinanceBannerProps> = {
-  label: msg("components.banner", "Banner"),
+  label: msg("components.banner", "Banner Section"),
   fields: toPuckFields<CommunityFinanceBannerProps>(
     CommunityFinanceBannerFields,
   ),
@@ -234,7 +240,7 @@ export const CommunityFinanceBanner: YextComponentConfig<CommunityFinanceBannerP
 
 export const config: SectionConfig = {
   id: "CommunityFinanceBanner",
-  displayName: "Banner",
+  displayName: "Banner Section",
   description: "Banner",
   pageSetTypes: ["ENTITY"],
 };

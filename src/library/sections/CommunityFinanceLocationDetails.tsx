@@ -1,3 +1,8 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+} from "../shared/sectionHelpers";
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -20,7 +25,6 @@ import {
   EntityField,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
@@ -97,7 +101,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 type StyledHeading = {
   text: YextEntityField<TranslatableString>;
@@ -681,7 +685,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
     sunday: t("sunday", "Sunday"),
   };
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const resolvedHeading =
     resolveComponentData(props.heading.text, locale, streamDocument) || "";
   const resolvedLobbyHoursHeading =
@@ -800,10 +804,12 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
   const sectionForegroundColor = getSurfaceTextColor(
     props.heading.fontColor,
     props.section.backgroundColor,
+    streamDocument,
   );
   const cardForegroundColor = getSurfaceTextColor(
     undefined,
     props.cardBackgroundColor,
+    streamDocument,
   );
   const phoneColor =
     getThemeColorValue(props.phones.color) ?? cardForegroundColor;
@@ -812,23 +818,27 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
   const accessibilityColor = getSurfaceTextColor(
     props.accessibility.fontColor,
     props.cardBackgroundColor,
+    streamDocument,
   );
   const secondaryCtaValue: Partial<ComprehensiveCTAValue> = {
     data: props.secondaryCta.data,
     styles: {
       ...props.secondaryCta.styles,
       color:
-        props.secondaryCta.styles.color?.selectedColor === "default"
-          ? {
-              selectedColor: props.cardBackgroundColor.contrastingColor,
-              contrastingColor: props.cardBackgroundColor.selectedColor,
-            }
+        props.secondaryCta.styles.variant === "link" &&
+        (!props.secondaryCta.styles.color?.selectedColor ||
+          props.secondaryCta.styles.color.selectedColor === "default")
+          ? getFinanceTextThemeColor(
+              undefined,
+              props.cardBackgroundColor,
+              streamDocument,
+            )
           : props.secondaryCta.styles.color,
     },
   };
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
   const additionalHoursText =
     typeof streamDocument.additionalHoursText === "string"
@@ -844,103 +854,17 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
         isEditing={props.puck.isEditing}
       >
         <section
-          className="yext-community-finance-location-details"
+          className="yext-community-finance-location-details border-y border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
-            borderTop: "1px solid rgb(230, 232, 233)",
-            borderBottom: "1px solid rgb(230, 232, 233)",
             paddingBlock,
           }}
         >
-          <style>{`
-            .yext-community-finance-location-details p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-location-details li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-location-details h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-            .yext-community-finance-location-details h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-            .yext-community-finance-location-details h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-            .yext-community-finance-location-details h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-            .yext-community-finance-location-details h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-            .yext-community-finance-location-details h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
-            .yext-community-finance-location-details a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
-              text-decoration: underline;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
-            }
-
-            .yext-community-finance-location-details a.components {
-              text-decoration: none;
-            }
-
-            .yext-community-finance-location-details a.components:hover {
-              text-decoration: underline;
-            }
-          `}</style>
           <div
-            className="mx-auto px-5 py-16 md:px-8"
+            className="mx-auto px-5 md:px-8"
             style={{
               maxWidth: FINANCE_SECTION_MAX_WIDTH,
             }}
@@ -971,7 +895,6 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     props.heading.styles.fontStyle === "default"
                       ? undefined
                       : props.heading.styles.fontStyle,
-                  lineHeight: 1,
                   textTransform:
                     props.heading.styles.textTransform === "default"
                       ? undefined
@@ -984,9 +907,9 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
             </div>
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               <article
-                className="rounded-[24px] p-6"
+                className="rounded-image-borderRadius p-6"
                 style={{
-                  ...getSurfaceColorStyle(
+                  ...getFinanceSurfaceColorStyle(
                     props.cardBackgroundColor,
                     streamDocument,
                   ),
@@ -999,12 +922,13 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     props.locationInformationHeading.text.constantValueEnabled}
               >
                 <h3
-                  className="m-0 text-lg font-bold"
+                  className="m-0"
                   style={{
                     color:
                       getSurfaceTextColor(
                         props.locationInformationHeading.fontColor,
                         props.cardBackgroundColor,
+                        streamDocument,
                       ) ?? cardForegroundColor,
                     fontFamily:
                       props.locationInformationHeading.styles.fontFamily ===
@@ -1037,11 +961,11 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                 </h3>
                 </EntityField>
                 <div
-                  className="mt-5 grid gap-4 text-sm leading-6"
+                  className="mt-5 grid gap-4"
                   style={{ color: cardForegroundColor }}
                 >
                   <div>
-                    <dt className="font-bold">{t("address", "Address")}</dt>
+                    <dt>{t("address", "Address")}</dt>
                     <dd className="mt-1">
                       {resolvedAddress ? (
                         <EntityField
@@ -1062,7 +986,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                   </div>
                   {normalizedPhones.map((phone, index) => (
                     <div key={`${phone.original}-${index}`}>
-                      <dt className="font-bold">{phone.label || "Phone"}</dt>
+                      <dt>{phone.label || "Phone"}</dt>
                       <EntityField
                         displayName="Phone"
                         fieldId={phone.entityField.field}
@@ -1103,7 +1027,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                   ))}
                   {normalizedEmails.length > 0 ? (
                     <div>
-                      <dt className="font-bold">{t("email", "Email")}</dt>
+                      <dt>{t("email", "Email")}</dt>
                       <EntityField
                         displayName="Email Addresses"
                         fieldId={props.emails.list.field}
@@ -1134,7 +1058,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     </div>
                   ) : null}
                   <div>
-                    <dt className="font-bold">
+                    <dt>
                       {t("nmlsNumber", "NMLS number")}
                     </dt>
                     <EntityField
@@ -1150,6 +1074,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                           getSurfaceTextColor(
                             props.nmlsNumber.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.nmlsNumber.styles.fontFamily === "default"
@@ -1202,15 +1127,15 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     <ComprehensiveCTA
                       value={secondaryCtaValue}
                       eventName="secondaryCta"
-                      className="inline-flex text-sm font-bold no-underline hover:underline"
+                      className="inline-flex"
                     />
                   </EntityField>
                 </div>
               </article>
               <article
-                className="rounded-[24px] p-6"
+                className="rounded-image-borderRadius p-6"
                 style={{
-                  ...getSurfaceColorStyle(
+                  ...getFinanceSurfaceColorStyle(
                     props.cardBackgroundColor,
                     streamDocument,
                   ),
@@ -1223,12 +1148,13 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     props.lobbyHoursHeading.text.constantValueEnabled}
               >
                 <h3
-                  className="m-0 text-lg font-bold"
+                  className="m-0"
                   style={{
                     color:
                       getSurfaceTextColor(
                         props.lobbyHoursHeading.fontColor,
                         props.cardBackgroundColor,
+                        streamDocument,
                       ) ?? cardForegroundColor,
                     fontFamily:
                       props.lobbyHoursHeading.styles.fontFamily === "default"
@@ -1302,7 +1228,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     {props.hoursStyles.showAdditionalHoursText &&
                     additionalHoursText ? (
                       <span
-                        className="mt-3 text-sm"
+                        className="mt-3"
                         style={{ color: cardForegroundColor }}
                       >
                         {additionalHoursText}
@@ -1320,12 +1246,13 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         props.secondaryHoursHeading.text.constantValueEnabled
                       }>
                     <h4
-                      className="m-0 text-sm font-bold"
+                      className="m-0"
                       style={{
                         color:
                           getSurfaceTextColor(
                             props.secondaryHoursHeading.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.secondaryHoursHeading.styles.fontFamily ===
@@ -1385,7 +1312,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         {props.secondaryHoursStyles.showAdditionalHoursText &&
                         additionalHoursText ? (
                           <span
-                            className="mt-3 text-sm"
+                            className="mt-3"
                             style={{ color: cardForegroundColor }}
                           >
                             {additionalHoursText}
@@ -1398,9 +1325,9 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                 ) : null}
               </article>
               <article
-                className="rounded-[24px] p-6 md:col-span-2 xl:col-span-1"
+                className="rounded-image-borderRadius p-6 md:col-span-2 xl:col-span-1"
                 style={{
-                  ...getSurfaceColorStyle(
+                  ...getFinanceSurfaceColorStyle(
                     props.cardBackgroundColor,
                     streamDocument,
                   ),
@@ -1413,12 +1340,13 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     props.clientServicesHeading.text.constantValueEnabled}
               >
                 <h3
-                  className="m-0 text-lg font-bold"
+                  className="m-0"
                   style={{
                     color:
                       getSurfaceTextColor(
                         props.clientServicesHeading.fontColor,
                         props.cardBackgroundColor,
+                        streamDocument,
                       ) ?? cardForegroundColor,
                     fontFamily:
                       props.clientServicesHeading.styles.fontFamily ===
@@ -1449,7 +1377,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                 </h3>
                 </EntityField>
                 <div
-                  className="mt-5 grid gap-4 text-sm leading-6"
+                  className="mt-5 grid gap-4"
                   style={{ color: cardForegroundColor }}
                 >
                   <div>
@@ -1460,12 +1388,13 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         props.languagesHeading.text.constantValueEnabled
                       }>
                     <h4
-                      className="m-0 font-bold"
+                      className="m-0"
                       style={{
                         color:
                           getSurfaceTextColor(
                             props.languagesHeading.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.languagesHeading.styles.fontFamily === "default"
@@ -1506,6 +1435,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         color: getSurfaceTextColor(
                           props.languages.fontColor,
                           props.cardBackgroundColor,
+                          streamDocument,
                         ),
                       })}
                     </div>
@@ -1519,12 +1449,13 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         props.accessibilityHeading.text.constantValueEnabled
                       }>
                     <h4
-                      className="m-0 font-bold"
+                      className="m-0"
                       style={{
                         color:
                           getSurfaceTextColor(
                             props.accessibilityHeading.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.accessibilityHeading.styles.fontFamily ===
@@ -1579,12 +1510,13 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         props.servicesHeading.text.constantValueEnabled
                       }>
                     <h4
-                      className="m-0 font-bold"
+                      className="m-0"
                       style={{
                         color:
                           getSurfaceTextColor(
                             props.servicesHeading.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.servicesHeading.styles.fontFamily === "default"
@@ -1625,6 +1557,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         color: getSurfaceTextColor(
                           props.services.fontColor,
                           props.cardBackgroundColor,
+                          streamDocument,
                         ),
                       })}
                     </div>
@@ -1642,7 +1575,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
 
 export const CommunityFinanceLocationDetails: YextComponentConfig<CommunityFinanceLocationDetailsProps> =
   {
-    label: msg("components.locationDetails", "Location Details"),
+    label: msg("components.locationDetails", "Location Details Section"),
     fields: CommunityFinanceLocationDetailsFields,
     defaultProps: {
       section: {
@@ -2029,7 +1962,7 @@ export const CommunityFinanceLocationDetails: YextComponentConfig<CommunityFinan
 
 export const config: SectionConfig = {
   id: "CommunityFinanceLocationDetails",
-  displayName: "Location Details",
+  displayName: "Location Details Section",
   description: "Location Details",
   pageSetTypes: ["ENTITY"],
 };

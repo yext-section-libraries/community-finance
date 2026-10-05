@@ -1,3 +1,10 @@
+import {
+  getFinanceCtaValue,
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -20,7 +27,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
@@ -312,7 +318,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
 > = (props) => {
   const { t, i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const resolvedHeading =
     resolveComponentData(props.heading.text, locale, streamDocument) || "";
   const resolvedBody = resolveComponentData(
@@ -333,7 +339,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
   const hasHeroImage = hasImageSource(resolvedHeroImage);
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
 
   const statusTemplate = (status: StatusParams) => {
@@ -382,20 +388,14 @@ const CommunityFinanceHeroComponent: PuckComponent<
             : t("opensAtTime", "Opens at {{time}}", { time })
         : "";
     const isOpen = status.isOpen && !isComingSoon;
-    const dotColor = isOpen ? "#59b66d" : "#d64545";
-    const dotShadow = isOpen
-      ? "0 0 0 4px rgba(89, 182, 109, 0.16)"
-      : "0 0 0 4px rgba(214, 69, 69, 0.16)";
 
     return (
       <span className="inline-flex items-center gap-2">
         <span
           aria-hidden="true"
-          className="h-2.5 w-2.5 rounded-full"
-          style={{
-            backgroundColor: dotColor,
-            boxShadow: dotShadow,
-          }}
+          className={`h-2.5 w-2.5 rounded-full ${
+            isOpen ? "bg-palette-primary" : "bg-palette-secondary"
+          }`}
         />
         <span>{currentStatus}</span>
         {futureStatus ? <span>: {futureStatus}</span> : null}
@@ -416,105 +416,21 @@ const CommunityFinanceHeroComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-hero border-b border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
             paddingBlock,
           }}
         >
-          <style>{`
-            .yext-community-finance-hero p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-hero li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-hero h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-            .yext-community-finance-hero h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-            .yext-community-finance-hero h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-            .yext-community-finance-hero h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-            .yext-community-finance-hero h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-            .yext-community-finance-hero h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
-            .yext-community-finance-hero a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
-              text-decoration: underline;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
-            }
-
-            .yext-community-finance-hero a.components {
-              text-decoration: none;
-            }
-
-            .yext-community-finance-hero a.components:hover {
-              text-decoration: underline;
-            }
-          `}</style>
           <div
-            className={`mx-auto grid gap-10 px-5 py-12 md:px-8 ${
+            className={`mx-auto grid gap-10 px-5 md:px-8 ${
               hasHeroImage
-                ? "lg:grid-cols-[minmax(0,1fr)_460px] lg:items-center lg:gap-12 lg:py-16"
+                ? "lg:grid-cols-[minmax(0,1fr)_460px] lg:items-center lg:gap-12"
                 : ""
             }`}
             style={{
-              maxWidth: "1440px",
+              maxWidth: "var(--maxWidth-pageSection-contentWidth)",
             }}
           >
             <div className="order-1">
@@ -526,13 +442,12 @@ const CommunityFinanceHeroComponent: PuckComponent<
                 >
                   <Background
                     background={props.statusPill.backgroundColor}
-                    className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold"
+                    className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1"
                     style={{
-                      ...getSurfaceColorStyle(
+                      ...getFinanceSurfaceColorStyle(
                         props.statusPill.backgroundColor,
                         streamDocument,
                       ),
-                      textTransform: "uppercase",
                     }}
                   >
                   <HoursStatus
@@ -554,7 +469,11 @@ const CommunityFinanceHeroComponent: PuckComponent<
               >
               <Heading
                 level={1}
-                color={props.heading.fontColor}
+                color={getFinanceTextThemeColor(
+                  props.heading.fontColor,
+                  props.section.backgroundColor,
+                  streamDocument,
+                )}
                 className="m-0 max-w-[720px]"
                 style={{
                   fontFamily:
@@ -573,7 +492,6 @@ const CommunityFinanceHeroComponent: PuckComponent<
                     props.heading.styles.fontStyle === "default"
                       ? undefined
                       : props.heading.styles.fontStyle,
-                  lineHeight: 0.95,
                   textTransform:
                     props.heading.styles.textTransform === "default"
                       ? undefined
@@ -597,7 +515,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
                       : props.body.styles.fontFamily,
                   fontSize:
                     props.body.styles.fontSize === "default"
-                      ? "1.125rem"
+                      ? "var(--fontSize-body-fontSize)"
                       : props.body.styles.fontSize,
                   fontWeight:
                     props.body.styles.fontWeight === "default"
@@ -607,7 +525,6 @@ const CommunityFinanceHeroComponent: PuckComponent<
                     props.body.styles.fontStyle === "default"
                       ? undefined
                       : props.body.styles.fontStyle,
-                  lineHeight: 1.7,
                   textTransform:
                     props.body.styles.textTransform === "default"
                       ? undefined
@@ -616,7 +533,11 @@ const CommunityFinanceHeroComponent: PuckComponent<
               >
                 {renderRichText(resolvedBody, {
                   ...props.body.styles,
-                  color: props.body.fontColor,
+                  color: getSurfaceTextColor(
+                    props.body.fontColor,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  ),
                 })}
               </div>
               </EntityField>
@@ -629,7 +550,11 @@ const CommunityFinanceHeroComponent: PuckComponent<
                   }
                 >
                   <ComprehensiveCTA
-                    value={props.primaryCta as Partial<ComprehensiveCTAValue>}
+                    value={getFinanceCtaValue(
+                      props.primaryCta as Partial<ComprehensiveCTAValue>,
+                      props.section.backgroundColor,
+                      streamDocument,
+                    )}
                     eventName="primaryCta"
                   />
                 </EntityField>
@@ -641,11 +566,13 @@ const CommunityFinanceHeroComponent: PuckComponent<
                   }
                 >
                   <ComprehensiveCTA
-                    value={
-                      props.secondaryCta as Partial<ComprehensiveCTAValue>
-                    }
+                    value={getFinanceCtaValue(
+                      props.secondaryCta as Partial<ComprehensiveCTAValue>,
+                      props.section.backgroundColor,
+                      streamDocument,
+                    )}
                     eventName="getDirections"
-                    className="p-0 text-sm font-bold no-underline hover:underline"
+                    className=""
                   />
                 </EntityField>
               </div>
@@ -659,7 +586,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
                     props.heroImage.image.constantValueEnabled
                   }>
                 <div
-                  className="relative overflow-hidden rounded-[28px]"
+                  className="relative overflow-hidden rounded-image-borderRadius"
                   style={{
                     aspectRatio:
                       props.heroImage.aspectRatio > 0
@@ -667,7 +594,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
                         : 1,
                     borderRadius:
                       props.heroImage.styles.borderRadius === "default"
-                        ? "28px"
+                        ? undefined
                         : props.heroImage.styles.borderRadius,
                   }}
                 >
@@ -697,7 +624,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
 
 export const CommunityFinanceHero: YextComponentConfig<CommunityFinanceHeroProps> =
   {
-    label: msg("components.hero", "Hero"),
+    label: msg("components.hero", "Hero Section"),
     fields: CommunityFinanceHeroFields,
     defaultProps: {
       section: {
@@ -862,7 +789,7 @@ export const CommunityFinanceHero: YextComponentConfig<CommunityFinanceHeroProps
 
 export const config: SectionConfig = {
   id: "CommunityFinanceHero",
-  displayName: "Hero",
+  displayName: "Hero Section",
   description: "Hero",
   pageSetTypes: ["ENTITY"],
 };

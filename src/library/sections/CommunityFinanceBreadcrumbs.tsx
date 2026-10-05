@@ -1,3 +1,8 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -10,7 +15,6 @@ import {
   EntityField,
   VisibilityWrapper,
   getAnalyticsScopeHash,
-  getSurfaceColorStyle,
   resolveBreadcrumbs,
   resolveComponentData,
   useDocument,
@@ -24,7 +28,6 @@ import {
   type YextFields,
   pt,
 } from "@yext/visual-editor";
-import { getSurfaceTextColor } from "../shared/sectionHelpers";
 
 type FinanceSectionVerticalPaddingValue =
   | "default"
@@ -102,7 +105,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 const getTextStyles = (
   field: StyledTextProps,
@@ -110,10 +113,10 @@ const getTextStyles = (
   streamDocument: StreamDocument,
 ): React.CSSProperties => ({
   color: getSurfaceTextColor(field.fontColor, surfaceColor, streamDocument),
-  fontFamily:
+    fontFamily:
     field.styles.fontFamily === "default"
-      ? "var(--fontFamily-link-fontFamily)"
-      : field.styles.fontFamily,
+    ? "var(--fontFamily-link-fontFamily)"
+  : field.styles.fontFamily,
   fontSize:
     field.styles.fontSize === "default"
       ? "var(--fontSize-link-fontSize)"
@@ -124,7 +127,6 @@ const getTextStyles = (
       : field.styles.fontWeight,
   fontStyle:
     field.styles.fontStyle === "default" ? undefined : field.styles.fontStyle,
-  lineHeight: 1.4,
   textTransform:
     field.styles.textTransform === "default"
       ? undefined
@@ -210,12 +212,12 @@ const CommunityFinanceBreadcrumbsFields: YextFields<CommunityFinanceBreadcrumbsP
 const CommunityFinanceBreadcrumbsComponent: PuckComponent<
   CommunityFinanceBreadcrumbsProps
 > = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
   const { relativePrefixToRoot } = useTemplateProps<{
     relativePrefixToRoot?: string;
   }>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const breadcrumbs = resolveBreadcrumbs(streamDocument) ?? [];
   const resolvedRootLabel =
     resolveComponentData(props.rootLabel.text, locale, streamDocument) ||
@@ -228,7 +230,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
     "";
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
   const rootTextStyles = getTextStyles(
     props.rootLabel,
@@ -256,7 +258,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
   const separator = (
     <span
       aria-hidden="true"
-      className="text-[0.7rem] opacity-45"
+      className="opacity-45"
       style={currentTextStyles}
     >
       /
@@ -276,7 +278,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="border-b border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
@@ -284,7 +286,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
           }}
         >
           <div
-            className="mx-auto px-5 py-4 md:px-8"
+            className="mx-auto px-5 md:px-8"
             style={{
               maxWidth: FINANCE_SECTION_MAX_WIDTH,
             }}
@@ -293,10 +295,8 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
               <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
                 {showSyntheticPreview ? (
                   <li
-                    className="text-sm"
                     style={{
                       ...currentTextStyles,
-                      fontFamily: "Arial, Helvetica, sans-serif",
                       padding: "18px 24px",
                     }}
                   >
@@ -330,14 +330,14 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
                             linkType: "URL",
                           }}
                           eventName={`breadcrumbLink${index}`}
-                          className="text-sm font-medium tracking-[0.08em] transition-opacity hover:opacity-75"
+                          className="transition-opacity hover:opacity-75"
                           style={isRoot ? rootTextStyles : currentTextStyles}
                         >
                           {label}
                         </Link>
                       ) : (
                         <span
-                          className={`text-sm font-medium tracking-[0.08em] ${
+                          className={`   ${
                             shouldRenderAsCurrent ? "opacity-65" : ""
                           }`}
                           style={isRoot ? rootTextStyles : currentTextStyles}
@@ -391,7 +391,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
 
 export const CommunityFinanceBreadcrumbs: YextComponentConfig<CommunityFinanceBreadcrumbsProps> =
   {
-    label: msg("components.breadcrumbs", "Breadcrumbs"),
+    label: msg("components.breadcrumbsSection", "Breadcrumbs Section"),
     fields: CommunityFinanceBreadcrumbsFields,
     defaultProps: {
       section: {
@@ -449,7 +449,7 @@ export default CommunityFinanceBreadcrumbs;
 
 export const config: SectionConfig = {
   id: "CommunityFinanceBreadcrumbs",
-  displayName: "Breadcrumbs",
+  displayName: "Breadcrumbs Section",
   description: "Breadcrumbs",
   pageSetTypes: ["ENTITY"],
 };

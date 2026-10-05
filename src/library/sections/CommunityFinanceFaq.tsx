@@ -1,6 +1,13 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, useAnalytics } from "@yext/pages-components";
 import {
@@ -12,7 +19,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
@@ -86,7 +92,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 type StyledHeading = {
   text: YextEntityField<TranslatableString>;
@@ -267,15 +273,16 @@ const CommunityFinanceFaqComponent: PuckComponent<
   CommunityFinanceFaqProps
 > = (props) => {
   const analytics = useAnalytics();
+  const { i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const resolvedHeading =
     resolveComponentData(props.heading.text, locale, streamDocument) || "";
   const [openIndex, setOpenIndex] = React.useState(0);
   const resolvedFaqs = faqSource.resolveItems(props.faqs.data, streamDocument);
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
 
   return (
@@ -291,91 +298,15 @@ const CommunityFinanceFaqComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-faq border-t border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
             paddingBlock,
           }}
         >
-          <style>{`
-            .yext-community-finance-faq p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-faq li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-faq h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-            .yext-community-finance-faq h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-            .yext-community-finance-faq h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-            .yext-community-finance-faq h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-            .yext-community-finance-faq h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-            .yext-community-finance-faq h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
-            .yext-community-finance-faq a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
-              text-decoration: underline;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
-            }
-          `}</style>
           <div
-            className="mx-auto px-5 py-16 md:px-8"
+            className="mx-auto px-5 md:px-8"
             style={{
               maxWidth: FINANCE_SECTION_MAX_WIDTH,
             }}
@@ -388,7 +319,11 @@ const CommunityFinanceFaqComponent: PuckComponent<
               >
                 <Heading
                   level={2}
-                  color={props.heading.fontColor}
+                  color={getFinanceTextThemeColor(
+                    props.heading.fontColor,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  )}
                   className="m-0 text-balance"
                   style={{
                     fontFamily:
@@ -407,7 +342,6 @@ const CommunityFinanceFaqComponent: PuckComponent<
                       props.heading.styles.fontStyle === "default"
                         ? undefined
                         : props.heading.styles.fontStyle,
-                    lineHeight: 1,
                     textTransform:
                       props.heading.styles.textTransform === "default"
                         ? undefined
@@ -444,15 +378,15 @@ const CommunityFinanceFaqComponent: PuckComponent<
                     <Background
                       key={`${resolvedQuestion}-${index}`}
                       background={props.rowBackgroundColor}
-                      className="rounded-[20px] px-5 py-4"
-                      style={getSurfaceColorStyle(
+                      className="rounded-image-borderRadius px-5 py-4"
+                      style={getFinanceSurfaceColorStyle(
                         props.rowBackgroundColor,
                         streamDocument,
                       )}
                     >
                       <button
                         type="button"
-                        className="flex w-full items-center justify-between gap-5 text-left text-base font-bold text-inherit"
+                        className="flex w-full items-center justify-between gap-5 text-left text-inherit"
                         onClick={() => {
                           const nextIsOpen = !isOpen;
                           setOpenIndex(nextIsOpen ? index : -1);
@@ -498,10 +432,14 @@ const CommunityFinanceFaqComponent: PuckComponent<
                         {isOpen ? <Minus size={16} /> : <Plus size={16} />}
                       </button>
                       {isOpen ? (
-                        <div className="mt-4 max-w-[880px] text-sm leading-7">
+                        <div className="mt-4 max-w-[880px]">
                           {renderRichText(resolvedAnswer, {
                             ...props.faqs.styles.answer.styles,
-                            color: props.faqs.styles.answer.fontColor,
+                            color: getSurfaceTextColor(
+                              props.faqs.styles.answer.fontColor,
+                              props.rowBackgroundColor,
+                              streamDocument,
+                            ),
                           })}
                         </div>
                       ) : null}
@@ -519,7 +457,7 @@ const CommunityFinanceFaqComponent: PuckComponent<
 
 export const CommunityFinanceFaq: YextComponentConfig<CommunityFinanceFaqProps> =
   {
-    label: msg("components.faq", "FAQ"),
+    label: msg("components.faq", "FAQ Section"),
     fields: CommunityFinanceFaqFields,
     defaultProps: {
       section: {
@@ -585,7 +523,7 @@ export const CommunityFinanceFaq: YextComponentConfig<CommunityFinanceFaqProps> 
 
 export const config: SectionConfig = {
   id: "CommunityFinanceFaq",
-  displayName: "FAQ",
+  displayName: "FAQ Section",
   description: "FAQ",
   pageSetTypes: ["ENTITY"],
 };

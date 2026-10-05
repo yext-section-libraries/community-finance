@@ -1,6 +1,14 @@
+import {
+  getFinanceCtaValue,
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, type ImageType } from "@yext/pages-components";
 import {
@@ -14,7 +22,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
@@ -93,7 +100,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 type StyledHeading = {
   text: YextEntityField<TranslatableString>;
@@ -523,8 +530,9 @@ const CommunityFinanceMeetTeamFields: YextFields<CommunityFinanceMeetTeamProps> 
 const CommunityFinanceMeetTeamComponent: PuckComponent<
   CommunityFinanceMeetTeamProps
 > = (props) => {
+  const { i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const credentialsHeading = props.credentialsHeading ?? {
     text: {
       field: "",
@@ -606,7 +614,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
   );
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
   const eyebrowColor = getThemeColorCssValue(
     props.eyebrow.fontColor?.selectedColor,
@@ -638,99 +646,15 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-meet-team border-t border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
             paddingBlock,
           }}
         >
-          <style>{`
-            .yext-community-finance-meet-team p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-meet-team li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-meet-team h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-            .yext-community-finance-meet-team h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-            .yext-community-finance-meet-team h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-            .yext-community-finance-meet-team h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-            .yext-community-finance-meet-team h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-            .yext-community-finance-meet-team h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
-            .yext-community-finance-meet-team a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
-              text-decoration: underline;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
-            }
-
-            .yext-community-finance-meet-team a.components {
-              text-decoration: none;
-            }
-
-            .yext-community-finance-meet-team a.components:hover {
-              text-decoration: underline;
-            }
-          `}</style>
           <div
-            className="mx-auto px-5 py-16 md:px-8"
+            className="mx-auto px-5 md:px-8"
             style={{
               maxWidth: FINANCE_SECTION_MAX_WIDTH,
             }}
@@ -743,9 +667,9 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
               >
                 <Background
                   background={props.eyebrow.backgroundColor}
-                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                   style={{
-                    ...getSurfaceColorStyle(
+                    ...getFinanceSurfaceColorStyle(
                       props.eyebrow.backgroundColor,
                       streamDocument,
                     ),
@@ -770,7 +694,6 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                         ? undefined
                         : props.eyebrow.styles.textTransform,
                     ...(eyebrowColor ? { color: eyebrowColor } : {}),
-                    lineHeight: 1.2,
                   }}
                 >
                   {resolvedEyebrow}
@@ -783,7 +706,11 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
               >
                 <Heading
                   level={2}
-                  color={props.heading.fontColor}
+                  color={getFinanceTextThemeColor(
+                    props.heading.fontColor,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  )}
                   className="m-0"
                   style={{
                     fontFamily:
@@ -802,7 +729,6 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                       props.heading.styles.fontStyle === "default"
                         ? undefined
                         : props.heading.styles.fontStyle,
-                    lineHeight: 1,
                     textTransform:
                       props.heading.styles.textTransform === "default"
                         ? undefined
@@ -890,11 +816,10 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                 const licensesColor = getThemeColorCssValue(
                   props.advisors.styles.licenses.fontColor?.selectedColor,
                 );
-                const specialtiesColor = getThemeColorCssValue(
-                  props.advisors.styles.specialties.fontColor?.selectedColor,
-                );
-                const cardForegroundColor = getThemeColorCssValue(
-                  props.cardBackgroundColor.contrastingColor,
+                const cardForegroundColor = getSurfaceTextColor(
+                  undefined,
+                  props.cardBackgroundColor,
+                  streamDocument,
                 );
                 const hasCredentials =
                   typeof resolvedCredentials === "string" &&
@@ -907,9 +832,9 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                 return (
                   <Background
                     key={resolvedName}
-                    className="overflow-hidden rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
+                    className="overflow-hidden rounded-image-borderRadius shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
                     background={props.cardBackgroundColor}
-                    style={getSurfaceColorStyle(
+                    style={getFinanceSurfaceColorStyle(
                       props.cardBackgroundColor,
                       streamDocument,
                     )}
@@ -924,7 +849,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               props.advisors.data.constantValueEnabled
                             }
                           >
-                            <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full">
+                            <div className="h-24 w-24 shrink-0 overflow-hidden rounded-image-borderRadius">
                               <Image
                                 image={resolvedImage}
                                 className="h-full w-full"
@@ -948,7 +873,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                             }
                           >
                             <h3
-                              className="m-0 text-2xl"
+                              className="m-0"
                               style={{
                                 color: nameColor,
                                 fontFamily:
@@ -966,7 +891,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                                 fontWeight:
                                   props.advisors.styles.name.styles
                                     .fontWeight === "default"
-                                    ? "600"
+                                    ? undefined
                                     : props.advisors.styles.name.styles
                                         .fontWeight,
                                 fontStyle:
@@ -994,7 +919,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                             }
                           >
                             <p
-                              className="mt-1 text-sm"
+                              className="mt-1"
                               style={{
                                 color: roleColor,
                                 fontFamily:
@@ -1046,7 +971,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               }
                             >
                               <h4
-                                className="m-0 font-bold"
+                                className="m-0"
                                 style={{
                                   color:
                                     credentialsHeadingColor ??
@@ -1140,7 +1065,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               }
                             >
                               <h4
-                                className="m-0 font-bold"
+                                className="m-0"
                                 style={{
                                   color:
                                     licensesHeadingColor ?? cardForegroundColor,
@@ -1233,7 +1158,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               }
                             >
                               <h4
-                                className="m-0 font-bold"
+                                className="m-0"
                                 style={{
                                   color:
                                     specialtiesHeadingColor ??
@@ -1278,9 +1203,11 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               <div className="mt-1 [&_ol]:my-0 [&_ol]:pl-0 [&_p]:m-0 [&_p]:pl-0 [&_ul]:my-0 [&_ul]:pl-0">
                                 {renderRichText(resolvedSpecialties, {
                                   ...props.advisors.styles.specialties.styles,
-                                  color:
-                                    props.advisors.styles.specialties
-                                      .fontColor ?? specialtiesColor,
+                                  color: getSurfaceTextColor(
+                                    props.advisors.styles.specialties.fontColor,
+                                    props.cardBackgroundColor,
+                                    streamDocument,
+                                  ),
                                 })}
                               </div>
                             </EntityField>
@@ -1298,8 +1225,12 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                             }
                           >
                             <ComprehensiveCTA
-                              value={advisorCtaValue}
-                              className="p-0 text-sm font-semibold no-underline hover:underline"
+                              value={getFinanceCtaValue(
+                                advisorCtaValue,
+                                props.cardBackgroundColor,
+                                streamDocument,
+                              )}
+                              className=""
                             />
                           </EntityField>
                         </div>
@@ -1318,7 +1249,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
 
 export const CommunityFinanceMeetTeam: YextComponentConfig<CommunityFinanceMeetTeamProps> =
   {
-    label: msg("components.meetTeam", "Meet Team"),
+    label: msg("components.meetTeam", "Meet Team Section"),
     fields: CommunityFinanceMeetTeamFields,
     defaultProps: {
       section: {
@@ -1510,7 +1441,7 @@ export default CommunityFinanceMeetTeam;
 
 export const config: SectionConfig = {
   id: "CommunityFinanceMeetTeam",
-  displayName: "Meet Team",
+  displayName: "Meet Team Section",
   description: "Meet Team",
   pageSetTypes: ["ENTITY"],
 };

@@ -1,6 +1,14 @@
+import {
+  getFinanceCtaValue,
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import type { PuckComponent } from "@puckeditor/core";
 import {
   AnalyticsScopeProvider,
@@ -16,7 +24,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
@@ -94,7 +101,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 type StyledHeading = {
   text: YextEntityField<TranslatableString>;
@@ -247,8 +254,9 @@ const CommunityFinanceCommunityResourcesFields: YextFields<CommunityFinanceCommu
 const CommunityFinanceCommunityResourcesComponent: PuckComponent<
   CommunityFinanceCommunityResourcesProps
 > = (props) => {
+  const { i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const resolvedHeading =
     resolveComponentData(props.heading.text, locale, streamDocument) || "";
   const resolvedEyebrow =
@@ -266,7 +274,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
   const hasImage = hasImageSource(resolvedImage);
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
   const eyebrowColor = getThemeColorCssValue(
     props.eyebrow.fontColor?.selectedColor,
@@ -285,99 +293,15 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-community-resources border-t border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
             paddingBlock,
           }}
         >
-          <style>{`
-            .yext-community-finance-community-resources p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-community-resources li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-community-resources h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-            .yext-community-finance-community-resources h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-            .yext-community-finance-community-resources h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-            .yext-community-finance-community-resources h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-            .yext-community-finance-community-resources h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-            .yext-community-finance-community-resources h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
-            .yext-community-finance-community-resources a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
-              text-decoration: underline;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
-            }
-
-            .yext-community-finance-community-resources a.components {
-              text-decoration: none;
-            }
-
-            .yext-community-finance-community-resources a.components:hover {
-              text-decoration: underline;
-            }
-          `}</style>
           <div
-            className={`mx-auto grid gap-10 px-5 py-16 md:px-8 ${
+            className={`mx-auto grid gap-10 px-5 md:px-8 ${
               hasImage
                 ? "xl:grid-cols-[minmax(0,1fr)_520px] xl:items-center"
                 : ""
@@ -394,9 +318,9 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
               >
                 <Background
                   background={props.eyebrow.backgroundColor}
-                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold"
+                  className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                   style={{
-                    ...getSurfaceColorStyle(
+                    ...getFinanceSurfaceColorStyle(
                       props.eyebrow.backgroundColor,
                       streamDocument,
                     ),
@@ -421,7 +345,6 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                       ? undefined
                       : props.eyebrow.styles.textTransform,
                   ...(eyebrowColor ? { color: eyebrowColor } : {}),
-                  lineHeight: 1.2,
                 }}
               >
                 {resolvedEyebrow}
@@ -434,7 +357,11 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
               >
                 <Heading
                 level={2}
-                color={props.heading.fontColor}
+                color={getFinanceTextThemeColor(
+                  props.heading.fontColor,
+                  props.section.backgroundColor,
+                  streamDocument,
+                )}
                 className="m-0 max-w-[720px]"
                 style={{
                   fontFamily:
@@ -453,7 +380,6 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                     props.heading.styles.fontStyle === "default"
                       ? undefined
                       : props.heading.styles.fontStyle,
-                  lineHeight: 1,
                   textTransform:
                     props.heading.styles.textTransform === "default"
                       ? undefined
@@ -477,7 +403,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                       : props.body.styles.fontFamily,
                   fontSize:
                     props.body.styles.fontSize === "default"
-                      ? "1.0625rem"
+                      ? "var(--fontSize-body-fontSize)"
                       : props.body.styles.fontSize,
                   fontWeight:
                     props.body.styles.fontWeight === "default"
@@ -487,7 +413,6 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                     props.body.styles.fontStyle === "default"
                       ? undefined
                       : props.body.styles.fontStyle,
-                  lineHeight: 1.75,
                   textTransform:
                     props.body.styles.textTransform === "default"
                       ? undefined
@@ -496,7 +421,11 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
               >
                 {renderRichText(resolvedBody, {
                   ...props.body.styles,
-                  color: props.body.fontColor,
+                  color: getSurfaceTextColor(
+                    props.body.fontColor,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  ),
                 })}
               </div>
               </EntityField>
@@ -508,7 +437,11 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                 }
               >
                 <ComprehensiveCTA
-                  value={props.primaryCta as Partial<ComprehensiveCTAValue>}
+                  value={getFinanceCtaValue(
+                    props.primaryCta as Partial<ComprehensiveCTAValue>,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  )}
                   eventName="primaryCta"
                   className="mt-8"
                 />
@@ -523,7 +456,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                     props.sectionImage.image.constantValueEnabled
                   }>
                 <div
-                  className="overflow-hidden rounded-[28px]"
+                  className="overflow-hidden rounded-image-borderRadius"
                   style={{
                     aspectRatio:
                       props.sectionImage.aspectRatio > 0
@@ -531,7 +464,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
                         : 16 / 9,
                     borderRadius:
                       props.sectionImage.styles.borderRadius === "default"
-                        ? "28px"
+                        ? undefined
                         : props.sectionImage.styles.borderRadius,
                   }}
                 >
@@ -561,7 +494,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
 
 export const CommunityFinanceCommunityResources: YextComponentConfig<CommunityFinanceCommunityResourcesProps> =
   {
-    label: msg("components.communityResources", "Community Resources"),
+    label: msg("components.communityResources", "Community Resources Section"),
     fields: CommunityFinanceCommunityResourcesFields,
     defaultProps: {
       section: {
@@ -693,7 +626,7 @@ export const CommunityFinanceCommunityResources: YextComponentConfig<CommunityFi
 
 export const config: SectionConfig = {
   id: "CommunityFinanceCommunityResources",
-  displayName: "Community Resources",
+  displayName: "Community Resources Section",
   description: "Community Resources",
   pageSetTypes: ["ENTITY"],
 };
