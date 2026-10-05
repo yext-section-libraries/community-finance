@@ -1,3 +1,9 @@
+import {
+  getFinanceCtaValue,
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -18,7 +24,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
@@ -243,7 +248,7 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-about-branch border-t border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
@@ -272,7 +277,7 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
                   background={props.eyebrow.backgroundColor}
                   className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                   style={{
-                    ...getSurfaceColorStyle(
+                    ...getFinanceSurfaceColorStyle(
                       props.eyebrow.backgroundColor,
                       streamDocument,
                     ),
@@ -309,7 +314,11 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
               >
                 <Heading
                 level={2}
-                color={props.heading.fontColor}
+                color={getFinanceTextThemeColor(
+                  props.heading.fontColor,
+                  props.section.backgroundColor,
+                  streamDocument,
+                )}
                 className="m-0"
                 style={{
                   fontFamily:
@@ -369,7 +378,11 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
               >
                 {renderRichText(resolvedBody, {
                   ...props.body.styles,
-                  color: props.body.fontColor,
+                  color: getSurfaceTextColor(
+                    props.body.fontColor,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  ),
                 })}
               </div>
               </EntityField>
@@ -381,7 +394,11 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
                 }
               >
                 <ComprehensiveCTA
-                  value={props.primaryCta as Partial<ComprehensiveCTAValue>}
+                  value={getFinanceCtaValue(
+                    props.primaryCta as Partial<ComprehensiveCTAValue>,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  )}
                   eventName="primaryCta"
                   className="mt-8"
                 />

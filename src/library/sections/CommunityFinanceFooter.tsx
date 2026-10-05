@@ -1,3 +1,8 @@
+import {
+  getFinanceCtaValue,
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -19,7 +24,6 @@ import {
   VisibilityWrapper,
   getThemeColorCssValue,
   getAnalyticsScopeHash,
-  getSurfaceColorStyle,
   normalizeLink,
   resolveComponentData,
   useDocument,
@@ -406,7 +410,11 @@ const CommunityFinanceFooterComponent: PuckComponent<
     ? normalizeLink(resolvedBrandLink, brand.linkType)
     : resolvedBrandLink;
   const brandTextStyles = getLinkTextStyles({
-    color: brand.fontColor,
+    color: getFinanceTextThemeColor(
+      brand.fontColor,
+      props.section.backgroundColor,
+      streamDocument,
+    ),
     styles: brand.styles,
   });
   const footerLinks = (links.items ?? [])
@@ -501,7 +509,7 @@ const CommunityFinanceFooterComponent: PuckComponent<
           as="footer"
           background={props.section.backgroundColor}
           className="yext-community-finance-footer relative border-t border-current/10"
-          style={getSurfaceColorStyle(
+          style={getFinanceSurfaceColorStyle(
             props.section.backgroundColor,
             streamDocument,
           )}
@@ -538,7 +546,11 @@ const CommunityFinanceFooterComponent: PuckComponent<
                     }
                   >
                     <ComprehensiveCTA
-                      value={item.cta as Partial<ComprehensiveCTAValue>}
+                      value={getFinanceCtaValue(
+                        item.cta as Partial<ComprehensiveCTAValue>,
+                        props.section.backgroundColor,
+                        streamDocument,
+                      )}
                       eventName="footerLink"
                       className={
                         item.isLegacy

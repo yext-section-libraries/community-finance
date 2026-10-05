@@ -1,3 +1,9 @@
+import {
+  getFinanceCtaValue,
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -18,7 +24,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
@@ -302,7 +307,7 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-before-meet border-t border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
@@ -365,7 +370,11 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
                 constantValueEnabled={props.heading.text.constantValueEnabled}>
               <Heading
                 level={2}
-                color={props.heading.fontColor}
+                color={getFinanceTextThemeColor(
+                  props.heading.fontColor,
+                  props.section.backgroundColor,
+                  streamDocument,
+                )}
                 className="m-0"
                 style={{
                   fontFamily:
@@ -425,7 +434,11 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
               >
                 {renderRichText(resolvedBody, {
                   ...props.body.styles,
-                  color: props.body.fontColor,
+                  color: getSurfaceTextColor(
+                    props.body.fontColor,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  ),
                 })}
               </div>
               </EntityField>
@@ -440,7 +453,11 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
                       }
                     >
                       <ComprehensiveCTA
-                        value={item.cta as Partial<ComprehensiveCTAValue>}
+                        value={getFinanceCtaValue(
+                          item.cta as Partial<ComprehensiveCTAValue>,
+                          props.section.backgroundColor,
+                          streamDocument,
+                        )}
                         eventName={`link${index}`}
                         className=""
                       />

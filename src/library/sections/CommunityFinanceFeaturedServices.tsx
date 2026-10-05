@@ -1,3 +1,9 @@
+import {
+  getFinanceCtaValue,
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -16,7 +22,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   getThemeColorCssValue,
   type ComprehensiveCTAValue,
   type StyledImageValue,
@@ -491,7 +496,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-featured-services"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
@@ -515,7 +520,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                     background={props.eyebrow.backgroundColor}
                     className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                     style={{
-                      ...getSurfaceColorStyle(
+                      ...getFinanceSurfaceColorStyle(
                         props.eyebrow.backgroundColor,
                         streamDocument,
                       ),
@@ -552,7 +557,11 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                 >
                   <Heading
                     level={2}
-                    color={props.heading.fontColor}
+                    color={getFinanceTextThemeColor(
+                      props.heading.fontColor,
+                      props.section.backgroundColor,
+                      streamDocument,
+                    )}
                     className="m-0"
                     style={{
                       fontFamily:
@@ -590,7 +599,11 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                   <div className="mt-3">
                     {renderRichText(resolvedDescription, {
                       ...props.description.styles,
-                      color: props.description.fontColor,
+                      color: getSurfaceTextColor(
+                        props.description.fontColor,
+                        props.section.backgroundColor,
+                        streamDocument,
+                      ),
                     })}
                   </div>
                 </EntityField>
@@ -603,7 +616,11 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                 }
               >
                 <ComprehensiveCTA
-                  value={props.sectionCta as Partial<ComprehensiveCTAValue>}
+                  value={getFinanceCtaValue(
+                    props.sectionCta as Partial<ComprehensiveCTAValue>,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  )}
                   eventName="primaryCta"
                 />
               </EntityField>
@@ -656,7 +673,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                       key={`${resolvedServiceTitle}-${index}`}
                       className="min-w-[280px] overflow-hidden rounded-image-borderRadius md:min-w-[320px]"
                       background={props.cardBackgroundColor}
-                      style={getSurfaceColorStyle(
+                      style={getFinanceSurfaceColorStyle(
                         props.cardBackgroundColor,
                         streamDocument,
                       )}
@@ -716,12 +733,20 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                         <div className="mt-3">
                           {renderRichText(resolvedServiceDescription, {
                             ...props.services.styles.description.styles,
-                            color: props.services.styles.description.fontColor,
+                            color: getSurfaceTextColor(
+                              props.services.styles.description.fontColor,
+                              props.cardBackgroundColor,
+                              streamDocument,
+                            ),
                           })}
                         </div>
                         {serviceCtaValue ? (
                           <ComprehensiveCTA
-                            value={serviceCtaValue}
+                            value={getFinanceCtaValue(
+                              serviceCtaValue,
+                              props.cardBackgroundColor,
+                              streamDocument,
+                            )}
                             eventName={`cardLink${index}`}
                             className={
                               serviceCtaVariant === "link"

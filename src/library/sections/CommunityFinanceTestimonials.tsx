@@ -1,3 +1,8 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -20,7 +25,6 @@ import {
   getAggregateRating,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
@@ -290,7 +294,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-testimonials border-t border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
@@ -313,7 +317,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                   background={props.eyebrow.backgroundColor}
                   className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                   style={{
-                    ...getSurfaceColorStyle(
+                    ...getFinanceSurfaceColorStyle(
                       props.eyebrow.backgroundColor,
                       streamDocument,
                     ),
@@ -350,7 +354,11 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
               >
                 <Heading
                 level={2}
-                color={props.heading.fontColor}
+                color={getFinanceTextThemeColor(
+                  props.heading.fontColor,
+                  props.section.backgroundColor,
+                  streamDocument,
+                )}
                 className="m-0"
                 style={{
                   fontFamily:
@@ -388,7 +396,11 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                 <div className="mt-3 max-w-[620px]">
                 {renderRichText(resolvedDescription, {
                   ...props.description.styles,
-                  color: props.description.fontColor,
+                  color: getSurfaceTextColor(
+                    props.description.fontColor,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  ),
                 })}
               </div>
               </EntityField>
@@ -403,7 +415,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
             <Background
               background={props.slideBackgroundColor}
               className="mt-8 overflow-hidden rounded-image-borderRadius px-6 py-10 text-center md:px-10"
-              style={getSurfaceColorStyle(
+              style={getFinanceSurfaceColorStyle(
                 props.slideBackgroundColor,
                 streamDocument,
               )}

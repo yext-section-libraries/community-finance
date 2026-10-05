@@ -1,3 +1,8 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -14,7 +19,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
@@ -294,7 +298,7 @@ const CommunityFinanceFaqComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-faq border-t border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
@@ -315,7 +319,11 @@ const CommunityFinanceFaqComponent: PuckComponent<
               >
                 <Heading
                   level={2}
-                  color={props.heading.fontColor}
+                  color={getFinanceTextThemeColor(
+                    props.heading.fontColor,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  )}
                   className="m-0 text-balance"
                   style={{
                     fontFamily:
@@ -371,7 +379,7 @@ const CommunityFinanceFaqComponent: PuckComponent<
                       key={`${resolvedQuestion}-${index}`}
                       background={props.rowBackgroundColor}
                       className="rounded-image-borderRadius px-5 py-4"
-                      style={getSurfaceColorStyle(
+                      style={getFinanceSurfaceColorStyle(
                         props.rowBackgroundColor,
                         streamDocument,
                       )}
@@ -427,7 +435,11 @@ const CommunityFinanceFaqComponent: PuckComponent<
                         <div className="mt-4 max-w-[880px]">
                           {renderRichText(resolvedAnswer, {
                             ...props.faqs.styles.answer.styles,
-                            color: props.faqs.styles.answer.fontColor,
+                            color: getSurfaceTextColor(
+                              props.faqs.styles.answer.fontColor,
+                              props.rowBackgroundColor,
+                              streamDocument,
+                            ),
                           })}
                         </div>
                       ) : null}

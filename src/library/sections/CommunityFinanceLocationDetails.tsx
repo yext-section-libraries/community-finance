@@ -1,3 +1,7 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -21,7 +25,6 @@ import {
   EntityField,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   resolveComponentData,
   useDocument,
   type ComprehensiveCTAValue,
@@ -801,10 +804,12 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
   const sectionForegroundColor = getSurfaceTextColor(
     props.heading.fontColor,
     props.section.backgroundColor,
+    streamDocument,
   );
   const cardForegroundColor = getSurfaceTextColor(
     undefined,
     props.cardBackgroundColor,
+    streamDocument,
   );
   const phoneColor =
     getThemeColorValue(props.phones.color) ?? cardForegroundColor;
@@ -813,17 +818,21 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
   const accessibilityColor = getSurfaceTextColor(
     props.accessibility.fontColor,
     props.cardBackgroundColor,
+    streamDocument,
   );
   const secondaryCtaValue: Partial<ComprehensiveCTAValue> = {
     data: props.secondaryCta.data,
     styles: {
       ...props.secondaryCta.styles,
       color:
-        props.secondaryCta.styles.color?.selectedColor === "default"
-          ? {
-              selectedColor: props.cardBackgroundColor.contrastingColor,
-              contrastingColor: props.cardBackgroundColor.selectedColor,
-            }
+        props.secondaryCta.styles.variant === "link" &&
+        (!props.secondaryCta.styles.color?.selectedColor ||
+          props.secondaryCta.styles.color.selectedColor === "default")
+          ? getFinanceTextThemeColor(
+              undefined,
+              props.cardBackgroundColor,
+              streamDocument,
+            )
           : props.secondaryCta.styles.color,
     },
   };
@@ -847,7 +856,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
         <section
           className="yext-community-finance-location-details border-y border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
@@ -900,7 +909,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
               <article
                 className="rounded-image-borderRadius p-6"
                 style={{
-                  ...getSurfaceColorStyle(
+                  ...getFinanceSurfaceColorStyle(
                     props.cardBackgroundColor,
                     streamDocument,
                   ),
@@ -919,6 +928,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                       getSurfaceTextColor(
                         props.locationInformationHeading.fontColor,
                         props.cardBackgroundColor,
+                        streamDocument,
                       ) ?? cardForegroundColor,
                     fontFamily:
                       props.locationInformationHeading.styles.fontFamily ===
@@ -1064,6 +1074,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                           getSurfaceTextColor(
                             props.nmlsNumber.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.nmlsNumber.styles.fontFamily === "default"
@@ -1124,7 +1135,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
               <article
                 className="rounded-image-borderRadius p-6"
                 style={{
-                  ...getSurfaceColorStyle(
+                  ...getFinanceSurfaceColorStyle(
                     props.cardBackgroundColor,
                     streamDocument,
                   ),
@@ -1143,6 +1154,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                       getSurfaceTextColor(
                         props.lobbyHoursHeading.fontColor,
                         props.cardBackgroundColor,
+                        streamDocument,
                       ) ?? cardForegroundColor,
                     fontFamily:
                       props.lobbyHoursHeading.styles.fontFamily === "default"
@@ -1240,6 +1252,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                           getSurfaceTextColor(
                             props.secondaryHoursHeading.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.secondaryHoursHeading.styles.fontFamily ===
@@ -1314,7 +1327,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
               <article
                 className="rounded-image-borderRadius p-6 md:col-span-2 xl:col-span-1"
                 style={{
-                  ...getSurfaceColorStyle(
+                  ...getFinanceSurfaceColorStyle(
                     props.cardBackgroundColor,
                     streamDocument,
                   ),
@@ -1333,6 +1346,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                       getSurfaceTextColor(
                         props.clientServicesHeading.fontColor,
                         props.cardBackgroundColor,
+                        streamDocument,
                       ) ?? cardForegroundColor,
                     fontFamily:
                       props.clientServicesHeading.styles.fontFamily ===
@@ -1380,6 +1394,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                           getSurfaceTextColor(
                             props.languagesHeading.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.languagesHeading.styles.fontFamily === "default"
@@ -1420,6 +1435,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         color: getSurfaceTextColor(
                           props.languages.fontColor,
                           props.cardBackgroundColor,
+                          streamDocument,
                         ),
                       })}
                     </div>
@@ -1439,6 +1455,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                           getSurfaceTextColor(
                             props.accessibilityHeading.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.accessibilityHeading.styles.fontFamily ===
@@ -1499,6 +1516,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                           getSurfaceTextColor(
                             props.servicesHeading.fontColor,
                             props.cardBackgroundColor,
+                            streamDocument,
                           ) ?? cardForegroundColor,
                         fontFamily:
                           props.servicesHeading.styles.fontFamily === "default"
@@ -1539,6 +1557,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                         color: getSurfaceTextColor(
                           props.services.fontColor,
                           props.cardBackgroundColor,
+                          streamDocument,
                         ),
                       })}
                     </div>

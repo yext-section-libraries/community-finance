@@ -1,3 +1,9 @@
+import {
+  getFinanceCtaValue,
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -16,7 +22,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
   useDocument,
@@ -641,7 +646,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="yext-community-finance-meet-team border-t border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
@@ -664,7 +669,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                   background={props.eyebrow.backgroundColor}
                   className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                   style={{
-                    ...getSurfaceColorStyle(
+                    ...getFinanceSurfaceColorStyle(
                       props.eyebrow.backgroundColor,
                       streamDocument,
                     ),
@@ -701,7 +706,11 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
               >
                 <Heading
                   level={2}
-                  color={props.heading.fontColor}
+                  color={getFinanceTextThemeColor(
+                    props.heading.fontColor,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  )}
                   className="m-0"
                   style={{
                     fontFamily:
@@ -807,11 +816,10 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                 const licensesColor = getThemeColorCssValue(
                   props.advisors.styles.licenses.fontColor?.selectedColor,
                 );
-                const specialtiesColor = getThemeColorCssValue(
-                  props.advisors.styles.specialties.fontColor?.selectedColor,
-                );
-                const cardForegroundColor = getThemeColorCssValue(
-                  props.cardBackgroundColor.contrastingColor,
+                const cardForegroundColor = getSurfaceTextColor(
+                  undefined,
+                  props.cardBackgroundColor,
+                  streamDocument,
                 );
                 const hasCredentials =
                   typeof resolvedCredentials === "string" &&
@@ -826,7 +834,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                     key={resolvedName}
                     className="overflow-hidden rounded-image-borderRadius shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
                     background={props.cardBackgroundColor}
-                    style={getSurfaceColorStyle(
+                    style={getFinanceSurfaceColorStyle(
                       props.cardBackgroundColor,
                       streamDocument,
                     )}
@@ -1195,9 +1203,11 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                               <div className="mt-1 [&_ol]:my-0 [&_ol]:pl-0 [&_p]:m-0 [&_p]:pl-0 [&_ul]:my-0 [&_ul]:pl-0">
                                 {renderRichText(resolvedSpecialties, {
                                   ...props.advisors.styles.specialties.styles,
-                                  color:
-                                    props.advisors.styles.specialties
-                                      .fontColor ?? specialtiesColor,
+                                  color: getSurfaceTextColor(
+                                    props.advisors.styles.specialties.fontColor,
+                                    props.cardBackgroundColor,
+                                    streamDocument,
+                                  ),
                                 })}
                               </div>
                             </EntityField>
@@ -1215,7 +1225,11 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
                             }
                           >
                             <ComprehensiveCTA
-                              value={advisorCtaValue}
+                              value={getFinanceCtaValue(
+                                advisorCtaValue,
+                                props.cardBackgroundColor,
+                                streamDocument,
+                              )}
                               className=""
                             />
                           </EntityField>

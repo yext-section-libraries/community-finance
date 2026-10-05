@@ -4,8 +4,11 @@ import {
   msg,
   MaybeRTF,
   getThemeColorCssValue,
+  getDefaultForegroundColor,
+  getSurfaceColorStyle,
   isDarkColor,
   type MaybeRTFProps,
+  type ComprehensiveCTAValue,
   type RichText,
   type StyledTextValue,
   type StreamDocument,
@@ -200,11 +203,47 @@ export const getSurfaceTextColor = (
   streamDocument?: StreamDocument,
 ): string | undefined =>
   getThemeColorValue(color) ??
-  (streamDocument
-    ? isDarkColor(surfaceColor, streamDocument)
-      ? "#ffffff"
-      : "#000000"
-    : getThemeColorValue({
-        selectedColor: surfaceColor.contrastingColor,
-        contrastingColor: surfaceColor.selectedColor,
-      }));
+  (isDarkColor(surfaceColor, streamDocument) ? "#ffffff" : "#000000");
+
+export const getFinanceTextThemeColor = (
+  color: ThemeColor | undefined,
+  surfaceColor: ThemeColor,
+  streamDocument?: StreamDocument,
+): ThemeColor | undefined =>
+  color?.selectedColor && color.selectedColor !== "default"
+    ? color
+    : getDefaultForegroundColor(surfaceColor, streamDocument);
+
+export const getFinanceCtaValue = (
+  value: Partial<ComprehensiveCTAValue>,
+  surfaceColor: ThemeColor,
+  streamDocument?: StreamDocument,
+): Partial<ComprehensiveCTAValue> => {
+  const styles = value.styles;
+  if (
+    styles?.variant !== "link" ||
+    (styles.color?.selectedColor && styles.color.selectedColor !== "default")
+  ) {
+    return value;
+  }
+  return {
+    ...value,
+    styles: {
+      ...styles,
+      color: getFinanceTextThemeColor(undefined, surfaceColor, streamDocument),
+    },
+  };
+};
+
+export const getFinanceSurfaceColorStyle = (
+  surfaceColor: ThemeColor | undefined,
+  streamDocument?: StreamDocument,
+) => {
+  const surfaceStyle = getSurfaceColorStyle(surfaceColor, streamDocument);
+  return surfaceStyle && surfaceColor?.selectedColor
+    ? {
+        ...surfaceStyle,
+        color: isDarkColor(surfaceColor, streamDocument) ? "#ffffff" : "#000000",
+      }
+    : surfaceStyle;
+};

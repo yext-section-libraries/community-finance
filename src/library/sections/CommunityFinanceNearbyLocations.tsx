@@ -1,3 +1,7 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getFinanceTextThemeColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -21,7 +25,6 @@ import {
   VisibilityWrapper,
   getAnalyticsScopeHash,
   getDefaultRTF,
-  getSurfaceColorStyle,
   mapboxStaticMapStyleOptions,
   mergeMeta,
   resolveComponentData,
@@ -471,27 +474,38 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
   const sectionForegroundColor = getSurfaceTextColor(
     props.body.fontColor,
     props.section.backgroundColor,
+    streamDocument,
+  );
+  const defaultSectionForegroundColor = getSurfaceTextColor(
+    undefined,
+    props.section.backgroundColor,
+    streamDocument,
   );
   const headingColor = getSurfaceTextColor(
     props.heading.fontColor,
     props.section.backgroundColor,
+    streamDocument,
   );
   const cardTitleColor = getSurfaceTextColor(
     props.cardTitle.fontColor,
     props.section.backgroundColor,
+    streamDocument,
   );
   const cardAddressColor = getSurfaceTextColor(
     props.cardAddress.fontColor,
     props.section.backgroundColor,
+    streamDocument,
   );
   const cardDetailsColor = getSurfaceTextColor(
     props.cardDetails.fontColor,
     props.section.backgroundColor,
+    streamDocument,
   );
   const phoneColor = getThemeColorValue(props.phones.color) ?? cardDetailsColor;
   const eyebrowColor = getSurfaceTextColor(
     props.eyebrow.fontColor,
     props.eyebrow.backgroundColor,
+    streamDocument,
   );
   const cardAddressTextStyle: React.CSSProperties = {
     color: cardAddressColor,
@@ -540,13 +554,16 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
         : props.cardDetails.styles.textTransform,
   };
   const cardCtaStyles =
-    props.cardCta.styles.color?.selectedColor === "default"
+    props.cardCta.styles.variant === "link" &&
+    (!props.cardCta.styles.color?.selectedColor ||
+      props.cardCta.styles.color.selectedColor === "default")
       ? {
           ...props.cardCta.styles,
-          color: {
-            selectedColor: props.section.backgroundColor.contrastingColor,
-            contrastingColor: props.section.backgroundColor.selectedColor,
-          },
+          color: getFinanceTextThemeColor(
+            undefined,
+            props.section.backgroundColor,
+            streamDocument,
+          ),
         }
       : props.cardCta.styles;
   const paddingBlock =
@@ -587,7 +604,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
         <section
           className="yext-community-finance-nearby-locations border-t border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
@@ -624,7 +641,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
                     background={props.eyebrow.backgroundColor}
                     className="mb-3 inline-flex items-center rounded-full px-3 py-1.5"
                     style={{
-                      ...getSurfaceColorStyle(
+                      ...getFinanceSurfaceColorStyle(
                         props.eyebrow.backgroundColor,
                         streamDocument,
                       ),
@@ -725,7 +742,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
               >
                 {renderRichText(resolvedBody, {
                   ...props.body.styles,
-                  color: props.body.fontColor,
+                  color: sectionForegroundColor,
                 })}
               </div>
               </EntityField>
@@ -752,7 +769,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
             {nearbyLocationsPending ? (
               <p
                 className="mt-6"
-                style={{ color: sectionForegroundColor }}
+                style={{ color: defaultSectionForegroundColor }}
               >
                 {t("loadingNearbyLocations", "Loading nearby locations")}
               </p>
@@ -762,7 +779,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
             !hasNearbyLocations ? (
               <p
                 className="mt-6"
-                style={{ color: sectionForegroundColor }}
+                style={{ color: defaultSectionForegroundColor }}
               >
                 {t(
                   "noNearbyLocationsFoundForThisLocation",

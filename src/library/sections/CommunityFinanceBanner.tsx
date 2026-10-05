@@ -1,3 +1,7 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -18,7 +22,6 @@ import {
   type YextFields,
   backgroundColors,
   getDefaultRTF,
-  getSurfaceColorStyle,
   resolveComponentData,
   resolveYextEntityField,
   toPuckFields,
@@ -128,7 +131,7 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
       <PageSection
         background={section.backgroundColor}
         className="flex items-center justify-center"
-        outerStyle={getSurfaceColorStyle(
+        outerStyle={getFinanceSurfaceColorStyle(
           section.backgroundColor,
           streamDocument,
         )}
@@ -150,7 +153,11 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
 
   const richTextStyleOverrides = {
     ...data.styles,
-    color: data.fontColor ?? section.backgroundColor.contrastingColor,
+    color: getSurfaceTextColor(
+      data.fontColor,
+      section.backgroundColor,
+      streamDocument,
+    ),
   };
   const resolvedText = resolveComponentData(
     data.text,
@@ -172,7 +179,7 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
           right: "justify-end text-right",
         }[styles.textAlignment]
       }`}
-      outerStyle={getSurfaceColorStyle(
+      outerStyle={getFinanceSurfaceColorStyle(
         section.backgroundColor,
         streamDocument,
       )}

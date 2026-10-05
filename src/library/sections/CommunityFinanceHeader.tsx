@@ -1,3 +1,7 @@
+import {
+  getFinanceCtaValue,
+  getFinanceSurfaceColorStyle,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -31,7 +35,6 @@ import {
   type YextEntityField,
   type YextFields,
   getAnalyticsScopeHash,
-  getSurfaceColorStyle,
   i18nPageInstance,
   isDarkColor,
   normalizeLink,
@@ -700,7 +703,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<
     styles: props.navigation.styles,
   });
   const headerSurfaceStyle =
-    getSurfaceColorStyle(props.section.backgroundColor, streamDocument) ?? {};
+    getFinanceSurfaceColorStyle(props.section.backgroundColor, streamDocument) ?? {};
 
   const logoWrapperStyle: React.CSSProperties = {
     height: "50px",
@@ -873,7 +876,11 @@ const CommunityFinanceHeaderComponent: PuckComponent<
               constantValueEnabled={item.cta.data.cta.constantValueEnabled}
             >
               <ComprehensiveCTA
-                value={item.cta as Partial<ComprehensiveCTAValue>}
+                value={getFinanceCtaValue(
+                  item.cta as Partial<ComprehensiveCTAValue>,
+                  props.section.backgroundColor,
+                  streamDocument,
+                )}
                 eventName={`headerCta${index}`}
                 className="inline-flex h-10 items-center justify-center px-5 transition-opacity hover:opacity-90"
               />
@@ -1055,7 +1062,11 @@ const CommunityFinanceHeaderComponent: PuckComponent<
                 }
               >
                 <ComprehensiveCTA
-                  value={topBarCtaItem.cta as Partial<ComprehensiveCTAValue>}
+                  value={getFinanceCtaValue(
+                    topBarCtaItem.cta as Partial<ComprehensiveCTAValue>,
+                    props.section.backgroundColor,
+                    streamDocument,
+                  )}
                   eventName="responsiveTopBarCta"
                   className="inline-flex h-10 items-center justify-center px-5 transition-opacity hover:opacity-90"
                 />
@@ -1128,7 +1139,11 @@ const CommunityFinanceHeaderComponent: PuckComponent<
                           }
                         >
                           <ComprehensiveCTA
-                            value={item.cta as Partial<ComprehensiveCTAValue>}
+                            value={getFinanceCtaValue(
+                              item.cta as Partial<ComprehensiveCTAValue>,
+                              props.section.backgroundColor,
+                              streamDocument,
+                            )}
                             eventName={`tabletOverlayCta${index}`}
                             className="inline-flex h-10 w-full items-center justify-center px-5 transition-opacity hover:opacity-90"
                           />
@@ -1148,7 +1163,11 @@ const CommunityFinanceHeaderComponent: PuckComponent<
                           }
                         >
                           <ComprehensiveCTA
-                            value={item.cta as Partial<ComprehensiveCTAValue>}
+                            value={getFinanceCtaValue(
+                              item.cta as Partial<ComprehensiveCTAValue>,
+                              props.section.backgroundColor,
+                              streamDocument,
+                            )}
                             eventName={`mobileOverlayCta${index}`}
                             className="inline-flex h-10 w-full items-center justify-center px-5 transition-opacity hover:opacity-90"
                           />

@@ -1,3 +1,7 @@
+import {
+  getFinanceSurfaceColorStyle,
+  getSurfaceTextColor,
+} from "../shared/sectionHelpers";
 import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
@@ -11,7 +15,6 @@ import {
   EntityField,
   VisibilityWrapper,
   getAnalyticsScopeHash,
-  getSurfaceColorStyle,
   resolveBreadcrumbs,
   resolveComponentData,
   useDocument,
@@ -25,7 +28,6 @@ import {
   type YextFields,
   pt,
 } from "@yext/visual-editor";
-import { getSurfaceTextColor } from "../shared/sectionHelpers";
 
 type FinanceSectionVerticalPaddingValue =
   | "default"
@@ -111,10 +113,10 @@ const getTextStyles = (
   streamDocument: StreamDocument,
 ): React.CSSProperties => ({
   color: getSurfaceTextColor(field.fontColor, surfaceColor, streamDocument),
-  fontFamily:
+    fontFamily:
     field.styles.fontFamily === "default"
-      ? "var(--fontFamily-link-fontFamily)"
-      : field.styles.fontFamily,
+    ? "var(--fontFamily-link-fontFamily)"
+  : field.styles.fontFamily,
   fontSize:
     field.styles.fontSize === "default"
       ? "var(--fontSize-link-fontSize)"
@@ -276,7 +278,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
           background={props.section.backgroundColor}
           className="border-b border-current/10"
           style={{
-            ...getSurfaceColorStyle(
+            ...getFinanceSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
             ),
