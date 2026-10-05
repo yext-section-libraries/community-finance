@@ -1,6 +1,8 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import type { PuckComponent } from "@puckeditor/core";
 import {
   AnalyticsScopeProvider,
@@ -93,7 +95,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 type StyledHeading = {
   text: YextEntityField<TranslatableString>;
@@ -266,8 +268,9 @@ const CommunityFinanceBeforeMeetFields: YextFields<CommunityFinanceBeforeMeetPro
 const CommunityFinanceBeforeMeetComponent: PuckComponent<
   CommunityFinanceBeforeMeetProps
 > = (props) => {
+  const { i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const resolvedHeading =
     resolveComponentData(props.heading.text, locale, streamDocument) || "";
   const resolvedBody = resolveComponentData(
@@ -283,7 +286,7 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
   const hasImage = hasImageSource(resolvedImage);
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
 
   return (
@@ -306,92 +309,8 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
             paddingBlock,
           }}
         >
-          <style>{`
-            .yext-community-finance-before-meet p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-before-meet li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-before-meet h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-            .yext-community-finance-before-meet h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-            .yext-community-finance-before-meet h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-            .yext-community-finance-before-meet h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-            .yext-community-finance-before-meet h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-            .yext-community-finance-before-meet h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
-            .yext-community-finance-before-meet a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
-              text-decoration: underline;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
-            }
-
-            .yext-community-finance-before-meet a.components {
-              text-decoration: none;
-            }
-
-            .yext-community-finance-before-meet a.components:hover {
-              text-decoration: underline;
-            }
-          `}</style>
           <div
-            className={`mx-auto grid gap-10 px-5 py-16 md:px-8 ${
+            className={`mx-auto grid gap-10 px-5 md:px-8 ${
               hasImage
                 ? "lg:grid-cols-[520px_minmax(0,1fr)] lg:items-center"
                 : ""
@@ -410,7 +329,7 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
                   }
                 >
                   <div
-                  className="overflow-hidden rounded-[28px]"
+                  className="overflow-hidden rounded-image-borderRadius"
                   style={{
                     aspectRatio:
                       props.sectionImage.aspectRatio > 0
@@ -418,7 +337,7 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
                         : 1,
                     borderRadius:
                       props.sectionImage.styles.borderRadius === "default"
-                        ? "28px"
+                        ? undefined
                         : props.sectionImage.styles.borderRadius,
                   }}
                 >
@@ -525,7 +444,7 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
                       <ComprehensiveCTA
                         value={item.cta as Partial<ComprehensiveCTAValue>}
                         eventName={`link${index}`}
-                        className="p-0 text-sm font-bold text-palette-primary no-underline hover:underline"
+                        className="p-0 text-palette-primary no-underline hover:underline"
                       />
                     </EntityField>
                   </li>
@@ -541,7 +460,7 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
 
 export const CommunityFinanceBeforeMeet: YextComponentConfig<CommunityFinanceBeforeMeetProps> =
   {
-    label: msg("components.beforeMeet", "Before Meet"),
+    label: msg("components.beforeMeet", "Before Meet Section"),
     fields: CommunityFinanceBeforeMeetFields,
     defaultProps: {
       section: {
@@ -772,7 +691,7 @@ export const CommunityFinanceBeforeMeet: YextComponentConfig<CommunityFinanceBef
 
 export const config: SectionConfig = {
   id: "CommunityFinanceBeforeMeet",
-  displayName: "Before Meet",
+  displayName: "Before Meet Section",
   description: "Before Meet",
   pageSetTypes: ["ENTITY"],
 };

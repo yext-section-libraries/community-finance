@@ -1,5 +1,6 @@
 import { PuckComponent, Slot } from "@puckeditor/core";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useCardContext } from "@yext/visual-editor/section-library-support";
 import {
   TemplatePropsContext,
@@ -258,6 +259,7 @@ export type DirectoryCardProps = {
 
 const DirectoryCardComponent: PuckComponent<DirectoryCardProps> = (props) => {
   const { data, styles, slots, parentData, index, puck } = props;
+  const { i18n } = useTranslation();
   const { document: streamDocument, relativePrefixToRoot } = useTemplateProps();
   const directoryChildrenFromContext = useDirectoryChildren();
   const sortedDirectoryChildren = React.useMemo(
@@ -297,7 +299,7 @@ const DirectoryCardComponent: PuckComponent<DirectoryCardProps> = (props) => {
   const linkOverrideValue = data.linkOverride.enabled
     ? resolveComponentData(
         data.linkOverride,
-        streamDocument.locale || "en",
+        i18n.language,
         childDocumentContext.document
       )
     : "";

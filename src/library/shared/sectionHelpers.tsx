@@ -7,6 +7,7 @@ import {
   isDarkColor,
   type MaybeRTFProps,
   type RichText,
+  type StyledTextValue,
   type StreamDocument,
   type ThemeColor,
 } from "@yext/visual-editor";
@@ -53,24 +54,86 @@ export const financeSectionStylesFields = {
   },
 } as const;
 
-export const FINANCE_SECTION_MAX_WIDTH = "1440px";
+export const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
+
+const resolveStyledTextStyles = (
+  styles:
+    | Partial<
+        Pick<
+          StyledTextValue,
+          "fontFamily" | "fontSize" | "fontWeight" | "fontStyle" | "textTransform"
+        >
+      >
+    | undefined,
+) => ({
+  fontFamily: styles?.fontFamily === "default" ? undefined : styles?.fontFamily,
+  fontSize: styles?.fontSize === "default" ? undefined : styles?.fontSize,
+  fontWeight: styles?.fontWeight === "default" ? undefined : styles?.fontWeight,
+  fontStyle: styles?.fontStyle === "default" ? undefined : styles?.fontStyle,
+  textTransform:
+    styles?.textTransform === "default" ? undefined : styles?.textTransform,
+});
 
 export const renderRichText = (
   value: unknown,
   richTextStyleOverrides?: MaybeRTFProps["richTextStyleOverrides"],
 ): React.ReactNode => {
+  const textStyle = resolveStyledTextStyles(richTextStyleOverrides);
+  const bodyStyle = Object.fromEntries(
+    Object.entries(textStyle)
+      .filter(([, value]) => value !== undefined)
+      .map(([property, value]) => [`--community-finance-body-${property}`, value]),
+  );
+  const bodyVariables = Object.fromEntries(
+    Object.entries(textStyle)
+      .filter(([, value]) => value !== undefined)
+      .map(([property, value]) => [`--${property}-body-${property}`, value]),
+  );
+  const color =
+    typeof richTextStyleOverrides?.color === "object"
+      ? getThemeColorCssValue(richTextStyleOverrides.color)
+      : richTextStyleOverrides?.color;
+
   if (React.isValidElement(value)) {
-    if (!richTextStyleOverrides) {
-      return value;
+    if (value.type === MaybeRTF) {
+      const element = value as React.ReactElement<MaybeRTFProps>;
+      return React.cloneElement(element, {
+        richTextStyleOverrides: { ...textStyle, color },
+        style: { ...element.props.style, ...bodyStyle, ...bodyVariables, color },
+      });
     }
 
+    const element = value as React.ReactElement<{
+      style?: React.CSSProperties;
+      children?: React.ReactNode;
+    }>;
+    const child = element.props.children;
+    const isMaybeRTFChild = React.isValidElement(child) && child.type === MaybeRTF;
+    const isRichTextChild = React.isValidElement<{
+      className?: string;
+      style?: React.CSSProperties;
+    }>(child) && child.props.className?.includes("rtf-wrapper");
+
     return React.cloneElement(
-      value as React.ReactElement<{ style?: React.CSSProperties }>,
+      element,
       {
+        children: isMaybeRTFChild
+          ? renderRichText(child, richTextStyleOverrides)
+          : isRichTextChild
+            ? React.cloneElement(child, {
+                style: {
+                  ...child.props.style,
+                  ...bodyStyle,
+                  ...bodyVariables,
+                  color,
+                },
+              })
+            : child,
         style: {
-          ...(value.props as { style?: React.CSSProperties }).style,
-          ...richTextStyleOverrides,
-          color: getThemeColorCssValue(richTextStyleOverrides.color),
+          ...element.props.style,
+          ...bodyStyle,
+          ...bodyVariables,
+          color,
         } as React.CSSProperties,
       },
     );
@@ -84,7 +147,7 @@ export const renderRichText = (
   return (
     <MaybeRTF
       data={data}
-      richTextStyleOverrides={richTextStyleOverrides}
+      richTextStyleOverrides={{ ...textStyle, color }}
     />
   );
 };

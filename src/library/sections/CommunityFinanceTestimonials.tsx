@@ -1,3 +1,4 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -93,7 +94,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 type StyledHeading = {
   text: YextEntityField<TranslatableString>;
@@ -219,9 +220,9 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
   CommunityFinanceTestimonialsProps
 > = (props) => {
   const analytics = useAnalytics();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const resolvedHeading =
     resolveComponentData(props.heading.text, locale, streamDocument) || "";
   const resolvedEyebrow =
@@ -256,7 +257,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
   const activeTestimonial = reviewItems[activeIndex] ?? reviewItems[0];
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
   const eyebrowColor = getThemeColorCssValue(
     props.eyebrow.fontColor?.selectedColor,
@@ -296,84 +297,8 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
             paddingBlock,
           }}
         >
-          <style>{`
-            .yext-community-finance-testimonials p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-testimonials li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-testimonials h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-            .yext-community-finance-testimonials h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-            .yext-community-finance-testimonials h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-            .yext-community-finance-testimonials h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-            .yext-community-finance-testimonials h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-            .yext-community-finance-testimonials h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
-            .yext-community-finance-testimonials a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
-              text-decoration: underline;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
-            }
-          `}</style>
           <div
-            className="mx-auto px-5 py-16 md:px-8"
+            className="mx-auto px-5 md:px-8"
             style={{
               maxWidth: FINANCE_SECTION_MAX_WIDTH,
             }}
@@ -462,7 +387,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                   props.description.text.constantValueEnabled
                 }
               >
-                <div className="mt-3 max-w-[620px] text-base leading-7">
+                <div className="mt-3 max-w-[620px] leading-7">
                 {renderRichText(resolvedDescription, {
                   ...props.description.styles,
                   color: props.description.fontColor,
@@ -485,12 +410,12 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
                 streamDocument,
               )}
             >
-              <p className="mx-auto max-w-[1210px] text-[1.9rem] font-bold leading-tight md:text-[2.4rem]">
+              <p className="mx-auto max-w-[1210px] leading-tight">
                 {activeTestimonial.quote}
               </p>
               <div className="mt-6 flex flex-col items-center gap-4 text-center">
                 <div className="flex flex-col items-center gap-1">
-                  <h3 className="m-0 text-base font-bold">
+                  <h3 className="m-0">
                     {activeTestimonial.authorName}
                   </h3>
                   <p className="m-0 text-sm">{activeTestimonial.authorRole}</p>
@@ -580,7 +505,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
 
 export const CommunityFinanceTestimonials: YextComponentConfig<CommunityFinanceTestimonialsProps> =
   {
-    label: msg("components.testimonials", "Testimonials"),
+    label: msg("components.testimonials", "Testimonials Section"),
     fields: CommunityFinanceTestimonialsFields,
     defaultProps: {
       section: {
@@ -660,7 +585,7 @@ export const CommunityFinanceTestimonials: YextComponentConfig<CommunityFinanceT
 
 export const config: SectionConfig = {
   id: "CommunityFinanceTestimonials",
-  displayName: "Testimonials",
+  displayName: "Testimonials Section",
   description: "Testimonials",
   pageSetTypes: ["ENTITY"],
 };

@@ -1,3 +1,4 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import { PuckComponent } from "@puckeditor/core";
@@ -193,7 +194,7 @@ const CommunityFinanceBannerComponent: PuckComponent<CommunityFinanceBannerProps
  * Displays a full-width, editor-configurable rich-text banner.
  */
 export const CommunityFinanceBanner: YextComponentConfig<CommunityFinanceBannerProps> = {
-  label: msg("components.banner", "Banner"),
+  label: msg("components.banner", "Banner Section"),
   fields: toPuckFields<CommunityFinanceBannerProps>(
     CommunityFinanceBannerFields,
   ),
@@ -234,7 +235,7 @@ export const CommunityFinanceBanner: YextComponentConfig<CommunityFinanceBannerP
 
 export const config: SectionConfig = {
   id: "CommunityFinanceBanner",
-  displayName: "Banner",
+  displayName: "Banner Section",
   description: "Banner",
   pageSetTypes: ["ENTITY"],
 };

@@ -1,3 +1,4 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -657,10 +658,10 @@ const CommunityFinanceHeaderFields: YextFields<CommunityFinanceHeaderProps> = {
 const CommunityFinanceHeaderComponent: PuckComponent<
   CommunityFinanceHeaderProps
 > = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const analytics = useAnalytics();
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const resolvedLogoImage = resolveComponentData(
@@ -820,7 +821,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<
         fieldId={iconImageProps.image.field}
         constantValueEnabled={iconImageProps.image.constantValueEnabled}
       >
-        <div style={wrapperStyle}>
+        <div className="rounded-image-borderRadius" style={wrapperStyle}>
           <img
             alt=""
             src={iconUrl}
@@ -931,7 +932,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<
         fieldId={props.logoImage.image.field}
         constantValueEnabled={props.logoImage.image.constantValueEnabled}
       >
-        <div style={logoWrapperStyle}>
+        <div className="rounded-image-borderRadius" style={logoWrapperStyle}>
           <Image
             image={logoImage}
             className="h-full w-full"
@@ -1038,93 +1039,11 @@ const CommunityFinanceHeaderComponent: PuckComponent<
           color: resolveThemeColorCssValue(navigationColor),
         }}
       >
-        <style>{`
-          .yext-community-finance-header p {
-            font-family: var(--fontFamily-body-fontFamily);
-            font-size: var(--fontSize-body-fontSize);
-            line-height: 1.5;
-            font-weight: var(--fontWeight-body-fontWeight);
-            font-style: var(--fontStyle-body-fontStyle);
-            text-transform: var(--textTransform-body-textTransform);
-          }
-          .yext-community-finance-header li {
-            font-family: var(--fontFamily-body-fontFamily);
-            font-size: var(--fontSize-body-fontSize);
-            line-height: 1.5;
-            font-weight: var(--fontWeight-body-fontWeight);
-            font-style: var(--fontStyle-body-fontStyle);
-            text-transform: var(--textTransform-body-textTransform);
-          }
-          .yext-community-finance-header h1 {
-            font-family: var(--fontFamily-h1-fontFamily);
-            font-size: var(--fontSize-h1-fontSize);
-            line-height: 1.2;
-            font-weight: var(--fontWeight-h1-fontWeight);
-            font-style: var(--fontStyle-h1-fontStyle);
-            text-transform: var(--textTransform-h1-textTransform);
-          }
-          .yext-community-finance-header h2 {
-            font-family: var(--fontFamily-h2-fontFamily);
-            font-size: var(--fontSize-h2-fontSize);
-            line-height: 1.2;
-            font-weight: var(--fontWeight-h2-fontWeight);
-            font-style: var(--fontStyle-h2-fontStyle);
-            text-transform: var(--textTransform-h2-textTransform);
-          }
-          .yext-community-finance-header h3 {
-            font-family: var(--fontFamily-h3-fontFamily);
-            font-size: var(--fontSize-h3-fontSize);
-            line-height: 1.2;
-            font-weight: var(--fontWeight-h3-fontWeight);
-            font-style: var(--fontStyle-h3-fontStyle);
-            text-transform: var(--textTransform-h3-textTransform);
-          }
-          .yext-community-finance-header h4 {
-            font-family: var(--fontFamily-h4-fontFamily);
-            font-size: var(--fontSize-h4-fontSize);
-            line-height: 1.2;
-            font-weight: var(--fontWeight-h4-fontWeight);
-            font-style: var(--fontStyle-h4-fontStyle);
-            text-transform: var(--textTransform-h4-textTransform);
-          }
-          .yext-community-finance-header h5 {
-            font-family: var(--fontFamily-h5-fontFamily);
-            font-size: var(--fontSize-h5-fontSize);
-            line-height: 1.2;
-            font-weight: var(--fontWeight-h5-fontWeight);
-            font-style: var(--fontStyle-h5-fontStyle);
-            text-transform: var(--textTransform-h5-textTransform);
-          }
-          .yext-community-finance-header h6 {
-            font-family: var(--fontFamily-h6-fontFamily);
-            font-size: var(--fontSize-h6-fontSize);
-            line-height: 1.2;
-            font-weight: var(--fontWeight-h6-fontWeight);
-            font-style: var(--fontStyle-h6-fontStyle);
-            text-transform: var(--textTransform-h6-textTransform);
-          }
-          .yext-community-finance-header nav a,
-          .yext-community-finance-header footer a,
-          .yext-community-finance-header a.components {
-            font-family: var(--fontFamily-link-fontFamily);
-            font-size: var(--fontSize-link-fontSize);
-            font-weight: var(--fontWeight-link-fontWeight);
-            font-style: var(--fontStyle-link-fontStyle);
-            line-height: 1.5;
-            text-decoration: none;
-            text-transform: var(--textTransform-link-textTransform);
-            letter-spacing: var(--letterSpacing-link-letterSpacing);
-          }
+        <div className="mx-auto hidden max-w-pageSection-contentWidth lg:block">
+          {desktopVariantContent}
+        </div>
 
-          .yext-community-finance-header nav a:hover,
-          .yext-community-finance-header footer a:hover,
-          .yext-community-finance-header a.components:hover {
-            text-decoration: underline;
-          }
-        `}</style>
-        <div className="hidden lg:block">{desktopVariantContent}</div>
-
-        <div className="flex min-h-[82px] items-center gap-4 px-6 md:px-8 lg:hidden">
+        <div className="mx-auto flex min-h-[82px] max-w-pageSection-contentWidth items-center gap-4 px-6 md:px-8 lg:hidden">
           <div className="min-w-0 flex-1">{renderLogo()}</div>
           {showCta && topBarCtaItem ? (
             <div className="hidden items-center gap-3 md:flex">
@@ -1288,7 +1207,7 @@ const CommunityFinanceHeaderComponent: PuckComponent<
 
 export const CommunityFinanceHeader: YextComponentConfig<CommunityFinanceHeaderProps> =
   {
-    label: msg("components.sharedHeader", "Header"),
+    label: msg("components.header", "Header"),
     fields: CommunityFinanceHeaderFields,
     defaultProps: {
       variant: "utilityTopRow",

@@ -1,3 +1,4 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -102,7 +103,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 const getTextStyles = (
   field: StyledTextProps,
@@ -210,12 +211,12 @@ const CommunityFinanceBreadcrumbsFields: YextFields<CommunityFinanceBreadcrumbsP
 const CommunityFinanceBreadcrumbsComponent: PuckComponent<
   CommunityFinanceBreadcrumbsProps
 > = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
   const { relativePrefixToRoot } = useTemplateProps<{
     relativePrefixToRoot?: string;
   }>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const breadcrumbs = resolveBreadcrumbs(streamDocument) ?? [];
   const resolvedRootLabel =
     resolveComponentData(props.rootLabel.text, locale, streamDocument) ||
@@ -228,7 +229,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
     "";
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "16px"
       : props.section.styles.verticalPadding;
   const rootTextStyles = getTextStyles(
     props.rootLabel,
@@ -284,7 +285,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
           }}
         >
           <div
-            className="mx-auto px-5 py-4 md:px-8"
+            className="mx-auto px-5 md:px-8"
             style={{
               maxWidth: FINANCE_SECTION_MAX_WIDTH,
             }}
@@ -391,7 +392,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
 
 export const CommunityFinanceBreadcrumbs: YextComponentConfig<CommunityFinanceBreadcrumbsProps> =
   {
-    label: msg("components.breadcrumbs", "Breadcrumbs"),
+    label: msg("components.breadcrumbsSection", "Breadcrumbs Section"),
     fields: CommunityFinanceBreadcrumbsFields,
     defaultProps: {
       section: {
@@ -449,7 +450,7 @@ export default CommunityFinanceBreadcrumbs;
 
 export const config: SectionConfig = {
   id: "CommunityFinanceBreadcrumbs",
-  displayName: "Breadcrumbs",
+  displayName: "Breadcrumbs Section",
   description: "Breadcrumbs",
   pageSetTypes: ["ENTITY"],
 };

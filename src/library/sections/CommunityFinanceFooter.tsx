@@ -1,6 +1,8 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import type { PuckComponent } from "@puckeditor/core";
 import {
   AnalyticsScopeProvider,
@@ -87,7 +89,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 type LegacyFooterLink = {
   label: TranslatableString;
@@ -337,8 +339,9 @@ const CommunityFinanceFooterFields: YextFields<CommunityFinanceFooterProps> =
 const CommunityFinanceFooterComponent: PuckComponent<
   CommunityFinanceFooterProps
 > = (props) => {
+  const { i18n } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const legacyProps = props as typeof props & {
     brandLabel?: {
       text?: unknown;
@@ -503,86 +506,6 @@ const CommunityFinanceFooterComponent: PuckComponent<
             streamDocument,
           )}
         >
-          <style>{`
-            .yext-community-finance-footer p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-footer li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-footer h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-            .yext-community-finance-footer h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-            .yext-community-finance-footer h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-            .yext-community-finance-footer h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-            .yext-community-finance-footer h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-            .yext-community-finance-footer h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
-            .yext-community-finance-footer a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
-              text-decoration: none;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
-            }
-
-            .yext-community-finance-footer a:hover {
-              text-decoration: underline;
-            }
-          `}</style>
           <div
             className="mx-auto flex flex-col gap-6 px-5 md:flex-row md:items-center md:justify-between md:px-8"
             style={{

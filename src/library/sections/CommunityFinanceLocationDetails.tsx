@@ -1,3 +1,4 @@
+import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -97,7 +98,7 @@ const financeSectionStylesFields = {
   },
 } as const;
 
-const FINANCE_SECTION_MAX_WIDTH = "1440px";
+const FINANCE_SECTION_MAX_WIDTH = "var(--maxWidth-pageSection-contentWidth)";
 
 type StyledHeading = {
   text: YextEntityField<TranslatableString>;
@@ -681,7 +682,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
     sunday: t("sunday", "Sunday"),
   };
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument.locale ?? "en";
+  const locale = i18n.language;
   const resolvedHeading =
     resolveComponentData(props.heading.text, locale, streamDocument) || "";
   const resolvedLobbyHoursHeading =
@@ -828,7 +829,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
   };
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? undefined
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
   const additionalHoursText =
     typeof streamDocument.additionalHoursText === "string"
@@ -855,92 +856,8 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
             paddingBlock,
           }}
         >
-          <style>{`
-            .yext-community-finance-location-details p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-location-details li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-            .yext-community-finance-location-details h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-            .yext-community-finance-location-details h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-            .yext-community-finance-location-details h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-            .yext-community-finance-location-details h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-            .yext-community-finance-location-details h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-            .yext-community-finance-location-details h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
-            .yext-community-finance-location-details a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
-              text-decoration: underline;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
-            }
-
-            .yext-community-finance-location-details a.components {
-              text-decoration: none;
-            }
-
-            .yext-community-finance-location-details a.components:hover {
-              text-decoration: underline;
-            }
-          `}</style>
           <div
-            className="mx-auto px-5 py-16 md:px-8"
+            className="mx-auto px-5 md:px-8"
             style={{
               maxWidth: FINANCE_SECTION_MAX_WIDTH,
             }}
@@ -999,7 +916,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     props.locationInformationHeading.text.constantValueEnabled}
               >
                 <h3
-                  className="m-0 text-lg font-bold"
+                  className="m-0"
                   style={{
                     color:
                       getSurfaceTextColor(
@@ -1202,7 +1119,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     <ComprehensiveCTA
                       value={secondaryCtaValue}
                       eventName="secondaryCta"
-                      className="inline-flex text-sm font-bold no-underline hover:underline"
+                      className="inline-flex no-underline hover:underline"
                     />
                   </EntityField>
                 </div>
@@ -1223,7 +1140,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     props.lobbyHoursHeading.text.constantValueEnabled}
               >
                 <h3
-                  className="m-0 text-lg font-bold"
+                  className="m-0"
                   style={{
                     color:
                       getSurfaceTextColor(
@@ -1413,7 +1330,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
                     props.clientServicesHeading.text.constantValueEnabled}
               >
                 <h3
-                  className="m-0 text-lg font-bold"
+                  className="m-0"
                   style={{
                     color:
                       getSurfaceTextColor(
@@ -1642,7 +1559,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
 
 export const CommunityFinanceLocationDetails: YextComponentConfig<CommunityFinanceLocationDetailsProps> =
   {
-    label: msg("components.locationDetails", "Location Details"),
+    label: msg("components.locationDetails", "Location Details Section"),
     fields: CommunityFinanceLocationDetailsFields,
     defaultProps: {
       section: {
@@ -2029,7 +1946,7 @@ export const CommunityFinanceLocationDetails: YextComponentConfig<CommunityFinan
 
 export const config: SectionConfig = {
   id: "CommunityFinanceLocationDetails",
-  displayName: "Location Details",
+  displayName: "Location Details Section",
   description: "Location Details",
   pageSetTypes: ["ENTITY"],
 };
