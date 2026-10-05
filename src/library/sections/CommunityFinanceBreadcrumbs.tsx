@@ -229,7 +229,7 @@ const CommunityFinanceBreadcrumbsComponent: PuckComponent<
     "";
   const paddingBlock =
     props.section.styles.verticalPadding === "default"
-      ? "16px"
+      ? "var(--padding-pageSection-verticalPadding)"
       : props.section.styles.verticalPadding;
   const rootTextStyles = getTextStyles(
     props.rootLabel,
