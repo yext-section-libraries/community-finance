@@ -327,7 +327,7 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
             {hasImage ? (
               <div>
                 <EntityField
-                  displayName="Section Image"
+                  displayName="Image"
                   fieldId={props.sectionImage.image.field}
                   constantValueEnabled={
                     props.sectionImage.image.constantValueEnabled
@@ -475,7 +475,7 @@ const CommunityFinanceBeforeMeetComponent: PuckComponent<
 
 export const CommunityFinanceBeforeMeet: YextComponentConfig<CommunityFinanceBeforeMeetProps> =
   {
-    label: msg("components.beforeMeet", "Before Meet Section"),
+    label: msg("components.beforeMeet", "Before Meet"),
     fields: CommunityFinanceBeforeMeetFields,
     defaultProps: {
       section: {
@@ -706,7 +706,7 @@ export const CommunityFinanceBeforeMeet: YextComponentConfig<CommunityFinanceBef
 
 export const config: SectionConfig = {
   id: "CommunityFinanceBeforeMeet",
-  displayName: "Before Meet Section",
+  displayName: "Before Meet",
   description: "Before Meet",
   pageSetTypes: ["ENTITY"],
 };

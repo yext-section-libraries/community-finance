@@ -1575,7 +1575,7 @@ const CommunityFinanceLocationDetailsComponent: PuckComponent<
 
 export const CommunityFinanceLocationDetails: YextComponentConfig<CommunityFinanceLocationDetailsProps> =
   {
-    label: msg("components.locationDetails", "Location Details Section"),
+    label: msg("components.locationDetails", "Location Details"),
     fields: CommunityFinanceLocationDetailsFields,
     defaultProps: {
       section: {
@@ -1962,7 +1962,7 @@ export const CommunityFinanceLocationDetails: YextComponentConfig<CommunityFinan
 
 export const config: SectionConfig = {
   id: "CommunityFinanceLocationDetails",
-  displayName: "Location Details Section",
+  displayName: "Location Details",
   description: "Location Details",
   pageSetTypes: ["ENTITY"],
 };

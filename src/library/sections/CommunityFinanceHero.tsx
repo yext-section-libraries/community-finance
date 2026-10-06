@@ -624,7 +624,7 @@ const CommunityFinanceHeroComponent: PuckComponent<
 
 export const CommunityFinanceHero: YextComponentConfig<CommunityFinanceHeroProps> =
   {
-    label: msg("components.hero", "Hero Section"),
+    label: msg("components.hero", "Hero"),
     fields: CommunityFinanceHeroFields,
     defaultProps: {
       section: {
@@ -789,7 +789,7 @@ export const CommunityFinanceHero: YextComponentConfig<CommunityFinanceHeroProps
 
 export const config: SectionConfig = {
   id: "CommunityFinanceHero",
-  displayName: "Hero Section",
+  displayName: "Hero",
   description: "Hero",
   pageSetTypes: ["ENTITY"],
 };

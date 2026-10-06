@@ -1249,7 +1249,7 @@ const CommunityFinanceMeetTeamComponent: PuckComponent<
 
 export const CommunityFinanceMeetTeam: YextComponentConfig<CommunityFinanceMeetTeamProps> =
   {
-    label: msg("components.meetTeam", "Meet Team Section"),
+    label: msg("components.meetTeam", "Meet Team"),
     fields: CommunityFinanceMeetTeamFields,
     defaultProps: {
       section: {
@@ -1441,7 +1441,7 @@ export default CommunityFinanceMeetTeam;
 
 export const config: SectionConfig = {
   id: "CommunityFinanceMeetTeam",
-  displayName: "Meet Team Section",
+  displayName: "Meet Team",
   description: "Meet Team",
   pageSetTypes: ["ENTITY"],
 };

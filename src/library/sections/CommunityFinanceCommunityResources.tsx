@@ -450,7 +450,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
             {hasImage ? (
               <div className="order-1 xl:order-2">
                 <EntityField
-                  displayName="Section Image"
+                  displayName="Image"
                   fieldId={props.sectionImage.image.field}
                   constantValueEnabled={
                     props.sectionImage.image.constantValueEnabled
@@ -494,7 +494,7 @@ const CommunityFinanceCommunityResourcesComponent: PuckComponent<
 
 export const CommunityFinanceCommunityResources: YextComponentConfig<CommunityFinanceCommunityResourcesProps> =
   {
-    label: msg("components.communityResources", "Community Resources Section"),
+    label: msg("components.communityResources", "Community Resources"),
     fields: CommunityFinanceCommunityResourcesFields,
     defaultProps: {
       section: {
@@ -626,7 +626,7 @@ export const CommunityFinanceCommunityResources: YextComponentConfig<CommunityFi
 
 export const config: SectionConfig = {
   id: "CommunityFinanceCommunityResources",
-  displayName: "Community Resources Section",
+  displayName: "Community Resources",
   description: "Community Resources",
   pageSetTypes: ["ENTITY"],
 };

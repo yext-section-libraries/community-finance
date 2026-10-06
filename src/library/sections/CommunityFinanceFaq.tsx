@@ -457,7 +457,7 @@ const CommunityFinanceFaqComponent: PuckComponent<
 
 export const CommunityFinanceFaq: YextComponentConfig<CommunityFinanceFaqProps> =
   {
-    label: msg("components.faq", "FAQ Section"),
+    label: msg("components.faq", "FAQ"),
     fields: CommunityFinanceFaqFields,
     defaultProps: {
       section: {
@@ -523,7 +523,7 @@ export const CommunityFinanceFaq: YextComponentConfig<CommunityFinanceFaqProps> 
 
 export const config: SectionConfig = {
   id: "CommunityFinanceFaq",
-  displayName: "FAQ Section",
+  displayName: "FAQ",
   description: "FAQ",
   pageSetTypes: ["ENTITY"],
 };

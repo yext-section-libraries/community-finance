@@ -1028,7 +1028,7 @@ const CommunityFinanceNearbyLocationsComponent: PuckComponent<
 
 export const CommunityFinanceNearbyLocations: YextComponentConfig<CommunityFinanceNearbyLocationsProps> =
   {
-    label: msg("components.nearbyLocations", "Nearby Locations Section"),
+    label: msg("components.nearbyLocations", "Nearby Locations"),
     fields: CommunityFinanceNearbyLocationsFields,
     defaultProps: {
       section: {
@@ -1202,7 +1202,7 @@ export const CommunityFinanceNearbyLocations: YextComponentConfig<CommunityFinan
 
 export const config: SectionConfig = {
   id: "CommunityFinanceNearbyLocations",
-  displayName: "Nearby Locations Section",
+  displayName: "Nearby Locations",
   description: "Nearby Locations",
   pageSetTypes: ["ENTITY"],
 };

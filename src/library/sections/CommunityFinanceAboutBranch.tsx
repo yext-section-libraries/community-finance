@@ -451,7 +451,7 @@ const CommunityFinanceAboutBranchComponent: PuckComponent<
 
 export const CommunityFinanceAboutBranch: YextComponentConfig<CommunityFinanceAboutBranchProps> =
   {
-    label: msg("components.aboutBranch", "About Branch Section"),
+    label: msg("components.aboutBranch", "About Branch"),
     fields: CommunityFinanceAboutBranchFields,
     defaultProps: {
       section: {
@@ -583,7 +583,7 @@ export const CommunityFinanceAboutBranch: YextComponentConfig<CommunityFinanceAb
 
 export const config: SectionConfig = {
   id: "CommunityFinanceAboutBranch",
-  displayName: "About Branch Section",
+  displayName: "About Branch",
   description: "About Branch",
   pageSetTypes: ["ENTITY"],
 };

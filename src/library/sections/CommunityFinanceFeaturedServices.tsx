@@ -609,7 +609,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
                 </EntityField>
               </div>
               <EntityField
-                displayName="Section CTA"
+                displayName="CTA"
                 fieldId={props.sectionCta.data.cta.field}
                 constantValueEnabled={
                   props.sectionCta.data.cta.constantValueEnabled
@@ -770,7 +770,7 @@ const CommunityFinanceFeaturedServicesComponent: PuckComponent<
 
 export const CommunityFinanceFeaturedServices: YextComponentConfig<CommunityFinanceFeaturedServicesProps> =
   {
-    label: msg("components.featuredServices", "Featured Services Section"),
+    label: msg("components.featuredServices", "Featured Services"),
     fields: CommunityFinanceFeaturedServicesFields,
     defaultProps: {
       section: {
@@ -936,7 +936,7 @@ export const CommunityFinanceFeaturedServices: YextComponentConfig<CommunityFina
 
 export const config: SectionConfig = {
   id: "CommunityFinanceFeaturedServices",
-  displayName: "Featured Services Section",
+  displayName: "Featured Services",
   description: "Featured Services",
   pageSetTypes: ["ENTITY"],
 };

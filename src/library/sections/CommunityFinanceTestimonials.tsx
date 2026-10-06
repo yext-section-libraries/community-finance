@@ -515,7 +515,7 @@ const CommunityFinanceTestimonialsComponent: PuckComponent<
 
 export const CommunityFinanceTestimonials: YextComponentConfig<CommunityFinanceTestimonialsProps> =
   {
-    label: msg("components.testimonials", "Testimonials Section"),
+    label: msg("components.testimonials", "Testimonials"),
     fields: CommunityFinanceTestimonialsFields,
     defaultProps: {
       section: {
@@ -595,7 +595,7 @@ export const CommunityFinanceTestimonials: YextComponentConfig<CommunityFinanceT
 
 export const config: SectionConfig = {
   id: "CommunityFinanceTestimonials",
-  displayName: "Testimonials Section",
+  displayName: "Testimonials",
   description: "Testimonials",
   pageSetTypes: ["ENTITY"],
 };
